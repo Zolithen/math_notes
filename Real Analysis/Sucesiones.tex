@@ -1,0 +1,123 @@
+\documentclass{article}
+
+\usepackage[spanish]{babel}
+\usepackage{inputenc}
+\usepackage{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage{amsthm}
+\usepackage[left=10pt,right=10pt,bottom=20pt,top=20pt]{geometry}
+\newtheorem{theorem}{Teorema}
+\newtheorem{define}{Definición}
+\newtheorem{prop}{Proposición}
+
+\begin{document}
+\renewcommand{\tablename}{Tabla} 
+\section{Sucesiones}
+
+
+
+
+\begin{define}
+	Una \textbf{sucesión} es una aplicación $a_n: \mathbb{N} \rightarrow \mathbb{R}$. El conjunto $\{a_n\}_n \subseteq \mathbb{R}$ es el conjunto imagen. Decimos que la sucesión
+	$\{a_n\}_n \subseteq \mathbb{R}$ es:
+	\begin{itemize}
+		\item
+		\textbf{Eventual creciente} si $\exists N \in \mathbb{N}$ tal que $a_m \geq a_n,\ \forall m>n\geq N$ con $n$ y $m$ naturales.
+		\item
+		\textbf{Eventual estrictamente creciente} si $\exists N \in \mathbb{N}$ tal que $a_m > a_n,\ \forall m>n\geq N$ con $n$ y $m$ naturales.
+		\item
+		\textbf{Eventual decreciente} si $\exists N \in \mathbb{N}$ tal que $a_m \leq a_n,\ \forall m>n\geq N$ con $n$ y $m$ naturales.
+		\item
+		\textbf{Eventual estrictamente decreciente} si $\exists N \in \mathbb{N}$ tal que $a_m < a_n,\ \forall m>n\geq N$ con $n$ y $m$ naturales.
+	\end{itemize}
+	Si $N = 1$ en cualquiera de estos casos, entonces quitamos ''eventual".
+\end{define}
+Nos interesa estudiar el comportamiento de la sucesión cuando $n$ se hace grande, es decir \textit{eventualmente}. Veremos que el comportamiento de $a_n$ cercano a $n = 1$ no importa
+en lo que a límite se refiere, solo el comportamiento eventual.
+
+
+\begin{define}
+	Sea $\{ a_n\}_n \subseteq \mathbb{R}$ una sucesión de números reales. Decimos que $a_n$ \textbf{converge} a $L$ y lo denotamos como $a_n \rightarrow_{n} L$ si y solo si 
+	$\forall \varepsilon > 0,\exists N \in \mathbb{N}$ tal que $|a_n - L| < \varepsilon$ para todo $n$ tal que $n \geq N$.
+\end{define}
+
+
+\begin{prop}[Unicidad del límite]
+	Sean $\{ a_n\}_n \subseteq \mathbb{R}$ convergente a $L_1$ y $L_2$. Entonces $L_1 = L_2$.
+\end{prop}
+\begin{proof}
+	Supongamos que $L_1$ y $L_2$ son dos límites de la sucesión $\{ a_n\}_n \subseteq \mathbb{R}$. Por tanto, dado un $\varepsilon > 0$, existe un $N \in \mathbb{N}$ 
+	tal que $|a_n - L_1| < \varepsilon/2$ y $|a_n - L_2| < \varepsilon/2\ $ $\forall n > N$ con $N=max\{n_1, n_2\}$, donde $n_1$ y $n_2$ son $N$ dado de la definición del límite para 
+	$L_1$ y $L_2$. Sumando ambas desigualdades y usando la desigualdad triangular, tenemos:
+	\begin{align*}
+		\varepsilon = \frac{\varepsilon}{2} + \frac{\varepsilon}{2} > |a_n - L_1| + |a_n - L_2| = |a_n - L_1| + |-a_n + L_2| \\ \geq |a_n - L_1 - a_n + L_2| = |L_2 - L_1|
+	\end{align*}
+	Como $\varepsilon$ es un número arbitrario mayor que 0, si asumimos que $|L_2 - L_1| \neq 0$, siempre vamos a poder encontrar un valor de $\varepsilon$ (por ejemplo, 
+	$\varepsilon = \frac{|L_2 - L_1|}{2} > 0$) mayor a 0 que contradiga $\varepsilon > |L_2 - L_1|$. Por tanto, $|L_2 - L_1| = 0$ y $L_2 = L_1$.
+\end{proof}
+
+
+\begin{define}
+	Sabiendo que una sucesión $\{ a_n\}_n \subseteq \mathbb{R}$ converge a un único valor $L$, llamamos a este valor \textbf{límite de la sucesión $a_n$}, y lo denotamos como
+	$\lim_{n\rightarrow +\infty} a_n = L$ o de manera resumida $\lim_{n} a_n = L$.
+\end{define}
+
+
+\begin{define}
+	Si $\{ a_n\}_n \subseteq \mathbb{R}$ no converge a ningún valor $L\in\mathbb{R}$, podemos decir que $a_n$ es:
+	\begin{itemize}
+		\item
+		\textbf{Divergente a $+\infty$} si $\forall M \in \mathbb{R},\ \exists N \in \mathbb{N}$ tal que $a_n > M\ \forall n>N$.
+		
+		\item
+		\textbf{Divergente a $-\infty$} si $\forall M \in \mathbb{R},\ \exists N \in \mathbb{N}$ tal que $a_n < M\ \forall n>N$.
+		
+		\item
+		\textbf{Oscilante} si no converge ni diverge.
+	\end{itemize}
+\end{define}
+
+
+\begin{define}
+	Sea $\{ n_k\}_k \subseteq \mathbb{N}$ una sucesión estrictamente creciente de números naturales y $\{ a_n\}_n \subseteq \mathbb{R}$ una sucesión cualquiera de números reales.
+	Una \textbf{subsucesión de $a_n$} es una sucesión de la forma $\{ a_{n_k}\}_k \subseteq \mathbb{R}$.
+\end{define}
+
+\begin{theorem}[Aritmética de límites]
+	Sean $\{ a_n\}_n \subseteq \mathbb{R}$ y $\{ b_n\}_n \subseteq \mathbb{R}$ dos sucesiones cualesquiera convergentes a $L_a$ y $L_b$ respectivamente. Entonces:
+	\begin{itemize}
+		\item
+		Si $r \in \mathbb{R}$, entonces $\lim_{n\rightarrow +\infty} ra_n = rL_a$
+		\item
+		$\lim_{n\rightarrow +\infty} a_n + b_n = L_a + L_b$
+		\item
+		$\lim_{n\rightarrow +\infty} a_nb_n = L_aL_b$
+		\item
+		Si $b_n \neq 0\ \forall n \in \mathbb{N}$, entonces $\lim_{n\rightarrow +\infty} \frac{a_n}{b_n} = \frac{L_a}{L_b}$
+	\end{itemize}
+\end{theorem}
+
+\begin{proof}
+	Para el lector.
+\end{proof}
+
+\begin{theorem}[Teorema de Bolzano]
+	Sea $f:[a,b]\rightarrow \mathbb{R}$ una función continua en $[a,b]$. Si $f(a)f(b)<0$, entonces $\exists c \in (a,b)$ tal que $f(c)=0$.
+\end{theorem}
+
+\begin{theorem}[Teorema de Weierstrass de los valores extremos]
+	Sea $f:[a,b]\rightarrow \mathbb{R}$ una función continua en $[a,b]$. Entonces $\exists\ max_{[a,b]} f$ y $\exists\ min_{[a,b]} f$
+\end{theorem}
+
+\begin{theorem}[Teorema de Rolle]
+	Sea $f:[a,b]\rightarrow \mathbb{R}$ una función continua en $[a,b]$ y derivable en $(a,b)$. Si $f(a)=f(b)$ entonces $\exists c \in (a,b)$ tal que $f'(c) = 0$.
+\end{theorem}
+
+\begin{theorem}[Teorema del valor medio]
+	Sea $f:[a,b]\rightarrow \mathbb{R}$ una función continua en $[a,b]$. Si $c \in (min_{[a,b]} f, max_{[a,b]} f)$, entonces $\exists d \in [a,b]$ tal que $f(d) = c$.
+\end{theorem}
+	
+\end{document}

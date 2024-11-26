@@ -1,0 +1,1 @@
+This repository contains my open notes for the different math courses I have taken, and anything else I want to write. Right now, I'm moving over all the things I wrote previously, so there's nothing finished nor up-to-standard.

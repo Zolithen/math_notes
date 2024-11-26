@@ -1,0 +1,160 @@
+\documentclass{article}
+
+\usepackage[spanish]{babel}
+\usepackage{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[left=10pt,right=20pt,top=20pt,bottom=60pt]{geometry}
+
+\newtheorem{theorem}{Teorema}
+\newtheorem{prop}{Proposición}
+\newtheorem{axiom}{Axioma}
+\newtheorem{definition}{Definición}
+
+\author{NyKi}
+\date{Diciembre 2024}
+
+\begin{document}
+
+\section{Introducción a los conjuntos numéricos}
+
+Sea $\mathbb{N}$ un conjunto con un elemento que denominamos 1. Ahora, para todo elemento $n$ de $\mathbb{N}$ añadimos a $\mathbb{N}$ el sucesor, $S(n)$ o $n+1$. Esto da un conjunto infinito, los \textbf{números naturales}. En este conjunto tenemos el principio de inducción:
+
+\begin{axiom}[Principio de inducción en $\mathbb{N}$]
+Sea $S \subseteq \mathbb{N}$. Si $S$ satisface las siguientes 2 condiciones, entonces $S = \mathbb{N}$:
+\begin{itemize}
+\item
+$1 \in S$
+\item
+$\forall n \in S \ n+1 \in S$
+\end{itemize}
+\end{axiom}
+
+Este principio es muy útil para probar cosas sobre $\mathbb{N}$, por ejemplo la forma cerrada de una sucesión. En $\mathbb{N}$ también podemos definir algo denominado \textbf{orden total}, que es una relación binaria  $\leq$ que sigue los siguientes axiomas:
+\begin{axiom}[Axiomas de orden total]
+$\forall a,b,c \in \mathbb{N}$
+\begin{enumerate}
+	\item
+	$a \leq a$ (Reflexividad)
+	\item
+	$a \leq b$ y $b \leq c$ implica $a \leq c$ (Transitivdad)
+	\item
+	$a \leq b$ y $b \leq a$ implica $a = b$ (Antisimetría)
+	\item
+	$a \leq b$ o $b \leq a$ (Totalidad)
+\end{enumerate}
+\end{axiom}
+Con este orden total definido, podemos reformular el principio de inducción como:
+
+\begin{axiom}[Principio de buena ordenación en $\mathbb{N}$]
+\label{ax_wellordering}
+$\forall S \subseteq \mathbb{N}\ S\neq \emptyset,\exists n \in S\ |\ \forall x \in S, n\leq x$. Es decir, todo subconjunto de los números naturales tiene mínimo.
+\end{axiom}
+
+Estas dos formulaciones son equivalentes.
+Los números naturales además cumplen los siguientes axiomas algebraicos:
+
+\begin{axiom}[Axiomas de semianillo unitario ordenado]
+\label{ax_usemiring}
+$\forall a,b,c \in \mathbb{N}$:
+\begin{enumerate}
+	\item
+	$(a+b)+c=a+(b+c)$ (Asociatividad de la suma)
+	\item
+	$a+b=b+a$ (Conmutatividad de la suma)
+	\item
+	$(a*b)*c=a*(b*c)$ (Asociatividad de la multiplicación)
+	\item
+	$a*b=b*a$ (Conmutatividad de la multiplicación)
+	\item
+	$a*(b+c) = a*b + a*c$ (Distributividad de la multiplicación sobre la suma)
+	\item
+	$\exists\ 1 \in \mathbb{N}\ |\ \forall n \in \mathbb{N},1*n = n$ (Elemento neutro del producto)
+	\item
+	$a \leq b \ \Rightarrow \ a+c\leq b+c$ (Compatibilidad del orden con la suma)
+	\item
+	Si $c\geq 0 $ (que es trivial en $\mathbb{N}$), entonces $a \leq b\ \Rightarrow \ ac \leq bc $ (Compatibilidad del orden con el producto)
+\end{enumerate}
+\end{axiom}
+
+Estos axiomas son particularmente débiles. Por ejemplo, para la ecuación $x + 2 = 4$ obviamente $x = 2$, pero no existe ninguna forma de probarlo fácilmente, cuando la existencia de inversos para cada número ayudaría inmensamente. Además, ecuaciones como $x + 4 = 2$ no tienen solución en $\mathbb{N}$. Por eso definimos un nuevo conjunto denominado $\mathbb{Z}$, los \textbf{números enteros}:
+
+\begin{definition}[Números enteros]
+$\mathbb{Z} = \mathbb{N} \cup \{0\} \cup \{-n\ \forall n \in \mathbb{N} \}$ donde $0$ denota la identidad para la suma y $-n$ el inverso para la suma de $n$. 
+\end{definition}
+
+Estos números, ademas de los \textit{Axiomas \ref{ax_usemiring}}, cumplen los siguientes axiomas:
+
+\begin{axiom}[Axiomas adicionales para $\mathbb{Z}$]\ 
+\label{ax_additionalz}
+\begin{enumerate}
+	\item
+	$\exists\ 0 \in \mathbb{Z}\ |\ \forall n \in \mathbb{N},0+n = n$ (Elemento neutro de la suma)
+	\item
+	$\forall n \in \mathbb{Z},\exists -n \in \mathbb{z}\ |\ n+(-n)=0$ (Existencia del elemento inverso para la suma)
+\end{enumerate}
+\end{axiom}
+Con estos axiomas, se dice que $(\mathbb{Z}, +)$ es un grupo conmutativo y que $(\mathbb{Z}, +, *)$ es un anillo conmutativo. A cambio de estos axiomas algebraicos, perdemos el principio de inducción en los números enteros, pero mantenemos una versión del principio de buena ordenación:
+
+\begin{axiom}[Principio de buena ordenación de subconjuntos minorados de $\mathbb{Z}$]\ 
+$\forall S \subseteq \mathbb{Z}\ S \neq \emptyset$ si $\exists n \in \mathbb{Z}\ |\ \forall x \in S,n\leq x$ entonces $\exists m \in S\ |\ \forall x \in S,m\leq x$. Es decir, todo subconjunto no vacío con cota inferior tiene un elemento mínimo.
+\end{axiom}
+
+Este axioma para $\mathbb{Z}$ implica el \textit{Axioma \ref{ax_wellordering}} para los naturales.
+El conjunto de los números enteros aún tiene unos cuantos problemas. Por ejemplo, es imposible resolver la ecuación $2x=1$ para $x\in \mathbb{Z}$. Por eso, podemos definir otro conjunto de números construidos sobre los números enteros, los \textbf{números racionales}, denotados por $\mathbb{Q}$:
+
+\begin{definition}[Números racionales]
+$\mathbb{Q} = \{ p/{q},p\in \mathbb{Z},q\in \mathbb{N}\}$
+\end{definition}
+
+Aparte de cumplir los \textit{Axiomas \ref{ax_usemiring} y \ref{ax_additionalz}}, $\mathbb{Q}$ cumple:
+
+\begin{axiom}[Axioma algebraico adicional para $\mathbb{Q}$]\ %fuck latex
+\begin{enumerate}
+	\item
+	$\forall q \in \mathbb{Q}\ q \neq 0, \exists\ 1/q \in \mathbb{Q}\ |\ q * (1/q) = 1$ (Existencia del inverso de elementos no nulos para el producto)
+\end{enumerate}
+\end{axiom}
+
+Esto hace de $\mathbb{Q}$ un cuerpo conmutativo. $\mathbb{Q}$ no tiene ni principio de buena ordenación, ni de buena ordenación de subconjuntos minorados (por ejemplo, el conjunto $S=\{ 1/n\ \forall n \in \mathbb{N}\}\subseteq \mathbb{Q}$ esta acotado inferiormente pero no tiene mínimo). Esto nos quita una vía de demostrar, pero "quitamos" más agujeros que existían en los números enteros:
+
+\begin{theorem}[Densidad de $\mathbb{Q}$]
+$\forall a,b \in \mathbb{Q}\ a \neq b,\ \exists r \in \mathbb{Q}\ |\ a<r<b$. Es decir, entre dos números racionales distintos siempre vamos a poder encontrar otro número racional. De hecho, vamos a poder encontrar infinitos aplicando el teorema cuantas veces como queramos.
+\end{theorem}
+\begin{proof}
+Dados $a<b \in \mathbb{Q}$: $a = (a+a)/2 < (a+b)/2 < (b+b)/2 = b$. $(a+b)/2$ es el número que buscamos. 
+\end{proof}
+De este teorema podemos deducir que no existe una función sucesora en $\mathbb{Q}$, y por tanto no tenemos alternativa a inducción. Pero este teorema no es suficiente para que $\mathbb{Q}$ sea el conjunto numérico perfecto para hacer análisis. Aún existen agujeros, como demuestra el siguiente ejemplo:
+
+\begin{prop}\label{prop_2_irrational}
+No existe ningún $a \in \mathbb{Q}$ tal que $a^{2} = 2$.
+\end{prop}
+\begin{proof}
+	Supongamos que $\exists a \in \mathbb{Q}$ tal que $a^2 = 2$. Al ser un número racional, lo podemos escribir de la forma $\frac{p}{q}$ con $p\in \mathbb{Z},q\in \mathbb{N}$ y $\gcd(p,q) = 1$ (donde $\gcd$ denota el máximo común divisor). Por tanto, tenemos la expresión $\frac{p^2}{q^2} = 2$, de donde deducimos que $p^2 = 2q^2$ y debido a que $2$ es un número primo, que $2|p$ o más concretamente $p=2k$ para algún $k \in \mathbb{Z}$. Substituyendo otra vez obtenemos $4k^2 = 2q^2$ y deducimos $2k^2 = q^2$, que de forma similar nos deja ver que $q$ es también múltiplo de 2. Pero inicialmente hemos asumido que el máximo común divisor de $p$ y $q$ es $1<2$ y no mayor o igual a $2$, por lo cual hemos encontrado una contradicción y la proposición es cierta.
+\end{proof}
+Esto es problemático, ya que intuitivamente deberíamos de poder encontrar un valor que cumpla $a^2 = 2$. Para poder arreglar este problema necesitamos una definición primero:
+
+\begin{definition}[Supremo e ínfimo]
+	Sea $A$ un subconjunto numérico acotado superiormente. Si existe la mínima cota superior (es decir, un número $\omega$ que sea cota superior del conjunto y tal que cualquier otra cota superior $\alpha$ sea $\omega \leq \alpha$) esta será única y la llamaremos \textbf{supremo}. Dualmente, a la máxima cota inferior en un subconjunto acotado inferiormente la llamaremos \textbf{ínfimo}. Se denotan $\sup A$ y $\inf A$.
+\end{definition}
+La definición parece ajena al ejemplo de ''agujero'' que hemos dado en la \textit{Proposición \ref{prop_2_irrational}}, pero es la más general que engloba todos los casos que necesitamos. El subconjunto $A\subseteq \mathbb{Q}$ definido como $A = \{a\in \mathbb{Q}\ |\ a^2 \leq 2\}$ esta acotado superiormente por $2$ y es posible demostrar que si existiera un supremo, este número sería tal que su cuadrado fuera igual a $2$, pero en $\mathbb{Q}$ no existe. Por tanto, podemos pensar que ''añadiendo todos los supremos'' completaríamos $\mathbb{Q}$. Este es el procedimiento que seguimos:
+\begin{axiom}[Axioma del supremo] \label{ax_supr}
+	Todo subconjunto acotado superiormente tiene supremo.
+\end{axiom}
+\begin{definition}[Números reales]
+	Al conjunto $\mathbb{R}$ con $\mathbb{Q} \subseteq \mathbb{R}$ y que cumpla el \textit{Axioma \ref{ax_supr}} lo llamamos los \textbf{números reales}.
+\end{definition}
+Este conjunto no es único, pero si es único bajo isomorfismos, que viene a decir que cualesquiera dos conjuntos con estas propiedades tienen la misma estructura y por tanto no hace falta distinguirlos.
+
+\section{Sucesiones de números reales}
+
+\section{Funciones, límites y continuidad}
+
+\section{Derivabilidad de funciones reales}
+
+\end{document}

@@ -1,0 +1,236 @@
+\documentclass[a4paper]{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{bm}
+\usepackage[left=10pt,right=20pt,top=20pt,bottom=60pt]{geometry}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{lemma}[section]
+
+\author{NyKi}
+\title{Summary of Basic Topology}
+\date{September 2024-January 2025}
+
+\begin{document}
+\maketitle
+\tableofcontents
+%%Thing
+\section{Preface}
+This file contains my notes for our \textit{Basic Topology} class at my university. I have decided to add more stuff I find interesting, but there's no distinction between what comes from class and what comes from my own research. Only proofs I find interesting are provided, and the notes are all over the place right now; I still need to sort them properly into chapters.
+\section{Basic point set topology}
+This is an introduction to topological concepts.
+\begin{itemize}
+
+\item
+\textbf{Topological space: }A topological space is a pair $(X,T)$ where $X$ is a set and $T$ is a family of subsets of $X$ where:
+\begin{enumerate}
+\item
+$X,\emptyset\ \in T$
+\item
+Any arbitrary union of elements of $T$ is again in $T$.
+\item
+Any finite intersection of elements of $T$ is again in $T$.
+\end{enumerate}
+Sets in T are called \textbf{open}. Sets which their complement is in $T$ are called \textbf{closed}. We usually call $X$ the topological space when we know the topology we are working with. Here, letters like $X$ and $Y$ will denote topological spaces. We also normally call an open subset that has a point $x$ a \textbf{neighborhood} of $x$.
+
+\item
+\textbf{Alternate definition of a topological space: }A topological space is a pair $(X, T)$ where $X$ is a set and $T$ is a family of subsets of $X$ where:
+\begin{enumerate}
+\item
+$X,\emptyset\ \in T$
+\item
+Any finite union of elements of $T$ is again in $T$.
+\item
+Any arbitrary intersection of elements of $T$ is again in $T$.
+\end{enumerate}
+The sets in $T$ are called closed. Both of the definitions given are practically equivalent. People tend to use the open set definition of a topology, but these one gives us some "rules" to manipulate closed sets whenever we use the open set definition. There also exist multiple other definitions for a topology, like Kuratowski's closure operator definition, but those are equivalent to the first one in here and so are not considered.
+
+\item
+\textbf{Directed set: }A partially preordered set X is called directed whenever for every $a,b\in X$ we have that there exists a $c\in X$ such that $a\leq c$ and $b\leq c$.
+
+\item
+\textbf{Nets: }A net is a function from a directed set to a topological space. They are generalizations of sequences, and they are usually denoted by $\{x_{a}\}_{a\in A}$ where $A$ is a directed set.
+
+\item
+\textbf{General convergence: }A net $\{x_{a}\}_{a\in A}$  in a topological space $X$ converges to a point $x$ if for every neighborhood $U$ of $x$ there exists an element $b\in A$ such that for all $a\geq b$ we have $x_{a}\in U$. Note that in general spaces a net may converge to multiple points.
+
+\item
+\textbf{Limit point: }A point $x$ is called a limit point of a subset $A\subseteq X$ if every neighborhood of $x$ intersects $A$ at a point different from $x$. This is equivalent to there existing a net fully inside $A$ that converges to $x$.
+
+\item
+\textbf{Closure of a set: }Let $A\subseteq X$ be a subset. We define it's closure $\bar{A}$ as the smallest closed set that contains $A$. Equivalently, it's the intersection of all closed subsets of $X$ that contain $A$.
+
+\begin{theorem}[Characterization of closure]
+Let $A\subseteq X$ and $A'$ be the set of its limit points. Then $\bar{A}=A\cup A'$.
+\end{theorem}
+From this theorem we can get the result that $x\in \bar{A}$ iff every neighborhood of $x$ intersects $A$.
+
+\item
+$\boldsymbol{T_{1}}$\textbf{ spaces: }A topological space $X$ is called a $\boldsymbol{T_{1}}$\textbf{ space} if every subset of $X$ that contains a finite amount of points is closed.
+
+\item
+\textbf{Hausdorff spaces: }A topological space $X$ is called a \textbf{Hausdorff space} if every 2 different points $x$ and $y$ can be separated by neighborhoods. That is, if there exists neighborhoods of $x$ and $y$ respectively that are disjoint whenever $x\neq y$.
+
+\begin{theorem}[Unique convergence]
+If a net $x_{a}$ converges in a Hausdorff space, then it converges to an unique point.
+\end{theorem}
+This explains to us why Hausdorff spaces are interesting to study.
+
+\item
+\textbf{Base of a topology: }A base for a topology over a set $X$ is family of subsets B where:
+\begin{enumerate}
+\item
+The union of all sets in B is equal to X.
+\item
+For every $x \in X$, if $x \in B_{1} \cap B_{2}$ for some $B_{1},B_{2} \in B$ then there exists a $B_{3} \in B$ such that $x \in B_{3} \subset B_{1} \cap B_{2}$
+\end{enumerate}
+A subset from the base is called a \textbf{basic element}. A basic element that contains a point $x$ is called a basic neighborhood.\\
+From here, we can generate the topology T 2 equivalent ways:
+\begin{enumerate}
+
+\item
+A subset $U$ of $X$ is called open iff for every $x \in U$ there exists a $B_{0} \in B$ such that $x \in B_{0} \subset U$.
+\item
+The topology T is the collection of all unions of subsets in B.
+\end{enumerate}
+\begin{theorem}[Going from topology to base]
+Let $X$ be a topological space, and $C$ a collection of open subsets from $X$. If we have that for every open subset $U$ of $X$ and $x \in U$ there exists an element $C_{0} \in C$ such that $x \in C_{0} \subset U$ then $C$ is a base for the topology $T$.
+\end{theorem}
+
+\begin{theorem}[Comparison of topologies from bases]
+Let $B_{1},B_{2}$ be bases for the topologies $T_{1},T_{2}$ respectively. The following are equivalent:
+\begin{enumerate}
+\item
+$T_{1} \subset T_{2}$
+\item
+For every $x$ and subsets $b_{1} \in B_{1}$ that have $x \in b_{1}$ there exists a $b_{2} \in B_{2}$ such that $x \in b_{2} \subset b_{1}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Closure and base]
+Let $A\subseteq X$ and the topology on $X$ be given by a base. Then $x\in\bar{A}$ iff every basic neighborhood of $x$ intersects $A$.
+\end{theorem}
+
+\item
+\textbf{Subbase of a topology: }A subbase $\delta$ for a topology over $X$ is a set of subsets such that their union is equal to $X$. We then get the topology generated by $\delta$ by grabbing all the unions of finite intersections of sets in $\delta$.
+
+\item
+\textbf{Subspace topology: }Let $X$ be a topological space and let $Y\subseteq X$. Then the set $T_{Y}=\{Y\cap U\ \forall U\in T \}$ is a topology over $Y$ called the \textbf{subspace topology}. We say that $Y$ \textbf{inherits} the topology from $X$.
+
+\begin{theorem}[Open sets in subspaces relative to the super space]
+Let $Y$ be an open subset in $X$. If $U$ is an open subset of $Y$ with the inherited topology from $X$ then $U$ is open in $X$ too.
+\end{theorem}
+If we change "open" to "closed" in that theorem it would still work.
+
+\begin{theorem}[Closed sets in subspaces]
+Let $Y$ be a subspace in $X$. Then a subset $A\subseteq Y$ is closed iff it is the intersection of a closed set in $X$ with $Y$.
+\end{theorem}
+
+\begin{theorem}[Closure in subspaces]
+Let $Y$ be a subspace in $X$ and $A\subseteq Y$. Then $\bar{A}$ in $Y$ is equal to $\bar{A}\cap Y$ where this closure is in $X$.
+\end{theorem}
+We have to be careful whenever we are talking about an space and a subspace of it: a set may be closed or open in the subspace but not be in $X$, or viceversa.
+
+\begin{theorem}[Subspaces of Hausdorff spaces]
+If $X$ is a Hausdorff space, then any subspace of it is a Hausdorff space.
+\end{theorem}
+
+\item
+\textbf{Ordered topology: }Let $(X, <)$ be an ordered set, and let $B$ be the collection of all open intervals of $X$ (the ones of the form $(a, b)= \{x|\ a<x<b\}$). If $X$ has a minimum add to $B$ intervals of the form $[a_{0}, b)$ for $a_{0}$ the minimum and $b$ any other element of the set and finally if $X$ has maximum, those intervals of the form $(a, b_{0}]$ where $b_{0}$ is the maximum. This forms a base for the \textbf{ordered topology} over a set. We can get a subbase for this topology by grabbing all \textbf{rays} in the set (intervals of the form $(-\infty, a)$ and $(a, +\infty)$ for a in the set).
+
+\begin{theorem}[Subspaces of ordered spaces]
+Let $X$ be an ordered space and $A$ be a convex subset of $X$ (that means that for every $a,b\in Y$ we have that $(a,b)\in Y$). Then, the subspace topology inherited from $X$ to $Y$ is the same as the ordered topology applied to $Y$.
+\end{theorem}
+
+\item
+\textbf{Box and product topology: }Let $(X_{i})_{i\in I}$ be an arbitrary family of topological spaces. We can put a topology over ${\displaystyle \prod_{i\in I}X_{i}}$ two inequivalent ways:
+\begin{enumerate}
+\item
+Take as a base every set ${\displaystyle \prod_{i\in I}U_{i}}$ where $U_{i}$ is open in $X_{i}$ for each $i\in I$. This topology is called the \textbf{box topology}.
+\item
+Take as a base every set ${\displaystyle \prod_{i\in I}U_{i}}$ where $U_{i}$ is open in $X_{i}$ for a finite amount of $i\in I$ and for every other $i$ let $U_{i}=X_{i}$. This topology is called the \textbf{product topology}.
+\end{enumerate}
+Both topologies are equal for finite products. For infinite products however, it's much more convenient to use the product topology instead of the box topology, and thus when we have a product of spaces we'll assume it has the product topology. In the infinite setting, both topologies are comparable and the box topology has more open subsets than the product topology.\\
+If the topology on the original sets is given as a base, we can get bases for our product and box topology as follows:
+\begin{enumerate}
+\item
+Take as a base every set ${\displaystyle \prod_{i\in I}B_{i}}$ where $B_{i}$ is basic in $X_{i}$ for each $i\in I$. This is a base for the box topology.
+\item
+Take as a base every set ${\displaystyle \prod_{i\in I}B_{i}}$ where $B_{i}$ is basic in $X_{i}$ for a finite amount of $i\in I$ and for every other $i$ let $B_{i}=X_{i}$. This is a base for the product topology.
+\end{enumerate}
+
+\begin{theorem}[Subspaces of product and box spaces]
+If $A_{i}$ is a subspace of $X_{i}$ for every $i\in I$ then ${\displaystyle \prod_{i\in I}A_{i} }$ is a subspace of ${\displaystyle \prod_{i\in I}X_{i} }$ if both are given the box topology or the product topology.
+\end{theorem}
+
+\begin{theorem}[Product of Hausdorff spaces]
+If $X_{i}$ is Hausdorff for every $i$ then ${\displaystyle \prod_{i\in I}X_{i} }$ is Hausdorff in both the box and product topologies.
+\end{theorem}
+
+\item
+\textbf{Metric spaces: }Given a set $X$ and a metric $d$ on $X$, we can define a topology called the \textbf{metric topology} by taking as basic elements all the open balls of points of $X$ with radius bigger than 0. Then, a metric space is a set with this topology equipped with the metric that gives that topology. An space is called \textbf{metrizable} if there exists some metric on it's underlying set that gives the same topology.
+
+\begin{theorem}[Bounded distance]
+Let $X$ be a metric space equipped with the metric $d$. We define the metric $\bar{d}(x,y) = min (d(x,y), 1)$, which we call bounded metric for $d$. Then, $\bar{d}$ induces the same topology as $d$.
+\end{theorem}
+
+\begin{theorem}[Comparison of metric topologies]
+Let $d$ and $d'$ be 2 metrics over a set $X$, and call the topologies that they generate $T$ and $T'$ respectively. Then, $T\subseteq T'$ iff for all $x\in X$ and $\varepsilon > 0$ there exists some $\delta > 0$ such that $B_{d'}(x,\delta)\subseteq B_{d}(x, \varepsilon)$
+\end{theorem}
+
+\begin{theorem}[Hausdorff condition in metric spaces]
+Every metric space is Hausdorff.
+\end{theorem}
+
+\begin{theorem}[Subspaces of metric spaces]
+Let $Y$ be a subset of a metric space $X$. Then $Y$ given the metric topology from the distance in $X$ is a subspace of $X$.
+\end{theorem}
+
+\begin{theorem}[Metrizability of products]
+Let $(X_{i})_{i\in I}$ be a family of metric spaces over a countable index set. Then the product ${\displaystyle \prod_{i\in I}X_{i} }$ is metrizable. Moreover, there exists a metric that induces the same topology as the product topology.
+\end{theorem}
+
+\item
+\textbf{Continuous functions: }A function between topological spaces $f:X\rightarrow Y$ is called continuous if any of the following equivalent conditions hold:
+\begin{enumerate}
+\item
+For every open set $V$ in $Y$ the preimage of $V$ ($f^{-1}(V)$) is open in $X$.
+\item
+For every closed set $V$ in $Y$ the preimage of $V$ is closed in $X$.
+\item
+If the topology on $Y$ is given by a base, the preimage of any basic element is an open set in $X$.
+\item
+For every subset $A$ of $X$, we have $f(\bar{A})\subseteq \overline{f(A)}$
+\end{enumerate}
+We also have local conditions. Each of the above is equivalent to these holding for every point in the space, and a local condition holding for a point implies all the other conditions. For a point $x\in X$:
+\begin{enumerate}
+\item
+For every neighborhood $V$ of $f(x)$ there exist a neighborhood $U$ of $x$ such that $f(U)\subseteq V$.
+\item
+For every net $x_{i}$ that converges to $x$ we have that the net $f(x_{i})$ converges to $f(x)$.
+\end{enumerate}
+
+\begin{theorem}[Operations on continuous functions]
+Let $X,Y,Z$ be topological spaces:
+\begin{enumerate}
+\item
+Let $f:X\rightarrow Y$ and $g:Y\rightarrow Z$ be continuous functions. Then $g\circ f$ is continuous.
+\item
+Let $f:X\rightarrow Y$ be continuous and let $A$ be a subspace of $X$. Then the restriction of $f$ to $A$ is continuous and denoted by $f|_{A}$.
+\item
+Let $f:X\rightarrow Y$ and let $B$ be a subspace of $Y$ containing $f(X)$. Then the restriction of $f$ to the range $B$ is continuous.
+\item
+Let $X=A\cup B$ where $A$ and $B$ are closed and $f:A\rightarrow Y$ and $g:B\rightarrow Y$ be two continuous functions that agree on $A\cap B$ (that means $\forall x \in A\cap B\ f(x)=g(x)$) then the function $h$ defined on $X$ by $h(x)=f(x)=g(x)\ \forall x \in A\cap B$, $h(y)=f(y)\ \forall y \in A-(A\cap B)$ and $h(z)=g(z)\ \forall z \in B-(A\cap B)$ is continuous.
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Continuous functions on product spaces]
+Let $f:A\rightarrow {\displaystyle \prod_{i\in I}X_{i} }$ be a function between topological spaces. We can see that $f(x)=(f_{i}(x))_{i\in I}$ for functions $f_{i}:A\rightarrow X_{i}$. Then, in the product topology $f$ is continuous iff $f_{i}$ is continuous for every $i$.
+\end{theorem}
+
+\item
+\textbf{Homeomorphisms: }A continuous function is called a homeomorphism if it's bijective and it's inverse is also continuous. If $f:X\rightarrow Y$ is continuous and injective and the function obtained by restricting the range to $f(X)$ is a homeomorphism then $f$ is called an \textbf{embedding}.
+
+\end{itemize}
+
+\end{document}
