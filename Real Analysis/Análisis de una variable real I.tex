@@ -13,8 +13,10 @@
 
 \newtheorem{theorem}{Teorema}
 \newtheorem{prop}{Proposición}
+\newtheorem{cor}{Corolario}
 \newtheorem{axiom}{Axioma}
-\newtheorem{definition}{Definición}
+\newtheorem{define}{Definición}
+\newtheorem{note}{Nota}
 
 \author{NyKi}
 \date{Diciembre 2024}
@@ -22,6 +24,12 @@
 \begin{document}
 
 \section{Introducción a los conjuntos numéricos}
+
+\subsection{Construcciones}
+
+\begin{note}
+Las definiciones y construcciones de los conjuntos numéricos estándares aquí no se dan de una forma muy rigurosa. Su construcción es más propia de una asignatura de fundamentos matemáticos, y ahora mismo me da mucha pereza escribir todo.
+\end{note}
 
 Sea $\mathbb{N}$ un conjunto con un elemento que denominamos 1. Ahora, para todo elemento $n$ de $\mathbb{N}$ añadimos a $\mathbb{N}$ el sucesor, $S(n)$ o $n+1$. Esto da un conjunto infinito, los \textbf{números naturales}. En este conjunto tenemos el principio de inducción:
 
@@ -49,6 +57,26 @@ $\forall a,b,c \in \mathbb{N}$
 	$a \leq b$ o $b \leq a$ (Totalidad)
 \end{enumerate}
 \end{axiom}
+
+Cuando tenemos un orden parcial o total definido sobre un conjunto, podemos hablar de cotas y máximos y mínimos:
+\begin{define}
+Sea $S \subseteq X$ donde $X$ es un conjunto con un orden parcial o total $\leq$. $S$ es...
+\begin{itemize}
+\item
+\textbf{Acotado superiormente} si $\exists r \in X$ tal que $x \leq r\ \forall x \in S$.
+\item
+\textbf{Acotado inferiormente} si $\exists r \in X$ tal que $r \leq x\ \forall x \in S$.
+\end{itemize}
+Y decimos que un elemento $r \in S$ es...
+\begin{itemize}
+\item
+Un \textbf{máximo} si $\forall x \in S\ x\leq r$.
+\item
+Un \textbf{mínimo} si $\forall x \in S\ r\leq x$.
+\end{itemize}
+\end{define}
+
+
 Con este orden total definido, podemos reformular el principio de inducción como:
 
 \begin{axiom}[Principio de buena ordenación en $\mathbb{N}$]
@@ -84,9 +112,9 @@ $\forall a,b,c \in \mathbb{N}$:
 
 Estos axiomas son particularmente débiles. Por ejemplo, para la ecuación $x + 2 = 4$ obviamente $x = 2$, pero no existe ninguna forma de probarlo fácilmente, cuando la existencia de inversos para cada número ayudaría inmensamente. Además, ecuaciones como $x + 4 = 2$ no tienen solución en $\mathbb{N}$. Por eso definimos un nuevo conjunto denominado $\mathbb{Z}$, los \textbf{números enteros}:
 
-\begin{definition}[Números enteros]
+\begin{define}[Números enteros]
 $\mathbb{Z} = \mathbb{N} \cup \{0\} \cup \{-n\ \forall n \in \mathbb{N} \}$ donde $0$ denota la identidad para la suma y $-n$ el inverso para la suma de $n$. 
-\end{definition}
+\end{define}
 
 Estos números, ademas de los \textit{Axiomas \ref{ax_usemiring}}, cumplen los siguientes axiomas:
 
@@ -99,7 +127,7 @@ Estos números, ademas de los \textit{Axiomas \ref{ax_usemiring}}, cumplen los s
 	$\forall n \in \mathbb{Z},\exists -n \in \mathbb{z}\ |\ n+(-n)=0$ (Existencia del elemento inverso para la suma)
 \end{enumerate}
 \end{axiom}
-Con estos axiomas, se dice que $(\mathbb{Z}, +)$ es un grupo conmutativo y que $(\mathbb{Z}, +, *)$ es un anillo conmutativo. A cambio de estos axiomas algebraicos, perdemos el principio de inducción en los números enteros, pero mantenemos una versión del principio de buena ordenación:
+Con estos axiomas, se dice que $(\mathbb{Z}, +)$ es un grupo conmutativo y que $(\mathbb{Z}, +, *)$ es un anillo conmutativo. A cambio de estos axiomas algebraicos, perdemos el principio de inducción en los números enteros y la existencia de un elemento mínimo, pero mantenemos una versión del principio de buena ordenación:
 
 \begin{axiom}[Principio de buena ordenación de subconjuntos minorados de $\mathbb{Z}$]\ 
 $\forall S \subseteq \mathbb{Z}\ S \neq \emptyset$ si $\exists n \in \mathbb{Z}\ |\ \forall x \in S,n\leq x$ entonces $\exists m \in S\ |\ \forall x \in S,m\leq x$. Es decir, todo subconjunto no vacío con cota inferior tiene un elemento mínimo.
@@ -108,9 +136,9 @@ $\forall S \subseteq \mathbb{Z}\ S \neq \emptyset$ si $\exists n \in \mathbb{Z}\
 Este axioma para $\mathbb{Z}$ implica el \textit{Axioma \ref{ax_wellordering}} para los naturales.
 El conjunto de los números enteros aún tiene unos cuantos problemas. Por ejemplo, es imposible resolver la ecuación $2x=1$ para $x\in \mathbb{Z}$. Por eso, podemos definir otro conjunto de números construidos sobre los números enteros, los \textbf{números racionales}, denotados por $\mathbb{Q}$:
 
-\begin{definition}[Números racionales]
+\begin{define}[Números racionales]
 $\mathbb{Q} = \{ p/{q},p\in \mathbb{Z},q\in \mathbb{N}\}$
-\end{definition}
+\end{define}
 
 Aparte de cumplir los \textit{Axiomas \ref{ax_usemiring} y \ref{ax_additionalz}}, $\mathbb{Q}$ cumple:
 
@@ -139,19 +167,184 @@ No existe ningún $a \in \mathbb{Q}$ tal que $a^{2} = 2$.
 \end{proof}
 Esto es problemático, ya que intuitivamente deberíamos de poder encontrar un valor que cumpla $a^2 = 2$. Para poder arreglar este problema necesitamos una definición primero:
 
-\begin{definition}[Supremo e ínfimo]
+\begin{define}[Supremo e ínfimo]
 	Sea $A$ un subconjunto numérico acotado superiormente. Si existe la mínima cota superior (es decir, un número $\omega$ que sea cota superior del conjunto y tal que cualquier otra cota superior $\alpha$ sea $\omega \leq \alpha$) esta será única y la llamaremos \textbf{supremo}. Dualmente, a la máxima cota inferior en un subconjunto acotado inferiormente la llamaremos \textbf{ínfimo}. Se denotan $\sup A$ y $\inf A$.
-\end{definition}
+\end{define}
 La definición parece ajena al ejemplo de ''agujero'' que hemos dado en la \textit{Proposición \ref{prop_2_irrational}}, pero es la más general que engloba todos los casos que necesitamos. El subconjunto $A\subseteq \mathbb{Q}$ definido como $A = \{a\in \mathbb{Q}\ |\ a^2 \leq 2\}$ esta acotado superiormente por $2$ y es posible demostrar que si existiera un supremo, este número sería tal que su cuadrado fuera igual a $2$, pero en $\mathbb{Q}$ no existe. Por tanto, podemos pensar que ''añadiendo todos los supremos'' completaríamos $\mathbb{Q}$. Este es el procedimiento que seguimos:
 \begin{axiom}[Axioma del supremo] \label{ax_supr}
 	Todo subconjunto acotado superiormente tiene supremo.
 \end{axiom}
-\begin{definition}[Números reales]
+\begin{define}[Números reales]
 	Al conjunto $\mathbb{R}$ con $\mathbb{Q} \subseteq \mathbb{R}$ y que cumpla el \textit{Axioma \ref{ax_supr}} lo llamamos los \textbf{números reales}.
-\end{definition}
+\end{define}
 Este conjunto no es único, pero si es único bajo isomorfismos, que viene a decir que cualesquiera dos conjuntos con estas propiedades tienen la misma estructura y por tanto no hace falta distinguirlos.
 
+\subsection{Los números reales}
+Empezamos el estudio de los números reales introduciendo algunos conceptos.
+\begin{define}
+El conjunto de los \textbf{irracionales} es $\mathbb{I} = \mathbb{R} \smallsetminus \mathbb{Q}$. Es decir, los números reales que no se pueden expresar como cociente de dos números enteros.
+\end{define}
+
+\begin{define}[Valor absoluto]
+Dado $x \in \mathbb{R}$ definimos el \textbf{valor absoluto} como:
+\begin{equation}
+|x| = \left\lbrace
+\begin{array}{l}
+x\ \text{si}\ x \geq 0 \\
+\\
+-x\ \text{si}\ x < 0
+\end{array}
+\right.
+\end{equation}
+\end{define}
+El valor absoluto es de los conceptos mas fundamentales del análisis real. Geométricamente, si dibujamos el valor $x \in \mathbb{R}$ en la recta real, el valor absoluto da la longitud del segmento que va desde $x$ hasta $0$. Geométricamente, la distancia entre dos números reales en la recta real viene dada por $d(x, y) = |x-y|$.
+\begin{prop}[Propiedades del valor absoluto]
+$\forall a,b \in \mathbb{R}$ tenemos:
+\begin{enumerate}
+\item
+$|-a| = |a|$
+\item
+$|ab| = |a||b|$
+\item
+La desigualdad triangular: $|a+b| \leq |a| + |b|$
+\item
+La desigualdad triangular inversa: $||a|-|b|| \leq |a-b|$
+\item
+Si $a\neq 0$ entonces $|\frac{1}{a}| = \frac{1}{|a|}$
+\end{enumerate}
+\end{prop}
+Usaremos mucho la desigualdad triangular. Cuando estudiemos sucesiones, nos será muy útil tener herramientas para relacionar los números naturales con los números reales.
+
+
+\begin{theorem}[Propiedad arquimediana]
+$\forall x,y \in \mathbb{R}$ tales que $x>0$ $\exists n \in \mathbb{N}$ con $nx>y$.
+\end{theorem}
+Podemos entender el teorema así: si tenemos una longitud muy pequeña siempre vamos a juntar muchas de ellas para poder formar una longitud grande.
+\begin{cor}
+El conjunto de los números naturales no está acotado superiormente.
+\end{cor}
+\begin{cor}
+Todo subconjunto no vacío de los números naturales que esté acotado superiormente tiene máximo y mínimo.
+\end{cor}
+
+\begin{theorem}[Existencia de la parte entera]
+$\forall x \in \mathbb{R}$ existe un único $k \in \mathbb{Z}$ tal que $k\leq x\leq k+1$.
+\end{theorem}
+\begin{define}[Parte entera]
+Dado $x \in \mathbb{R}$ definimos la \textbf{parte entera} como:
+\begin{equation}
+[x] = \sup \{k\in \mathbb{Z}\ |\ k\leq x\}
+\end{equation}
+Por el teorema anterior, este supremo siempre existe.
+\end{define}
+
+
+\begin{theorem}[Existencia de raíces]
+Sea $a \in \mathbb{R}$ cualquiera.
+\begin{enumerate}
+\item
+Para todo $n \in \mathbb{Z}$ impar existe un único $x\in \mathbb{R}$ tal que $x^n = a$.
+\item
+Si $a\geq 0$ entonces para todo $n \in \mathbb{Z}$ par distinto de $0$ existe un único $x\in \mathbb{R}$ con $x\geq 0$ tal que $x^n = a$.
+\end{enumerate}
+\end{theorem}
+
+
+
+
+
+
+
+\newpage
 \section{Sucesiones de números reales}
+\begin{define}
+	Una \textbf{sucesión} es una aplicación $a_n: \mathbb{N} \rightarrow \mathbb{R}$. El conjunto $\{a_n\}_n \subseteq \mathbb{R}$ es el conjunto imagen. Decimos que la sucesión
+	$\{a_n\}_n \subseteq \mathbb{R}$ es:
+	\begin{itemize}
+		\item
+		\textbf{Eventual creciente} si $\exists N \in \mathbb{N}$ tal que $a_m \geq a_n,\ \forall m>n\geq N$ con $n$ y $m$ naturales.
+		\item
+		\textbf{Eventual estrictamente creciente} si $\exists N \in \mathbb{N}$ tal que $a_m > a_n,\ \forall m>n\geq N$ con $n$ y $m$ naturales.
+		\item
+		\textbf{Eventual decreciente} si $\exists N \in \mathbb{N}$ tal que $a_m \leq a_n,\ \forall m>n\geq N$ con $n$ y $m$ naturales.
+		\item
+		\textbf{Eventual estrictamente decreciente} si $\exists N \in \mathbb{N}$ tal que $a_m < a_n,\ \forall m>n\geq N$ con $n$ y $m$ naturales.
+	\end{itemize}
+	Si $N = 1$ en cualquiera de estos casos, entonces quitamos ''eventual".
+\end{define}
+Nos interesa estudiar el comportamiento de la sucesión cuando $n$ se hace grande, es decir \textit{eventualmente}. Veremos que el comportamiento de $a_n$ cercano a $n = 1$ no importa
+en lo que a límite se refiere, solo el comportamiento eventual.
+
+
+\begin{define}
+	Sea $\{ a_n\}_n \subseteq \mathbb{R}$ una sucesión de números reales. Decimos que $a_n$ \textbf{converge} a $L$ y lo denotamos como $a_n \rightarrow_{n} L$ si y solo si 
+	$\forall \varepsilon > 0,\exists N \in \mathbb{N}$ tal que $|a_n - L| < \varepsilon$ para todo $n$ tal que $n \geq N$.
+\end{define}
+
+
+\begin{prop}[Unicidad del límite]
+	Sean $\{ a_n\}_n \subseteq \mathbb{R}$ convergente a $L_1$ y $L_2$. Entonces $L_1 = L_2$.
+\end{prop}
+\begin{proof}
+	Supongamos que $L_1$ y $L_2$ son dos límites de la sucesión $\{ a_n\}_n \subseteq \mathbb{R}$. Por tanto, dado un $\varepsilon > 0$, existe un $N \in \mathbb{N}$ 
+	tal que $|a_n - L_1| < \varepsilon/2$ y $|a_n - L_2| < \varepsilon/2\ $ $\forall n > N$ con $N=max\{n_1, n_2\}$, donde $n_1$ y $n_2$ son $N$ dado de la definición del límite para 
+	$L_1$ y $L_2$. Sumando ambas desigualdades y usando la desigualdad triangular, tenemos:
+	\begin{align*}
+		\varepsilon = \frac{\varepsilon}{2} + \frac{\varepsilon}{2} > |a_n - L_1| + |a_n - L_2| = |a_n - L_1| + |-a_n + L_2| \\ \geq |a_n - L_1 - a_n + L_2| = |L_2 - L_1|
+	\end{align*}
+	Como $\varepsilon$ es un número arbitrario mayor que 0, si asumimos que $|L_2 - L_1| \neq 0$, siempre vamos a poder encontrar un valor de $\varepsilon$ (por ejemplo, 
+	$\varepsilon = \frac{|L_2 - L_1|}{2} > 0$) mayor a 0 que contradiga $\varepsilon > |L_2 - L_1|$. Por tanto, $|L_2 - L_1| = 0$ y $L_2 = L_1$.
+\end{proof}
+
+
+\begin{define}
+	Sabiendo que una sucesión $\{ a_n\}_n \subseteq \mathbb{R}$ converge a un único valor $L$, llamamos a este valor \textbf{límite de la sucesión $a_n$}, y lo denotamos como
+	$\lim_{n\rightarrow +\infty} a_n = L$ o de manera resumida $\lim_{n} a_n = L$.
+\end{define}
+
+
+\begin{define}
+	Si $\{ a_n\}_n \subseteq \mathbb{R}$ no converge a ningún valor $L\in\mathbb{R}$, podemos decir que $a_n$ es:
+	\begin{itemize}
+		\item
+		\textbf{Divergente a $+\infty$} si $\forall M \in \mathbb{R},\ \exists N \in \mathbb{N}$ tal que $a_n > M\ \forall n>N$.
+		
+		\item
+		\textbf{Divergente a $-\infty$} si $\forall M \in \mathbb{R},\ \exists N \in \mathbb{N}$ tal que $a_n < M\ \forall n>N$.
+		
+		\item
+		\textbf{Oscilante} si no converge ni diverge.
+	\end{itemize}
+\end{define}
+
+
+\begin{define}
+	Sea $\{ n_k\}_k \subseteq \mathbb{N}$ una sucesión estrictamente creciente de números naturales y $\{ a_n\}_n \subseteq \mathbb{R}$ una sucesión cualquiera de números reales.
+	Una \textbf{subsucesión de $a_n$} es una sucesión de la forma $\{ a_{n_k}\}_k \subseteq \mathbb{R}$.
+\end{define}
+
+\begin{theorem}[Aritmética de límites]
+	Sean $\{ a_n\}_n \subseteq \mathbb{R}$ y $\{ b_n\}_n \subseteq \mathbb{R}$ dos sucesiones cualesquiera convergentes a $L_a$ y $L_b$ respectivamente. Entonces:
+	\begin{itemize}
+		\item
+		Si $r \in \mathbb{R}$, entonces $\lim_{n\rightarrow +\infty} ra_n = rL_a$
+		\item
+		$\lim_{n\rightarrow +\infty} a_n + b_n = L_a + L_b$
+		\item
+		$\lim_{n\rightarrow +\infty} a_nb_n = L_aL_b$
+		\item
+		Si $b_n \neq 0\ \forall n \in \mathbb{N}$, entonces $\lim_{n\rightarrow +\infty} \frac{a_n}{b_n} = \frac{L_a}{L_b}$
+	\end{itemize}
+\end{theorem}
+
+
+
+
+
+
+
+
+
 
 \section{Funciones, límites y continuidad}
 
