@@ -9,7 +9,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage[left=10pt,right=20pt,top=20pt,bottom=60pt]{geometry}
+\usepackage[left=30pt,right=40pt,top=40pt,bottom=60pt]{geometry}
 
 \newtheorem{theorem}{Teorema}
 \newtheorem{prop}{Proposición}
@@ -17,6 +17,7 @@
 \newtheorem{axiom}{Axioma}
 \newtheorem{define}{Definición}
 \newtheorem{note}{Nota}
+\newtheorem{ejem}{Ejemplo}
 
 \author{NyKi}
 \date{Diciembre 2024}
@@ -28,7 +29,7 @@
 \subsection{Construcciones}
 
 \begin{note}
-Las definiciones y construcciones de los conjuntos numéricos estándares aquí no se dan de una forma muy rigurosa. Su construcción es más propia de una asignatura de fundamentos matemáticos, y ahora mismo me da mucha pereza escribir todo.
+Las definiciones y construcciones de los conjuntos numéricos estándares aquí no se dan de una forma muy rigurosa. Su construcción es más propia de una asignatura de fundamentos matemáticos, y ahora mismo me da mucha pereza escribir todo. Aquí solo nos preocupará la construcción de los números reales.
 \end{note}
 
 Sea $\mathbb{N}$ un conjunto con un elemento que denominamos 1. Ahora, para todo elemento $n$ de $\mathbb{N}$ añadimos a $\mathbb{N}$ el sucesor, $S(n)$ o $n+1$. Esto da un conjunto infinito, los \textbf{números naturales}. En este conjunto tenemos el principio de inducción:
@@ -177,13 +178,18 @@ La definición parece ajena al ejemplo de ''agujero'' que hemos dado en la \text
 \begin{define}[Números reales]
 	Al conjunto $\mathbb{R}$ con $\mathbb{Q} \subseteq \mathbb{R}$ y que cumpla el \textit{Axioma \ref{ax_supr}} lo llamamos los \textbf{números reales}.
 \end{define}
-Este conjunto no es único, pero si es único bajo isomorfismos, que viene a decir que cualesquiera dos conjuntos con estas propiedades tienen la misma estructura y por tanto no hace falta distinguirlos.
+Este conjunto no es único, pero si es único bajo isomorfismos, que viene a decir que cualesquiera dos conjuntos con estas propiedades tienen la misma estructura y por tanto no hace falta distinguirlos. En una sección posterior, nos centraremos en la construcción de los números reales: lo que hemos dado aquí es solo una definición axiomática.
+
+
+
 
 \subsection{Los números reales}
 Empezamos el estudio de los números reales introduciendo algunos conceptos.
 \begin{define}
 El conjunto de los \textbf{irracionales} es $\mathbb{I} = \mathbb{R} \smallsetminus \mathbb{Q}$. Es decir, los números reales que no se pueden expresar como cociente de dos números enteros.
 \end{define}
+
+De esta definición podemos ver que un número real tiene que ser racional o irracional, pero no puede ser los dos a la vez. Esto implica que los racionales e irracionales forman una partición de los números reales.
 
 \begin{define}[Valor absoluto]
 Dado $x \in \mathbb{R}$ definimos el \textbf{valor absoluto} como:
@@ -197,10 +203,12 @@ x\ \text{si}\ x \geq 0 \\
 \right.
 \end{equation}
 \end{define}
-El valor absoluto es de los conceptos mas fundamentales del análisis real. Geométricamente, si dibujamos el valor $x \in \mathbb{R}$ en la recta real, el valor absoluto da la longitud del segmento que va desde $x$ hasta $0$. Geométricamente, la distancia entre dos números reales en la recta real viene dada por $d(x, y) = |x-y|$.
+El valor absoluto es de los conceptos mas fundamentales del análisis real. Geométricamente, si dibujamos el valor $x \in \mathbb{R}$ en la recta real, el valor absoluto da la longitud del segmento que va desde $x$ hasta $0$ y la distancia entre dos números reales en la recta real viene dada por $d(x, y) = |x-y|$.
 \begin{prop}[Propiedades del valor absoluto]
 $\forall a,b \in \mathbb{R}$ tenemos:
 \begin{enumerate}
+\item
+$||a|| = |a|$
 \item
 $|-a| = |a|$
 \item
@@ -213,13 +221,28 @@ La desigualdad triangular inversa: $||a|-|b|| \leq |a-b|$
 Si $a\neq 0$ entonces $|\frac{1}{a}| = \frac{1}{|a|}$
 \end{enumerate}
 \end{prop}
-Usaremos mucho la desigualdad triangular. Cuando estudiemos sucesiones, nos será muy útil tener herramientas para relacionar los números naturales con los números reales.
+
+
+La desigualdad triangular se usa mucho. Vamos a ver una caracterización del supremo e ínfimo:
+\begin{prop}[Caracterización del supremo]
+Sea $A\subseteq \mathbb{R}$.
+\begin{enumerate}
+\item
+El supremo de $A$ existe si y solo sí existe un número $\omega \in \mathbb{R}$ que sea cota superior de $A$ tal que $\forall \varepsilon > 0$ exista $x \in A$ tal que $x > \omega - \varepsilon$. En este caso $\sup A = \omega$.
+
+\item
+El ínfimo de $A$ existe si y solo sí existe un número $\alpha \in \mathbb{R}$ que sea cota inferior de $A$ tal que $\forall \varepsilon > 0$ exista $x \in A$ tal que $x < \alpha - \varepsilon$. En este caso $\inf A = \alpha$.
+\end{enumerate}
+\end{prop}
+
+
+Cuando estudiemos sucesiones, nos será muy útil tener herramientas para relacionar los números naturales con los números reales.
 
 
 \begin{theorem}[Propiedad arquimediana]
 $\forall x,y \in \mathbb{R}$ tales que $x>0$ $\exists n \in \mathbb{N}$ con $nx>y$.
 \end{theorem}
-Podemos entender el teorema así: si tenemos una longitud muy pequeña siempre vamos a juntar muchas de ellas para poder formar una longitud grande.
+Podemos entender el teorema así: si tenemos una longitud muy pequeña siempre vamos a juntar muchas de ellas para poder formar una longitud grande. Este teorema nos va a servir para demostrar dos corolarios que son intuitivamente verdad:
 \begin{cor}
 El conjunto de los números naturales no está acotado superiormente.
 \end{cor}
@@ -235,19 +258,62 @@ Dado $x \in \mathbb{R}$ definimos la \textbf{parte entera} como:
 \begin{equation}
 [x] = \sup \{k\in \mathbb{Z}\ |\ k\leq x\}
 \end{equation}
-Por el teorema anterior, este supremo siempre existe.
+Por el teorema anterior, este supremo siempre existe. También definimos la \textbf{parte fraccionaria} :
+\begin{equation}
+\{x\} = x - [x]
+\end{equation}
+\end{define}
+Estos dos no son tan útiles como el valor absoluto.
+
+\begin{define}[Potencias enteras]
+Sea $x\in \mathbb{R}$ y $n\in \mathbb{Z}$. Definimos la \textbf{potencia n-ésima} de $x$ de forma inductiva, y la denotamos por $x^n$, como:
+\begin{equation}
+x^n = \left\lbrace
+\begin{array}{l}
+x * x^{n-1}\ \text{si}\ n > 1 \\
+x\ \text{si}\ n = 1 \\
+1\ \text{si}\ n = 0\ \text{y}\ x \neq 0 \\
+\frac{1}{x^n}\ \text{si}\ n < 0\ \text{y}\ x \neq 0 \\
+\end{array}
+\right.
+\end{equation}
+Si $x = 0$ y $n \leq 0$ entonces la potencia queda indefinida. Al número $n$ se le llama \textbf{exponente}.
 \end{define}
 
+Podemos intentar extender esta definición a todo número racional, y conservar algunas propiedades.
 
 \begin{theorem}[Existencia de raíces]
 Sea $a \in \mathbb{R}$ cualquiera.
 \begin{enumerate}
 \item
-Para todo $n \in \mathbb{Z}$ impar existe un único $x\in \mathbb{R}$ tal que $x^n = a$.
+Para todo $n \in \mathbb{N}$ impar existe un único $x\in \mathbb{R}$ tal que $x^n = a$.
 \item
-Si $a\geq 0$ entonces para todo $n \in \mathbb{Z}$ par distinto de $0$ existe un único $x\in \mathbb{R}$ con $x\geq 0$ tal que $x^n = a$.
+Si $a\geq 0$ entonces para todo $n \in \mathbb{N}$ par (recordamos que $\mathbb{N}$ no tiene el $0$ en nuestra definición) existe un único $x\in \mathbb{R}$ con $x\geq 0$ tal que $x^n = a$.
 \end{enumerate}
+En cualquier caso, al número $x$ lo llamaremos la \textbf{raíz n-ésima} de $a$ y lo denotaremos por $\sqrt[n]{a}$ o $a^{\frac{1}{n}}$.
 \end{theorem}
+
+\begin{prop}[Potencias racionales]
+Sean $x \in \mathbb{R}$, $q \in \mathbb{Q}$ y $n,m \in \mathbb{Z}$ tales que $q = \frac{n}{m}$. Cuando las siguientes expresiones son válidas, tenemos:
+\begin{equation}
+(x^n)^{\frac{1}{m}} = (x^{\frac{1}{m}})^n
+\end{equation}
+y este número lo denotaremos por $x^{\frac{n}{m}}$ o $x^q$. (TODO: Falta ver que está bien definido)
+\end{prop}
+
+\begin{prop}[Propiedades de las potencias]
+TODO
+
+\end{prop}
+
+\begin{prop}[Binomio de Newton]
+Sean $x,y \in \mathbb{R}$ y $n \in \mathbb{N}$ entonces:
+\begin{equation}
+(x + y)^n = \sum_{m=0}^{n} {n \choose m} x^m y^{n-m}
+\end{equation}
+\end{prop}
+
+Las potencias de exponente real tienen una definición más complicada.
 
 
 
@@ -270,17 +336,17 @@ Si $a\geq 0$ entonces para todo $n \in \mathbb{Z}$ par distinto de $0$ existe un
 		\item
 		\textbf{Eventual estrictamente decreciente} si $\exists N \in \mathbb{N}$ tal que $a_m < a_n,\ \forall m>n\geq N$ con $n$ y $m$ naturales.
 	\end{itemize}
-	Si $N = 1$ en cualquiera de estos casos, entonces quitamos ''eventual".
+	En cualquier caso decimos que la sucesión es \textbf{eventual monótona}. Si $N = 1$ en cualquiera de estos casos, entonces quitamos ''eventual".
 \end{define}
 Nos interesa estudiar el comportamiento de la sucesión cuando $n$ se hace grande, es decir \textit{eventualmente}. Veremos que el comportamiento de $a_n$ cercano a $n = 1$ no importa
-en lo que a límite se refiere, solo el comportamiento eventual.
+en lo que a límite se refiere, solo el comportamiento eventual. En los teoremas de sucesiones monótonas que hagamos generalmente no usaremos la monotonía eventual, sino la monotonía desde $n = 1$ pero también serán válidos para la eventual con pocas modificaciones.
 
 
 \begin{define}
 	Sea $\{ a_n\}_n \subseteq \mathbb{R}$ una sucesión de números reales. Decimos que $a_n$ \textbf{converge} a $L$ y lo denotamos como $a_n \rightarrow_{n} L$ si y solo si 
 	$\forall \varepsilon > 0,\exists N \in \mathbb{N}$ tal que $|a_n - L| < \varepsilon$ para todo $n$ tal que $n \geq N$.
 \end{define}
-
+Esta definición se le conoce como definición $\delta-\varepsilon$.
 
 \begin{prop}[Unicidad del límite]
 	Sean $\{ a_n\}_n \subseteq \mathbb{R}$ convergente a $L_1$ y $L_2$. Entonces $L_1 = L_2$.
@@ -337,6 +403,28 @@ en lo que a límite se refiere, solo el comportamiento eventual.
 	\end{itemize}
 \end{theorem}
 
+
+\begin{ejem}
+\begin{enumerate}
+\item
+La sucesión $a_n = \frac{1}{n}$ converge a $0$ y es monótona decreciente.
+\item
+La sucesión $a_n = n^3$ diverge a $+\infty$ y es monótona creciente.
+\item
+La sucesión 
+\begin{equation}
+a_n = \left\lbrace
+\begin{array}{l}
+1\ \text{si n es par}\\ 
+-1\ \text{si n es impar}\
+\end{array}
+\right.
+\end{equation}
+es oscilante.
+\item
+Las sucesiones $a_n = n$ y $b_n = -n$ divergen pero la sucesión $c_n = a_n + b_n$ converge a $0$.
+\end{enumerate}
+\end{ejem}
 
 
 
