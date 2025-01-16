@@ -22,6 +22,15 @@
 \author{NyKi}
 \date{Diciembre 2024}
 
+\newcommand{\reales}{\mathbb{R}}
+\newcommand{\naturales}{\mathbb{N}}
+\newcommand{\racionales}{\mathbb{Q}}
+\newcommand{\sucesion}[1]{\{ #1 _n \}_n}
+\newcommand{\sucreal}[1]{\{ #1 _n \}_n \subseteq \reales}
+\newcommand{\converge}[2]{#1 _n \rightarrow_{n} #2}
+\newcommand{\limitesup}[1]{\limsup_{n\rightarrow +\infty} #1 _n}
+\newcommand{\limiteinf}[1]{\liminf_{n\rightarrow +\infty} #1 _n}
+
 \begin{document}
 
 \section{Introducción a los conjuntos numéricos}
@@ -29,12 +38,14 @@
 \subsection{Construcciones}
 
 \begin{note}
-Las definiciones y construcciones de los conjuntos numéricos estándares aquí no se dan de una forma muy rigurosa. Su construcción es más propia de una asignatura de fundamentos matemáticos, y ahora mismo me da mucha pereza escribir todo. Aquí solo nos preocupará la construcción de los números reales.
+Las definiciones y construcciones de los conjuntos numéricos estándares aquí no se dan de una forma muy rigurosa. Su construcción es más propia de una asignatura de fundamentos matemáticos, y ahora mismo me da mucha pereza escribir todo. En este documento solo nos preocupará la construcción de los números reales, que haremos en la sección de sucesiones.
 \end{note}
 
-Sea $\mathbb{N}$ un conjunto con un elemento que denominamos 1. Ahora, para todo elemento $n$ de $\mathbb{N}$ añadimos a $\mathbb{N}$ el sucesor, $S(n)$ o $n+1$. Esto da un conjunto infinito, los \textbf{números naturales}. En este conjunto tenemos el principio de inducción:
+Sea $\mathbb{N}$ un conjunto con un elemento que denominamos 1. Ahora, para todo elemento $n$ de $\naturales$ añadimos a $\naturales$ el sucesor, $S(n)$ o $n+1$. Esto da un conjunto infinito, los \textbf{números naturales}. Generalmente, que $0$ esté dentro de $\mathbb{N}$ es una cuestión de comodidad. Aquí nos será mucho más cómodo que los números naturales empiecen en $1$.
 
-\begin{axiom}[Principio de inducción en $\mathbb{N}$]
+En este conjunto tenemos el principio de inducción:
+
+\begin{axiom}[Principio de inducción en $\naturales$]
 Sea $S \subseteq \mathbb{N}$. Si $S$ satisface las siguientes 2 condiciones, entonces $S = \mathbb{N}$:
 \begin{itemize}
 \item
@@ -55,7 +66,7 @@ $\forall a,b,c \in \mathbb{N}$
 	\item
 	$a \leq b$ y $b \leq a$ implica $a = b$ (Antisimetría)
 	\item
-	$a \leq b$ o $b \leq a$ (Totalidad)
+	$a \leq b$ o $b \leq a$ (Totalidad o principio de tricotomía)
 \end{enumerate}
 \end{axiom}
 
@@ -244,10 +255,13 @@ $\forall x,y \in \mathbb{R}$ tales que $x>0$ $\exists n \in \mathbb{N}$ con $nx>
 \end{theorem}
 Podemos entender el teorema así: si tenemos una longitud muy pequeña siempre vamos a juntar muchas de ellas para poder formar una longitud grande. Este teorema nos va a servir para demostrar dos corolarios que son intuitivamente verdad:
 \begin{cor}
-El conjunto de los números naturales no está acotado superiormente.
+	El conjunto de los números naturales no está acotado superiormente.
 \end{cor}
 \begin{cor}
-Todo subconjunto no vacío de los números naturales que esté acotado superiormente tiene máximo y mínimo.
+	Todo subconjunto no vacío de los números naturales que esté acotado superiormente tiene máximo y mínimo.
+\end{cor}
+\begin{cor}
+	Todo subconjunto finito de los números reales esta acotado y tiene máximo y mínimo.
 \end{cor}
 
 \begin{theorem}[Existencia de la parte entera]
@@ -280,7 +294,11 @@ x\ \text{si}\ n = 1 \\
 Si $x = 0$ y $n \leq 0$ entonces la potencia queda indefinida. Al número $n$ se le llama \textbf{exponente}.
 \end{define}
 
-Podemos intentar extender esta definición a todo número racional, y conservar algunas propiedades.
+Es posible extender esta definición a los números racionales e irracionales, pero se necesitan herramienta más fuertes para fundamentarlos. Por ahora damos los teoremas:
+
+\begin{theorem}[Existencia de la raíz cuadrada]
+Sea $a \in \mathbb{R}$ mayor o igual que $0$. Entonces existe un único $x \in \mathbb{R}$ mayor o igual que $0$ tal que $x^2 = a$.
+\end{theorem}
 
 \begin{theorem}[Existencia de raíces]
 Sea $a \in \mathbb{R}$ cualquiera.
@@ -321,10 +339,14 @@ Las potencias de exponente real tienen una definición más complicada.
 
 
 
+
+
+
 \newpage
 \section{Sucesiones de números reales}
+
 \begin{define}
-	Una \textbf{sucesión} es una aplicación $a_n: \mathbb{N} \rightarrow \mathbb{R}$. El conjunto $\{a_n\}_n \subseteq \mathbb{R}$ es el conjunto imagen. Decimos que la sucesión
+	Una \textbf{sucesión} es una aplicación $a: \mathbb{N} \rightarrow \mathbb{R}$. Por comodidad, la imagen de $n \in \mathbb{N}$ se denota por $a_n$ y para la sucesión en sí usaremos $\{a_n\}_n$. El conjunto $\{a_n\ : n \in \mathbb{N}\} \subseteq \mathbb{R}$ es el conjunto \textbf{imagen}. Decimos que la sucesión
 	$\{a_n\}_n \subseteq \mathbb{R}$ es:
 	\begin{itemize}
 		\item
@@ -341,6 +363,11 @@ Las potencias de exponente real tienen una definición más complicada.
 Nos interesa estudiar el comportamiento de la sucesión cuando $n$ se hace grande, es decir \textit{eventualmente}. Veremos que el comportamiento de $a_n$ cercano a $n = 1$ no importa
 en lo que a límite se refiere, solo el comportamiento eventual. En los teoremas de sucesiones monótonas que hagamos generalmente no usaremos la monotonía eventual, sino la monotonía desde $n = 1$ pero también serán válidos para la eventual con pocas modificaciones.
 
+\begin{define}
+	Sea $\{ a_n\}_n \subseteq \mathbb{R}$ una sucesión de números reales. Decimos que $a_n$ está \textbf{acotada inferiormente} si existe un $A \in \mathbb{R}$ tal que para todo $n \in \mathbb{N}$ se tiene $a_n \geq A$. Análogamente, se dice que está \textbf{acotada superiormente} si existe un $B \in \mathbb{R}$ tal que para todo $n \in \mathbb{N}$ se tiene $a_n \leq B$. Se dice que está \textbf{acotada} si lo está superiormente e inferiormente.
+\end{define}
+
+\subsection{Convergencia y cálculo de límites}
 
 \begin{define}
 	Sea $\{ a_n\}_n \subseteq \mathbb{R}$ una sucesión de números reales. Decimos que $a_n$ \textbf{converge} a $L$ y lo denotamos como $a_n \rightarrow_{n} L$ si y solo si 
@@ -364,10 +391,28 @@ Esta definición se le conoce como definición $\delta-\varepsilon$.
 
 
 \begin{define}
-	Sabiendo que una sucesión $\{ a_n\}_n \subseteq \mathbb{R}$ converge a un único valor $L$, llamamos a este valor \textbf{límite de la sucesión $a_n$}, y lo denotamos como
+	Sabiendo que una sucesión convergente $\{ a_n\}_n \subseteq \mathbb{R}$ converge a un único valor $L$, llamamos a este valor \textbf{límite de la sucesión $a_n$}, y lo denotamos como
 	$\lim_{n\rightarrow +\infty} a_n = L$ o de manera resumida $\lim_{n} a_n = L$.
 \end{define}
 
+\begin{prop}
+	Sea $\{ a_n\}_n \subseteq \mathbb{R}$ una sucesión de números reales. Si $\{ a_n\}_n$ converge, entonces es acotada.
+\end{prop}
+
+\begin{proof}
+	Supongamos que $\sucreal{a}$ es una sucesión que converge a $L \in \reales$. Por la definición de convergencia existirá un $N \in \naturales$ tal que si $n \geq N$ entonces $|a_n - L| < 1$ (haciendo $\varepsilon = 1$). Podemos asegurar que $N > 1$ (si tuviéramos que $N = 1$ simplemente dejaríamos $N = 2$). Desarrollando el valor absoluto tenemos:
+	\begin{align}\label{pf_random1}
+		L - 1 < a_n < L + 1
+	\end{align}	
+	para todo $n \geq N$. Consideramos entonces los conjuntos $A = \{ a_1,\ a_2,\ \ldots,\ a_{N-1},\  L+1\}$ y $B = \{ a_1,\ a_2,\ \ldots,\ a_{N-1},\ L-1\}$. Como ambos conjuntos son finitos, podemos asegurar que existe el máximo de $A$ y el mínimo de $B$. Sean $\alpha = \min B$ y $\omega = \max A$. Entonces:
+	\begin{enumerate}
+	\item
+	Si $n \in \naturales$ es tal que $1 \leq n < N$ entonces $a_n \in A$ y $a_n \in B$ y por tanto $\alpha \leq a_n \leq \omega$.
+	\item
+	Si $n \in \naturales$ es tal que $n \geq N$ entonces por \eqref{pf_random1} tenemos $\alpha \leq L - 1 \leq a_n \leq L + 1 \leq \omega$ y así $\alpha \leq a_n \leq \omega$ por la transitividad del orden.
+	\end{enumerate}	 
+	Como todo número natural es menor, igual o mayor que $N$ (principio de la tricotomía) tenemos que $\alpha \leq a_n \leq \omega$ para todo $n \in \naturales$ y por tanto la sucesión $\sucesion{a}$ está acotada.
+\end{proof}
 
 \begin{define}
 	Si $\{ a_n\}_n \subseteq \mathbb{R}$ no converge a ningún valor $L\in\mathbb{R}$, podemos decir que $a_n$ es:
@@ -384,7 +429,7 @@ Esta definición se le conoce como definición $\delta-\varepsilon$.
 \end{define}
 
 
-\begin{define}
+\begin{define}[Subsucesion]
 	Sea $\{ n_k\}_k \subseteq \mathbb{N}$ una sucesión estrictamente creciente de números naturales y $\{ a_n\}_n \subseteq \mathbb{R}$ una sucesión cualquiera de números reales.
 	Una \textbf{subsucesión de $a_n$} es una sucesión de la forma $\{ a_{n_k}\}_k \subseteq \mathbb{R}$.
 \end{define}
@@ -407,7 +452,7 @@ Esta definición se le conoce como definición $\delta-\varepsilon$.
 \begin{ejem}
 \begin{enumerate}
 \item
-La sucesión $a_n = \frac{1}{n}$ converge a $0$ y es monótona decreciente.
+La sucesión $a_n = \frac{1}{n}$ converge a $0$ y es monótona decreciente. Además, toda subsucesión converge a $0$.
 \item
 La sucesión $a_n = n^3$ diverge a $+\infty$ y es monótona creciente.
 \item
@@ -420,15 +465,137 @@ a_n = \left\lbrace
 \end{array}
 \right.
 \end{equation}
-es oscilante.
+es oscilante. Además, la subsucesión $\{a_{2n} \}_n$ converge a $1$ y $\{a_{2n+1} \}_n$ converge a $-1$.
 \item
 Las sucesiones $a_n = n$ y $b_n = -n$ divergen pero la sucesión $c_n = a_n + b_n$ converge a $0$.
 \end{enumerate}
 \end{ejem}
 
+El comportamiento de las subsucesiones de una sucesión dada en relación a su convergencia es muy importante. Vemos unos resultados.
+
+\begin{prop}
+	Sea $\sucreal{a}$ una sucesión de números reales. Entonces converge si y solo si cada una de sus subsucesiones converge al mismo número.
+\end{prop}
+
+\begin{cor}
+	Sea $\sucreal{a}$ una sucesión de números reales.
+	\begin{enumerate}
+		\item
+		Si existe una subsucesión de $\sucesion{a}$ que no converge, entonces $\sucesion{a}$ no converge.
+		\item
+		Si existen dos subsucesiones que converjan a dos valores distintos entonces $\sucesion{a}$ no converge.
+	\end{enumerate}
+\end{cor}
+
+Este corolario es muy útil para demostrar que algunas sucesiones no convergen. Ahora vamos a ver más resultados para poder saber cuando converge una sucesión y a qué converge.
+
+\begin{theorem}[Convergencia de las sucesiones monótonas]
+Sea $\sucreal{a}$ una sucesión de números reales, entonces:
+\begin{enumerate}
+\item
+Si $\sucesion{a}$ es creciente, entonces converge si y solo si es acotada superiormente.
+\item
+Si $\{ a_n\}_n$ es decreciente, entonces converge si y solo si es acotada inferiormente. 
+\end{enumerate}
+\end{theorem}
+
+Este es un ejemplo de teorema donde podríamos cambiar las suposiciones de creciente y decreciente por sus respectivas suposiciones eventuales. Esto cambiaría la demostración y el método de obtener el límite un poco.
+
+\begin{theorem}[Orden de los límites y teorema del sandwich]
+Sean $\sucreal{a}$, $\sucreal{b}$ y $\sucreal{c}$ tres sucesiones de números reales tales que $a_n \leq b_n \leq c_n$ para todo $n \in \naturales$.
+\begin{enumerate}
+\item
+Si $\converge{a}{A}$, $\converge{b}{B}$ y $\converge{c}{C}$ entonces $A \leq B \leq C$.
+\item
+Si $\converge{a}{A}$ y $\converge{c}{C}$ y además $A = C$ entonces $\sucesion{b}$ converge a $A$.
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Criterio de Cauchy o de la raíz]
+
+\end{theorem}
+
+\begin{theorem}[Criterio de Stolz]
+
+\end{theorem}
+
+\begin{theorem}[Criterio de la media aritmética]
+	Sea $\sucreal{a}$ una sucesión de números reales que converja a $L \in \reales$. Entonces la sucesión $\{ A_n = \frac{\Sigma_{m=1}^{n} a_m}{n} \}_n$ converge a $L$. (TODO: Poner este tipo de fórmulas en una nueva linea)
+\end{theorem}
+
+\begin{theorem}[Criterio de la media geométrica]
+
+\end{theorem}
+
+Finalmente, podemos constatar una relación del ínfimo y supremo con las sucesiones:
+
+\begin{theorem}[Teorema de alcance]
+	Sea $A \subseteq \reales$. 
+\begin{enumerate}
+\item
+	Si $\exists \sup A$ entonces existe una sucesión de elementos de $A$ que converge a $\sup A$.
+\item
+	Análogamente, si $\exists \inf A$ entonces existe una sucesión de elementos de $A$ que converge a $\inf A$.
+\end{enumerate}	
+
+\end{theorem}
 
 
 
+\subsection{Sucesiones de Cauchy y completitud}
+
+
+\subsection{Puntos de acumulación}
+\begin{define}[Punto de acumulación]
+	Sea $\sucreal{a}$ una sucesión de números reales. Si existe una subsucesión que converge a un número $L \in \reales$ entonces $L$ se dice que es un \textbf{punto de acumulación}.
+\end{define}
+
+\begin{theorem}[De Bolzano-Weierstrass]
+\label{thm_bolzano_weierstrass}
+	Toda sucesión acotada tiene una subsucesión convergente.
+\end{theorem}
+
+\begin{define}[Límites superior e inferior]
+	Sea $\sucreal{a}$ una sucesión de números reales. 
+	\begin{enumerate}
+	\item
+	Si $\sucesion{a}$ está acotada superiormente definimos el \textbf{límite superior} como $\limitesup{a} = \lim_{n \rightarrow +\infty} \sup\{ a_m : m > n\}$. Si $\sucesion{a}$ no está acotada superiormente lo definimos como $\limsup_{n\rightarrow +\infty} a_n = +\infty$
+	\item
+	Análogamente, si $\sucesion{a}$ está acotada inferiormente definimos el \textbf{límite inferior} como $\limiteinf{a} = \lim_{n \rightarrow +\infty} \inf\{ a_m : m > n\}$. Si $\sucesion{a}$ no está acotada inferiormente lo definimos como $\liminf_{n\rightarrow +\infty} a_n = -\infty$
+	\end{enumerate}
+\end{define}
+
+Intuitivamente, el límite inferior y límite superior nos dicen el intervalo al que converge la sucesión:
+
+\begin{prop}
+	Sea $\sucreal{a}$ una sucesión acotada. Entonces para todo $\varepsilon > 0$ existe un $N \in \naturales$ tal que si $m \geq N$ entonces $a_m \in [\limiteinf{a}-\varepsilon, \limitesup{a}+\varepsilon]$.
+\end{prop}
+
+Los límites inferior y superior nos permiten hacer una pequeña extensión del teorema \eqref{thm_bolzano_weierstrass}:
+\begin{prop}
+\begin{enumerate}
+\item
+	El límite inferior y superior de una sucesión son puntos de acumulación de la misma.
+\item
+	Toda sucesión acotada tiene un punto de acumulación. Además es no convergente si y solo sí tiene dos o más puntos de acumulación.
+\end{enumerate}
+\end{prop}
+
+\begin{ejem}[Una sucesión con infinitos puntos de acumulación]
+	Vamos a construir una sucesión que tenga como conjunto de puntos de acumulación todos los números racionales. Esta misma sucesión tiene como conjunto de puntos de acumulación todo $\reales$, pero la demostración es más complicada, y usa la completitud de $\reales$.
+	Como los números racionales son numerables, existe una biyección $q_n : \naturales \rightarrow \racionales$. Construimos la siguiente sucesión: (TODO: terminar)
+\end{ejem}
+
+
+\subsection{El número e}
+
+
+
+\section{Introducción a la topología de los números reales}
+
+\subsection{Conjuntos abiertos y cerrados}
+
+\subsection{Compacidad}
 
 
 
@@ -436,6 +603,49 @@ Las sucesiones $a_n = n$ y $b_n = -n$ divergen pero la sucesión $c_n = a_n + b_
 
 \section{Funciones, límites y continuidad}
 
+
+
+
+
+
 \section{Derivabilidad de funciones reales}
+
+
+
+
+
+
+
+\section{Integrabilidad de funciones reales}
+
+\subsection{Cálculo de primitivas}
+
+\subsection{La integral de Riemann y Darboux}
+
+\subsection{Teoremas fundamentales}
+
+\subsection{Integrabilidad impropia}
+
+
+
+
+
+\section{Series numéricas}
+
+\subsection{Series de términos no negativos}
+
+\subsection{Series de términos arbitrarios}
+
+
+
+
+
+\section{Series funcionales y de potencias}
+
+\subsection{Sucesiones y series de funciones}
+
+\subsection{Convergencia uniforme}
+
+\subsection{Series de potencias y Taylor}
 
 \end{document}
