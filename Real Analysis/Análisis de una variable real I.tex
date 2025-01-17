@@ -30,6 +30,7 @@
 \newcommand{\converge}[2]{#1 _n \rightarrow_{n} #2}
 \newcommand{\limitesup}[1]{\limsup_{n\rightarrow +\infty} #1 _n}
 \newcommand{\limiteinf}[1]{\liminf_{n\rightarrow +\infty} #1 _n}
+\newcommand{\limiten}[1]{\lim_{n \rightarrow +\infty} #1}
 
 \begin{document}
 
@@ -444,7 +445,7 @@ Esta definición se le conoce como definición $\delta-\varepsilon$.
 		\item
 		$\lim_{n\rightarrow +\infty} a_nb_n = L_aL_b$
 		\item
-		Si $b_n \neq 0\ \forall n \in \mathbb{N}$, entonces $\lim_{n\rightarrow +\infty} \frac{a_n}{b_n} = \frac{L_a}{L_b}$
+		Si $b_n \neq 0\ \forall n \in \mathbb{N}$ y $L_b \not= 0$, entonces $\lim_{n\rightarrow +\infty} \frac{a_n}{b_n} = \frac{L_a}{L_b}$
 	\end{itemize}
 \end{theorem}
 
@@ -543,6 +544,22 @@ Finalmente, podemos constatar una relación del ínfimo y supremo con las sucesi
 
 
 \subsection{Sucesiones de Cauchy y completitud}
+\begin{define}
+	Sea $\sucreal{a}$ una sucesión. Decimos que es una \textbf{sucesión de Cauchy} si para todo $\varepsilon > 0$ existe un $N \in \naturales$ tal que si $m,\ n \in \naturales$ son números naturales mayores o iguales que $N$ se tiene $|a_n - a_m| < \varepsilon$.
+\end{define}
+El objetivo de esta definición es tener una propiedad equivalente a la convergencia sin necesitar de saber el límite de una sucesión. Este hecho es muy importante:
+\begin{theorem}[Completitud de $\reales$]
+	Sea $\sucreal{a}$ una sucesión. Entonces $\sucesion{a}$ converge si y solo si es de Cauchy.
+\end{theorem}
+El resultado importante aquí es que una sucesión de Cauchy converge, y en algunos textos esto es lo que se llama completitud.
+La completitud se puede generalizar a espacios métricos generales, y podemos hablar de \textit{completitud} en subconjuntos de $\reales$:
+\begin{ejem}[Los racionales no son completos]
+	Sea $A \subseteq \racionales$ definido como $A = \{ a\in \racionales\ :\ a^2 < 2\}$. Entonces $\sqrt{2} \not\in \racionales$ es el supremo de este conjunto en los reales, y por tanto existirá una sucesión de elementos de $A$ que converge a $\sqrt{2}$, vamos a llamarla $\sucesion{a} \subseteq \racionales$. En los reales la sucesión converge, y por el teorema de completitud es de Cauchy. Como es de Cauchy en los reales entonces es de Cauchy en los racionales, pero como converge a $\sqrt{2}$ y este número es irracional al existir un único límite para toda sucesión convergente, concluimos que no converge en $\racionales$.
+\end{ejem}
+Con este concepto ya podemos hacer una construcción de los números reales.
+\begin{prop}[Construcción del conjunto de los números reales]
+	Sea $\racionales ^ {\naturales}$ el conjunto de todas las sucesiones de números racionales, y sea $A \subseteq \racionales ^ {\naturales}$ el subconjunto (que es no vacío) de todas las sucesiones de Cauchy en los racionales. Definimos sobre este conjunto la relación $\sim$ de la siguiente manera: $\sucesion{x} \sim \sucesion{y}$ si y solo si para todo $\varepsilon > 0$ existe un $N \in \naturales$ tal que si $n \geq N$ entonces $|x_n - y_n| < \varepsilon$ (es decir si y solo si $\limiten{x_n - y_n} = 0$). Esta es una relación de equivalencia y el conjunto $\frac{\racionales ^ {\naturales}}{\sim}$ es no numerable.
+\end{prop}
 
 
 \subsection{Puntos de acumulación}
@@ -568,8 +585,15 @@ Finalmente, podemos constatar una relación del ínfimo y supremo con las sucesi
 Intuitivamente, el límite inferior y límite superior nos dicen el intervalo al que converge la sucesión:
 
 \begin{prop}
-	Sea $\sucreal{a}$ una sucesión acotada. Entonces para todo $\varepsilon > 0$ existe un $N \in \naturales$ tal que si $m \geq N$ entonces $a_m \in [\limiteinf{a}-\varepsilon, \limitesup{a}+\varepsilon]$.
+	Sea $\sucreal{a}$ una sucesión. Entonces para todo $\varepsilon > 0$ existe un $N \in \naturales$ tal que si $m \geq N$ entonces $a_m \in [\limiteinf{a}-\varepsilon, \limitesup{a}+\varepsilon]$.
 \end{prop}
+
+Si la sucesión no es acotada, substituimos alguno de los límites del intervalo por $+\infty$ o $-\infty$.
+Con esta proposición podemos demostrar otra caracterización de la convergencia de soluciones:
+
+\begin{theorem}
+	Sea $\sucreal{a}$ una sucesión. Entonces $\sucesion{a}$ converge si y solo si $\limiteinf{a} = \limitesup{a}$. En tal caso $\limiten{a_n} = \limitesup{a}$.
+\end{theorem}
 
 Los límites inferior y superior nos permiten hacer una pequeña extensión del teorema \eqref{thm_bolzano_weierstrass}:
 \begin{prop}
@@ -582,8 +606,13 @@ Los límites inferior y superior nos permiten hacer una pequeña extensión del 
 \end{prop}
 
 \begin{ejem}[Una sucesión con infinitos puntos de acumulación]
-	Vamos a construir una sucesión que tenga como conjunto de puntos de acumulación todos los números racionales. Esta misma sucesión tiene como conjunto de puntos de acumulación todo $\reales$, pero la demostración es más complicada, y usa la completitud de $\reales$.
-	Como los números racionales son numerables, existe una biyección $q_n : \naturales \rightarrow \racionales$. Construimos la siguiente sucesión: (TODO: terminar)
+	Vamos a construir una sucesión que tenga como conjunto de puntos de acumulación todos los números naturales. Es posible usar esta sucesión para poder construir otra tal que el conjunto de puntos de acumulación sean todos los reales, pero la construcción es algo más ortopédica y la demostración mas engorrosa.
+	El objetivo es construir la siguiente sucesión: $1,\ 1,\ 2,\ 1,\ 2,\ 3,\ 1,\ 2,\ 3,\ 4 \ldots\ $, para esto usamos los números triangulares.
+	Sea $\sucreal{b}$ la sucesión de los números triangulares más uno, es decir $b_n = \frac{n(n+1)}{2} + 1$ para todo $n \in \naturales$. Sabemos que esta sucesión es estrictamente creciente y que $b_0 = 1,\ b_1 = 2$ (por comodidad añadimos el término cero). Definimos la sucesión $\sucreal{a}$ como:
+	\begin{equation*}
+		a_n = n - b_{m-1} + 1\ \text{para m} \in \naturales\ \text{tal que}\ b_{m-1} \leq n \leq b_m \text{.}
+	\end{equation*}
+	Para cualquier $n \in \naturales$ existe un único $m \in \naturales$ que satisfaga la igualdad, así que está bien definida. (TODO: Terminar demostración)
 \end{ejem}
 
 
