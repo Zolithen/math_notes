@@ -266,16 +266,16 @@ Podemos entender el teorema así: si tenemos una longitud muy pequeña siempre v
 \end{cor}
 
 \begin{theorem}[Existencia de la parte entera]
-$\forall x \in \mathbb{R}$ existe un único $k \in \mathbb{Z}$ tal que $k\leq x\leq k+1$.
+$\forall x \in \mathbb{R}$ existe un único $k \in \mathbb{Z}$ tal que $k\leq x < k+1$.
 \end{theorem}
 \begin{define}[Parte entera]
 Dado $x \in \mathbb{R}$ definimos la \textbf{parte entera} como:
 \begin{equation}
-[x] = \sup \{k\in \mathbb{Z}\ |\ k\leq x\}
+\lfloor x \rfloor = \sup \{k\in \mathbb{Z}\ |\ k\leq x\}
 \end{equation}
 Por el teorema anterior, este supremo siempre existe. También definimos la \textbf{parte fraccionaria} :
 \begin{equation}
-\{x\} = x - [x]
+\{x\} = x - \lfloor x \rfloor
 \end{equation}
 \end{define}
 Estos dos no son tan útiles como el valor absoluto.
@@ -601,9 +601,36 @@ Los límites inferior y superior nos permiten hacer una pequeña extensión del 
 \item
 	El límite inferior y superior de una sucesión son puntos de acumulación de la misma.
 \item
-	Toda sucesión acotada tiene un punto de acumulación. Además es no convergente si y solo sí tiene dos o más puntos de acumulación.
+	Toda sucesión acotada tiene un punto de acumulación. Además es no convergente si y solo sí es oscilante si y solo si tiene dos o más puntos de acumulación.
 \end{enumerate}
 \end{prop}
+
+\begin{ejem}
+	La sucesión $\{ a_n = \{\sqrt{n}\} \}_n$ tiene por lo menos dos puntos de acumulación:
+	\begin{enumerate}
+		\item
+		Consideramos la subsucesión $b_m = a_{m^2}$, vemos que $b_m = \{\sqrt{m^2} \} = \{m \} = 0$ y como es constante converge a 0.
+		\item
+		Consideramos $c_m = a_{m^2 - 1}$. Primero constatamos la siguiente desigualdad:
+		\begin{equation}
+			\sqrt{m+1} - \sqrt{m-1} \geq \frac{1}{\sqrt{m+1}}
+		\end{equation}				
+		Que se puede comprobar fácilmente simplificando. Ahora notamos que si $m \geq 1$ entonces:
+		\begin{equation*}
+			m = \sqrt{m^2} > \sqrt{m^2 - 1} \geq \sqrt{m^2 - 2m + 1} = \sqrt{(m-1)^2} = m - 1
+		\end{equation*}
+		Y por tanto $\lfloor \sqrt{m^2 - 1} \rfloor = m - 1$, así tenemos que 
+		
+		\begin{align*}
+			\begin{split}
+				& 1 \geq c_m = \{\sqrt{m^2 - 1} \} = \sqrt{m^2 - 1} - \lfloor \sqrt{m^2 - 1} \rfloor =\\ & \sqrt{m^2 - 1} - (m - 1) = \sqrt{m-1}(\sqrt{m+1} - \sqrt{m-1})
+				\geq  \frac{\sqrt{m-1}}{\sqrt{m+1}} = \sqrt{1 - \frac{2}{m+1}}
+			\end{split}
+		\end{align*}
+		Y por el teorema del sandwich la subsucesión $c_m$ converge a $1$.\
+	\end{enumerate}
+	Como $a_n$ tiene por lo menos dos puntos de acumulación y $0 \leq a_n < 1$ para todo $n \in \naturales$ por la proposición anterior $\sucesion{a}$ es oscilante.
+\end{ejem}
 
 \begin{ejem}[Una sucesión con infinitos puntos de acumulación]
 	Vamos a construir una sucesión que tenga como conjunto de puntos de acumulación todos los números naturales. Es posible usar esta sucesión para poder construir otra tal que el conjunto de puntos de acumulación sean todos los reales, pero la construcción es algo más ortopédica y la demostración mas engorrosa.
