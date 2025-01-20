@@ -22,15 +22,23 @@
 \author{NyKi}
 \date{Diciembre 2024}
 
+% Conjuntos
 \newcommand{\reales}{\mathbb{R}}
 \newcommand{\naturales}{\mathbb{N}}
 \newcommand{\racionales}{\mathbb{Q}}
+
+
 \newcommand{\sucesion}[1]{\{ #1 _n \}_n}
 \newcommand{\sucreal}[1]{\{ #1 _n \}_n \subseteq \reales}
 \newcommand{\converge}[2]{#1 _n \rightarrow_{n} #2}
 \newcommand{\limitesup}[1]{\limsup_{n\rightarrow +\infty} #1 _n}
 \newcommand{\limiteinf}[1]{\liminf_{n\rightarrow +\infty} #1 _n}
 \newcommand{\limiten}[1]{\lim_{n \rightarrow +\infty} #1}
+
+% Operadores
+\newcommand{\cerradura}[1]{\text{Cl}(#1)}
+\newcommand{\interior}[1]{\text{Int}(#1)}
+\newcommand{\frontera}[1]{\text{Fr}(#1)}
 
 \begin{document}
 
@@ -332,9 +340,15 @@ Sean $x,y \in \mathbb{R}$ y $n \in \mathbb{N}$ entonces:
 \end{equation}
 \end{prop}
 
-Las potencias de exponente real tienen una definición más complicada.
-
-
+Las potencias de exponente real tienen una definición más complicada.\\
+Por conveniencia, definimos las sucesiones aquí:
+\begin{define}
+	Una \textbf{sucesión} es una aplicación $a: \mathbb{N} \rightarrow \mathbb{R}$. Por comodidad, la imagen de $n \in \mathbb{N}$ se denota por $a_n$ y para la sucesión en sí usaremos $\{a_n\}_n$. El conjunto $\{a_n\ : n \in \mathbb{N}\} \subseteq \mathbb{R}$ es el conjunto \textbf{imagen}. 
+\end{define}
+Introducir las sucesiones aquí nos va a permitir establecer algunos ejemplos de inducción:
+\begin{ejem}[Números triangulares]
+	Definimos la sucesión $\sucreal{T}$ mediante la fórmula $T_n = \sigma_{k = 1}^{n} k$. Estos son los \textbf{números triangulares}. El objetivo es establecer una expresión cerrada para la sucesión.
+\end{ejem}
 
 
 
@@ -345,10 +359,7 @@ Las potencias de exponente real tienen una definición más complicada.
 
 \newpage
 \section{Sucesiones de números reales}
-
-\begin{define}
-	Una \textbf{sucesión} es una aplicación $a: \mathbb{N} \rightarrow \mathbb{R}$. Por comodidad, la imagen de $n \in \mathbb{N}$ se denota por $a_n$ y para la sucesión en sí usaremos $\{a_n\}_n$. El conjunto $\{a_n\ : n \in \mathbb{N}\} \subseteq \mathbb{R}$ es el conjunto \textbf{imagen}. Decimos que la sucesión
-	$\{a_n\}_n \subseteq \mathbb{R}$ es:
+\begin{define}Decimos que una sucesión $\{a_n\}_n \subseteq \mathbb{R}$ es:
 	\begin{itemize}
 		\item
 		\textbf{Eventual creciente} si $\exists N \in \mathbb{N}$ tal que $a_m \geq a_n,\ \forall m>n\geq N$ con $n$ y $m$ naturales.
@@ -396,6 +407,11 @@ Esta definición se le conoce como definición $\delta-\varepsilon$.
 	$\lim_{n\rightarrow +\infty} a_n = L$ o de manera resumida $\lim_{n} a_n = L$.
 \end{define}
 
+\begin{ejem}
+	Consideramos la sucesión $\sucreal{a}$ de término general $a_n = \frac{1}{n}$. Sea $\varepsilon > 0 $. Por la propiedad arquimediana existe un $N \in \naturales$ tal que $N\varepsilon > 1 \Rightarrow \varepsilon > |\frac{1}{N}|$. Si $n > N$ entonces $|\frac{1}{n} - 0| < |\frac{1}{N}| < \varepsilon$. Por tanto $\limiten{a_n} = 0$.
+\end{ejem}
+
+
 \begin{prop}
 	Sea $\{ a_n\}_n \subseteq \mathbb{R}$ una sucesión de números reales. Si $\{ a_n\}_n$ converge, entonces es acotada.
 \end{prop}
@@ -430,7 +446,7 @@ Esta definición se le conoce como definición $\delta-\varepsilon$.
 \end{define}
 
 
-\begin{define}[Subsucesion]
+\begin{define}[Subsucesión]
 	Sea $\{ n_k\}_k \subseteq \mathbb{N}$ una sucesión estrictamente creciente de números naturales y $\{ a_n\}_n \subseteq \mathbb{R}$ una sucesión cualquiera de números reales.
 	Una \textbf{subsucesión de $a_n$} es una sucesión de la forma $\{ a_{n_k}\}_k \subseteq \mathbb{R}$.
 \end{define}
@@ -558,6 +574,7 @@ La completitud se puede generalizar a espacios métricos generales, y podemos ha
 \end{ejem}
 Con este concepto ya podemos hacer una construcción de los números reales.
 \begin{prop}[Construcción del conjunto de los números reales]
+	\label{prop_consreal1}
 	Sea $\racionales ^ {\naturales}$ el conjunto de todas las sucesiones de números racionales, y sea $A \subseteq \racionales ^ {\naturales}$ el subconjunto (que es no vacío) de todas las sucesiones de Cauchy en los racionales. Definimos sobre este conjunto la relación $\sim$ de la siguiente manera: $\sucesion{x} \sim \sucesion{y}$ si y solo si para todo $\varepsilon > 0$ existe un $N \in \naturales$ tal que si $n \geq N$ entonces $|x_n - y_n| < \varepsilon$ (es decir si y solo si $\limiten{x_n - y_n} = 0$). Esta es una relación de equivalencia y el conjunto $\frac{\racionales ^ {\naturales}}{\sim}$ es no numerable.
 \end{prop}
 
@@ -601,9 +618,10 @@ Los límites inferior y superior nos permiten hacer una pequeña extensión del 
 \item
 	El límite inferior y superior de una sucesión son puntos de acumulación de la misma.
 \item
-	Toda sucesión acotada tiene un punto de acumulación. Además es no convergente si y solo sí es oscilante si y solo si tiene dos o más puntos de acumulación.
+	Toda sucesión acotada tiene un punto de acumulación. Además es no convergente si y solo si es oscilante si y solo si tiene dos o más puntos de acumulación.
 \end{enumerate}
 \end{prop}
+
 
 \begin{ejem}
 	La sucesión $\{ a_n = \{\sqrt{n}\} \}_n$ tiene por lo menos dos puntos de acumulación:
@@ -632,6 +650,24 @@ Los límites inferior y superior nos permiten hacer una pequeña extensión del 
 	Como $a_n$ tiene por lo menos dos puntos de acumulación y $0 \leq a_n < 1$ para todo $n \in \naturales$ por la proposición anterior $\sucesion{a}$ es oscilante.
 \end{ejem}
 
+\begin{prop}
+	Si una sucesión tiene por lo menos un punto de acumulación entonces no puede diverger.
+\end{prop}
+
+\begin{ejem}
+	La sucesión $\sucreal{a}$ definida por:
+	\begin{equation}
+		a_n = \left\lbrace
+		\begin{array}{l}
+		0\ \text{si existe}\ m \in \naturales\ \text{con}\ n = 3m\\
+		1\ \text{si existe}\ m \in \naturales\ \text{con}\ n = 3m + 1\\
+		n\ \text{si existe}\ m \in \naturales\ \text{con}\ n = 3m + 2\\
+		\end{array}
+		\right.
+	\end{equation}
+	tiene $0$ y $1$ como puntos de acumulación, es oscilante pero no es acotada.
+\end{ejem}
+
 \begin{ejem}[Una sucesión con infinitos puntos de acumulación]
 	Vamos a construir una sucesión que tenga como conjunto de puntos de acumulación todos los números naturales. Es posible usar esta sucesión para poder construir otra tal que el conjunto de puntos de acumulación sean todos los reales, pero la construcción es algo más ortopédica y la demostración mas engorrosa.
 	El objetivo es construir la siguiente sucesión: $1,\ 1,\ 2,\ 1,\ 2,\ 3,\ 1,\ 2,\ 3,\ 4 \ldots\ $, para esto usamos los números triangulares.
@@ -642,16 +678,123 @@ Los límites inferior y superior nos permiten hacer una pequeña extensión del 
 	Para cualquier $n \in \naturales$ existe un único $m \in \naturales$ que satisfaga la igualdad, así que está bien definida. (TODO: Terminar demostración)
 \end{ejem}
 
+Los límites superior e inferior no tienen mucho interés práctico. Sirven por ejemplo para obtener refinamientos de teoremas como el criterio de Stolz.
 
 \subsection{El número e}
 
 
 
+
+
+
+
 \section{Introducción a la topología de los números reales}
 
-\subsection{Conjuntos abiertos y cerrados}
+El objetivo de introducir conceptos topológicos aquí es proporcionar la idea de estar infinitamente cerca y estar lejos de un conjunto.
 
-\subsection{Compacidad}
+\begin{define}
+\begin{enumerate}
+	\item
+	Un conjunto $A \subseteq \reales$ se dice \textbf{abierto} si y solo si para todo $a \in A$ existe un $\varepsilon > 0$ tal que $(a - \varepsilon, a + \varepsilon) \subseteq A$.
+	\item 
+	Un conjunto $C \subseteq \reales$ se dice \textbf{cerrado} si y solo si el complementario $\reales \setminus C$ es abierto.
+\end{enumerate}
+\end{define}
+
+Un conjunto abierto es tal que todo punto no esté infinitamente cerca del complementario. Así, un conjunto cerrado es aquel en el que todo punto fuera de él esta ``lejos".
+
+\begin{ejem}
+	$\reales$, el conjunto vacío y todo intervalo abierto son conjuntos abiertos.
+\end{ejem}
+
+\begin{define}[Puntos especiales de un conjunto]
+	Sea $A \subseteq \reales$ un conjunto cualquiera.
+	\begin{enumerate}
+		\item
+		Un punto $x \in A$ se dice \textbf{punto interior} si y solo si existe un $\varepsilon > 0$ tal que $(x - \varepsilon, x + \varepsilon) \subseteq A$.
+		\item
+		Un punto $x \in \reales$ se dice \textbf{punto límite} si y solo si existe una sucesión $\sucesion{a} \subseteq A$ que converge a $x$.
+		\item
+		Un punto $x \in \reales $ se dice \textbf{punto de acumulación} si y solo si existe una sucesión $\sucesion{a} \subseteq A$ que converge a $x$ tal que $a_n \neq x$ para todo $n \in \naturales$.
+		\item
+		Un punto límite de $A$ que no es de acumulación se dice \textbf{punto aislado}.
+		\item
+		Se dice que $A$ es un \textbf{entorno} de un punto $x \in A$ si y solo si $x$ es un punto interior de $A$.
+	\end{enumerate}
+\end{define}
+
+\begin{prop}
+	Sea $A \subseteq \reales$ un conjunto cualquiera. Entonces siempre existe un menor conjunto cerrado que contiene a $A$ y un mayor conjunto abierto contenido en $A$.
+\end{prop}
+
+Podemos usar esta proposición para estas definiciones:
+
+\begin{define}[Conjuntos asociados]
+	Sea $A \subseteq \reales$ un conjunto cualquiera.
+	\begin{enumerate}
+		\item
+		Definimos la \textbf{cerradura} de $A$ como el menor conjunto cerrado que contiene a $A$ y lo denotamos por $\cerradura{A}$.
+		\item
+		Definimos el \textbf{interior} de $A$ como el mayor conjunto abierto contenido en $A$ y lo denotamos por $\interior{A}$.
+		\item
+		Definimos la \textbf{frontera} de $A$ como el conjunto $\frontera{A} = \cerradura{A} \setminus \interior{A}$.
+	\end{enumerate}
+\end{define}
+
+\begin{prop}
+	Sea $A \subseteq \reales$ un conjunto cualquiera.
+	\begin{enumerate}
+		\item
+		$\cerradura{A}$ es igual a la intersección de todos los cerrados que contienen a $A$ y también al conjunto de todos los puntos límite de $A$.
+		\item
+		$\interior{A}$ es igual a la unión de todos los abiertos contenidos en $A$ y también al conjunto de todos los puntos interiores de $A$.
+	\end{enumerate}
+\end{prop}
+
+\begin{prop}
+	Sea $A \subseteq \reales$ un conjunto cualquiera.
+	\begin{enumerate}
+		\item
+		$A$ es abierto si y solo si $A = \interior{A}$.
+		\item
+		$A$ es cerrado si y solo si $A = \cerradura{A}$.
+	\end{enumerate}
+\end{prop}
+
+\begin{prop}
+	\begin{enumerate}
+		\item
+		La unión arbitraria de conjuntos abiertos es abierta.
+		\item
+		La intersección finita de conjuntos abiertos es abierta.
+		\item
+		La intersección arbitraria de conjuntos cerrados es cerrada.
+		\item
+		La unión finita de conjuntos cerrados es cerrada.
+	\end{enumerate}
+\end{prop}
+
+Hay un corolario importante del teorema de Bolzano-Weierstrass para sucesiones:
+
+\begin{theorem}
+	Todo conjunto infinito y acotado tiene por lo menos un punto de acumulación.
+\end{theorem}
+
+\begin{note}
+	Los términos introducidos aquí reciben múltiples definiciones, nombres y notaciones distintas dependiendo de que libros y apuntes se miren. Otras notaciones incluyen $\overline{A}$ para la cerradura, $\mathring{A}$ para el interior y $\partial A$ para la frontera. La cerradura también se llama clausura o adherencia, y la frontera se le puede llamar borde también. Generalmente, para las distintas definiciones se suele presentar una como ``la definición'' y las otras como teoremas de equivalencia, que es lo que he hecho aquí.
+\end{note}
+
+\begin{define}
+	Sea $A \subseteq \reales$ y $\mathcal{A}$ una familia de subconjuntos abiertos de $\reales$. Decimos que $\mathcal{A}$ \textbf{cubre} o que es un \textbf{cubrimiento por abiertos} de $A$ si y solo si la unión de todos los conjuntos de $\mathcal{A}$ contiene a $A$.
+\end{define}
+
+\begin{define}
+	Un conjunto $A \subseteq \reales$ se dice \textbf{compacto} si y solo si de todo cubrimiento por abiertos de $A$ se puede obtener una subfamilia (llamada \textbf{subrecubrimiento}) de cardinal finito que sigue cubriendo $A$.
+\end{define}
+
+\begin{theorem}[Heine-Borel]
+	Un subconjunto de $\reales$ es compacto si y solo si es acotado y cerrado.
+\end{theorem}
 
 
 
