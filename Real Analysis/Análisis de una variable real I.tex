@@ -347,7 +347,7 @@ Por conveniencia, definimos las sucesiones aquí:
 \end{define}
 Introducir las sucesiones aquí nos va a permitir establecer algunos ejemplos de inducción:
 \begin{ejem}[Números triangulares]
-	Definimos la sucesión $\sucreal{T}$ mediante la fórmula $T_n = \sigma_{k = 1}^{n} k$. Estos son los \textbf{números triangulares}. El objetivo es establecer una expresión cerrada para la sucesión.
+	Definimos la sucesión $\sucreal{T}$ mediante la fórmula $T_n = \Sigma_{k = 1}^{n} k$. Estos son los \textbf{números triangulares}. El objetivo es establecer una expresión cerrada para la sucesión.
 \end{ejem}
 
 
@@ -801,15 +801,114 @@ Hay un corolario importante del teorema de Bolzano-Weierstrass para sucesiones:
 
 
 \section{Funciones, límites y continuidad}
+\begin{define}[Funciones]
+	Una aplicación $f:A \rightarrow B$ con $A$ y $B$ subconjuntos de $\reales$ (preferentemente no vacíos) se llama \textbf{función real de una variable real} o simplemente \textbf{función}.
+\end{define}
+
+Hay muchos detalles sobre esta definición. Al conjunto $A$ lo llamamos \textbf{dominio} y al conjunto $B$ \textbf{codominio}. Si $C \subseteq \reales$ el conjunto $f(C) = \{f(a)\ : a \in A \cap C \}$ se denomina conjunto \textbf{imagen de C}, el conjunto $f(A)$ se denomina simplemente \textbf{imagen}. Generalmente es mucho trabajo indicar siempre el dominio, codominio y definición de todas las funciones que usamos. Es por eso que nos tomamos la libertad de excluir ciertos componentes de la definición cuando hablamos de funciones, si pueden quedar claros. Por ejemplo: 
+
+\begin{ejem}[Definiciones de funciones]
+	\begin{enumerate}
+		\item
+		$f:\reales \rightarrow \reales$ tal que $f(x) = x^2\ \forall x \in \reales$. En este ejemplo tenemos explícitamente el dominio y el codominio.
+		\item
+		$g(x) = \sqrt{x^2 - 1}$. Aquí no hemos incluido ni el dominio ni el codominio en la definición de la función. Por tanto, asumimos que el codominio es $\reales$ y que el dominio es donde la regla de definición sea válida, es decir donde $x^2 - 1 \geq 0$
+		\item
+		$h(x) = \sqrt{-x^2 - 1}$. En este caso la regla dada no define una función ya que no es válida para ningún valor de $x$. Técnicamente, obtendríamos una aplicación con dominio vacío, pero introducir este tipo de funciones en la teoría no aporta nada relevante, así que se ignoran.
+	\end{enumerate}
+\end{ejem}
+
+Espero que el lector haya visto ya algunas funciones importantes. Usando funciones ya dadas podemos construir nuevas funciones (esto es un hecho intuitivo):
+\begin{define}
+	Sean $f:A \rightarrow \reales$ y $g:B \rightarrow \reales$ con $A,B \subseteq \reales$. Definimos:
+	\begin{enumerate}
+		\item
+		Si $A \cap B \neq \emptyset$, la suma $f + g : A \cap B \rightarrow \reales$ por $(f + g)(x) = f(x) + g(x)\ \forall x \in A \cap B$.
+		\item
+		Si $A \cap B \neq \emptyset$, la multiplicación $fg : A \cap B \rightarrow \reales$ por $(fg)(x) = f(x)g(x)\ \forall x \in A \cap B$.
+		\item
+		El opuesto de f, $-f: A \rightarrow \reales$ por $(-f)(x) = -f(x)\ \forall x \in A \cap B$.
+		\item
+		$\frac{1}{f}: C \rightarrow \reales$ donde $C = \{x \in A\ |\ f(x) \neq 0\}$ (si $C$ no es vacío) por $(\frac{1}{f}(x)) = \frac{1}{f(x)}\ \forall x \in A$.
+		\item
+		Si $g(B) \cap A \neq \emptyset$, la composición $f \circ g : C \rightarrow \reales$ donde $C = \{x \in B\ |\ g(x) \in A\}$ por $(f \circ g)(x) = f(g(x))\ \forall x \in C$.
+	\end{enumerate}
+\end{define}
+Lo importante de esta definición es la composición. Veremos que generalmente es más complicado tratar con composiciones de funciones que con sumas o multiplicaciones.\\
+Al igual que las sucesiones, las funciones pueden estar acotadas o ser monótonas.
+\begin{define}[Acotaciones]
+	Sea $f:A \rightarrow \reales$ una función. Decimos que:
+	\begin{enumerate}
+		\item
+		$f$ está \textbf{acotada superiormente} si existe un $\alpha \in \reales$ tal que $f(x) \geq \alpha\ \forall x \in A$.
+		\item
+		$f$ está \textbf{acotada inferiormente} si existe un $\alpha \in \reales$ tal que $f(x) \leq \alpha\ \forall x \in A$.
+		\item
+		$f$ está \textbf{acotada} si lo está superiormente e inferiormente.
+	\end{enumerate}
+\end{define}
+
+\begin{define}[Monotonía de funciones]
+	Sea $f:A \rightarrow \reales$ una función.
+	\begin{enumerate}
+		\item
+		$f$ es \textbf{creciente} si $f(x) \leq f(y)$ para cualesquiera $x,y \in A$ tales que $x < y$.
+		\item
+		$f$ es \textbf{decreciente} si $f(x) \geq f(y)$ para cualesquiera $x,y \in A$ tales que $x < y$.
+	\end{enumerate}
+	Si las desigualdades son estrictas, se tienen funciones \textbf{estrictamente crecientes} y \textbf{estrictamente decrecientes}. En cualquiera de estos casos, la función $f$ se dice que es \textbf{monótona}.
+\end{define}
+
+\begin{ejem}
+	\begin{enumerate}
+		\item
+		La función $f(x) = x^2$ es decreciente en $(-\infty, 0]$ y creciente en $[0, +\infty]$. Además, esta acotada inferiormente pero no superiormente. En intervalos finitos está acotada.
+		\item
+		La función $f: \reales \setminus \{ 0\} \rightarrow \reales$ dada por $f(x) = \frac{1}{x}$ no está acotada. Presenta en $x = 0$ una asíntota vertical.
+		\item
+		La función $f: \reales \rightarrow \reales$ definida por:
+		\begin{equation*}
+			f(x) = \left\lbrace
+			\begin{array}{l}
+			0\ \text{si }\ x \not \in \racionales \text{ o } x = 0\\
+			p\ \text{si }\ x \in \racionales \text{,}\ x \neq 0 \text{, y}\ \exists p,q \in \naturales \text{ tales que } x = \frac{p}{q}\  \text{y}\ \gcd(p,q) = 1\\
+			-p\ \text{si }\ x \in \racionales \text{,}\ x \neq 0 \text{, y}\ \exists p,q \in \naturales \text{ tales que } x = \frac{-p}{q}\  \text{y}\ \gcd(p,q) = 1 \\
+			\end{array}
+			\right.
+		\end{equation*}
+		está acotada inferiormente, pero no superiormente. Además, sobre todo intervalo acotado la función no es acotada superiormente.
+	\end{enumerate}
+\end{ejem}
+
+El último ejemplo es "patológico``: es una función definida en todo $\reales$, que no está acotada en ningún intervalo acotado (que no sean un único punto) y no presenta ninguna asíntota en el sentido de la función $f(x) = \frac{1}{x}$.\\ 
+Presentamos ahora definiciones de la teoría de conjuntos:
+\begin{define}
+	Sea $f:A \rightarrow B$ con $A,B \subseteq \reales$ una función. Decimos que $f$ es:
+	\begin{enumerate}
+		\item
+		\textbf{Inyectiva}, sí $f(x) = f(y)$ implica $x = y$ para todo $x,y \in A$.
+		\item
+		\textbf{Suprayectiva} (o suryectiva), si $f(A) = B$.
+		\item
+		\textbf{Biyectiva}, si es inyectiva y suprayectiva.
+	\end{enumerate}
+\end{define}
+
+TODO: faltan cotas, monotonía, grafica, inversa, inyectiva, suprayectiva, paridad, periodicidad, preimagen y mas ejemplos
 
 
 
 
+\subsection{Límites}
+El concepto de límite formaliza la idea de \textit{acercarse}. Para una función, podemos ver a que valor se acerca al ir a infinito o cuando tiende a un punto.
+TODO: limites en un punto e infinito, laterales, caracterización por sucesiones, operaciones con limites, limite inferior y superior, limites de funciones monótonas, equivalencias, notacion o y O
+
+\subsection{Continuidad}
+TODO: definiciones, continuidad lateral, operaciones, lipschitz, holder, uniformemente continua, teoremas del valor intermedio (bolzano), weierstrass, borel, 
 
 
 \section{Derivabilidad de funciones reales}
-
-
+\subsection{Taylor I}
 
 
 
@@ -845,6 +944,9 @@ Hay un corolario importante del teorema de Bolzano-Weierstrass para sucesiones:
 
 \subsection{Convergencia uniforme}
 
-\subsection{Series de potencias y Taylor}
+\subsection{Series de potencias y Taylor II}
 
+
+
+\section{Funciones especiales}
 \end{document}
