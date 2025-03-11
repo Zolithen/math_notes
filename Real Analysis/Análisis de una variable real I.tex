@@ -26,6 +26,7 @@
 \newcommand{\reales}{\mathbb{R}}
 \newcommand{\naturales}{\mathbb{N}}
 \newcommand{\racionales}{\mathbb{Q}}
+\newcommand{\protoreales}{\frac{\racionales}{\sim}}
 
 
 \newcommand{\sucesion}[1]{\{ #1 _n \}_n}
@@ -573,10 +574,7 @@ La completitud se puede generalizar a espacios métricos generales, y podemos ha
 	Sea $A \subseteq \racionales$ definido como $A = \{ a\in \racionales\ :\ a^2 < 2\}$. Entonces $\sqrt{2} \not\in \racionales$ es el supremo de este conjunto en los reales, y por tanto existirá una sucesión de elementos de $A$ que converge a $\sqrt{2}$, vamos a llamarla $\sucesion{a} \subseteq \racionales$. En los reales la sucesión converge, y por el teorema de completitud es de Cauchy. Como es de Cauchy en los reales entonces es de Cauchy en los racionales, pero como converge a $\sqrt{2}$ y este número es irracional al existir un único límite para toda sucesión convergente, concluimos que no converge en $\racionales$.
 \end{ejem}
 Con este concepto ya podemos hacer una construcción de los números reales.
-\begin{prop}[Construcción del conjunto de los números reales]
-	\label{prop_consreal1}
-	Sea $\racionales ^ {\naturales}$ el conjunto de todas las sucesiones de números racionales, y sea $A \subseteq \racionales ^ {\naturales}$ el subconjunto (que es no vacío) de todas las sucesiones de Cauchy en los racionales. Definimos sobre este conjunto la relación $\sim$ de la siguiente manera: $\sucesion{x} \sim \sucesion{y}$ si y solo si para todo $\varepsilon > 0$ existe un $N \in \naturales$ tal que si $n \geq N$ entonces $|x_n - y_n| < \varepsilon$ (es decir si y solo si $\limiten{x_n - y_n} = 0$). Esta es una relación de equivalencia y el conjunto $\frac{\racionales ^ {\naturales}}{\sim}$ es no numerable.
-\end{prop}
+
 
 
 \subsection{Puntos de acumulación}
@@ -681,6 +679,31 @@ Los límites inferior y superior nos permiten hacer una pequeña extensión del 
 Los límites superior e inferior no tienen mucho interés práctico. Sirven por ejemplo para obtener refinamientos de teoremas como el criterio de Stolz.
 
 \subsection{El número e}
+
+
+\subsection{Construcción de los números reales}
+Inspirándonos en los conceptos introducidos en este tema podemos realizar una construcción de los números reales. Es posible construir $\reales$ de otra manera más tradicional con los cortes de Dedekind (y esto no necesitaría bagaje de sucesiones), pero aquí doy una construcción usando las sucesiones de Cauchy en los racionales.\\ 
+La condición de Cauchy nos permite decir cuando una sucesión ''converge" en los reales sin necesidad de conocer el límite. Sabiendo esto, si tenemos una sucesión de racionales que converge a un número irracional entonces es de Cauchy, pero el límite no está en $\racionales$ y por tanto no converge en $\racionales$. El truco está en que sabemos que sí dos sucesiones convergen a un mismo número, entonces la resta converge a $0$, que es un número racional. Esto nos permite identificar un número real con todas las sucesiones de racionales que convergen a él, y así tenemos la siguiente proposición:
+\begin{prop}[Construcción del conjunto de los números reales]
+	\label{prop_consreal1}
+	Sea $\racionales ^ {\naturales}$ el conjunto de todas las sucesiones de números racionales, y sea $A \subseteq \racionales ^ {\naturales}$ el subconjunto (que es no vacío) de todas las sucesiones de Cauchy en los racionales. Definimos sobre este conjunto la relación $\sim$ de la siguiente manera: $\sucesion{x} \sim \sucesion{y}$ si y solo si para todo $\varepsilon > 0$ racional existe un $N \in \naturales$ tal que si $n \geq N$ entonces $|x_n - y_n| < \varepsilon$. Esta es una relación de equivalencia, que llamamos \textbf{relación real} sobre el conjunto $\racionales$.
+\end{prop}
+Por ahora, $\frac{\racionales}{\sim}$ no es nada más que un conjunto. Sobre él vamos a definir la estructura de un cuerpo de la siguiente manera:
+\begin{prop}[Operaciones sobre los reales]
+	Sobre el conjunto $\frac{\racionales}{\sim}$ definimos dos operaciones:
+	\begin{enumerate}
+		\item
+		Una suma $\oplus: \protoreales \times \protoreales \rightarrow \protoreales$ definida por $[\sucesion{a}] \oplus [\sucesion{b}] = [\sucesion{a} + \sucesion{b}]$.
+		\item
+		Una multiplicación $\otimes: \protoreales \times \protoreales \rightarrow \protoreales$ definida por $[\sucesion{a}] \otimes [\sucesion{b}] = [\sucesion{a} * \sucesion{b}]$.
+	\end{enumerate}
+	Estas dos operaciones están bien definidas y la tupla $(\protoreales, \oplus, \otimes)$ es un cuerpo.
+\end{prop}
+
+\begin{proof}
+\textbf{Parte 1: } Primero necesitamos comprobar que las operaciones están bien definidas
+\end{proof}
+
 
 
 
