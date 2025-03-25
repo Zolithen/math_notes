@@ -9,7 +9,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage[left=30pt,right=40pt,top=40pt,bottom=60pt]{geometry}
+%\usepackage[left=30pt,right=40pt,top=40pt,bottom=60pt]{geometry}
 
 \author{NyKi}
 \date{Enero 2025-}
@@ -19,6 +19,7 @@
 \newtheorem{theorem}{Teorema}
 \newtheorem{prop}{Proposición}
 \newtheorem{cor}{Corolario}
+\newtheorem{lemma}{Lema}
 \newtheorem{axiom}{Axioma}
 \newtheorem{define}{Definición}
 \newtheorem{note}{Nota}
@@ -36,8 +37,10 @@
 
 \begin{document}
 
+Estas notas proporcionan un estudio elemental de las curvas y las superficies, como se presenta en un primer curso de geometría diferencial.
+
+\section{Preliminares de análisis y geometría}
 Por comodidad, asumiremos que $\naturales$ (el conjunto de los números naturales) empiezan en el $1$ (es decir, no contienen al $0$).
-Antes de empezar voy a dar unas definiciones y resultados de análisis que se usan aquí.
 
 \begin{define}
 	Una aplicación $f:U\subseteq\reales^n \rightarrow \reales^m$ con $n,m$ enteros mayores a 0 y $U$ abierto no vacío se denomina \textbf{de clase $\claseck{k}$} si admite parciales hasta el orden $k \in \naturales$ y estas son continuas.
@@ -55,9 +58,9 @@ De la definición se puede ver que un difeomorfismo es también un homeomorfismo
 
 
 \begin{define}
-	Decimos que una aplicación $\alpha: I \rightarrow \reales^2$ (con $I$ un intervalo abierto de $\reales$) de clase $\claseck{k}$ es una \textbf{curva parametrizada k-diferenciable} (o paramétrica). El conjunto $\alpha(I)$ se denomina \textbf{traza} de la curva y lo denotamos mediante $\trace(\alpha)$.
+	Decimos que una aplicación $\alpha: I \rightarrow \reales^2$ (con $I$ un intervalo abierto de $\reales$) de clase $\cinfinito$ es una \textbf{curva parametrizada diferenciable} (o paramétrica). El conjunto $\alpha(I)$ se denomina \textbf{traza} de la curva y lo denotamos mediante $\trace(\alpha)$.
 \end{define}
-En general simplemente las llamaremos curvas diferenciables, excluyendo la clase de la función, y asumiendo que admiten todas las derivadas que necesitamos (y estas son continuas). Es viable también definir las curvas como aplicaciones $\cinfinito$, pero le quita un poco de generalidad a la teoría. En esta definición nos hemos restringido a intervalos abiertos de la recta real. Es posible considerar intervalos cerrados, pero nos tenemos que asegurar que la función en los extremos se pueda ``extender'':
+Hemos de notar que la condición de ser $\cinfinito$ es muy fuerte. Podríamos perfectamente requerir solo que fueran $\claseck{k}$ para algún $k \in \naturales$, y de hecho algunos ejemplos trataremos estas curvas, pero requerir diferenciabilidad infinita hace el trabajo teórico más fácil. En esta definición nos hemos restringido a intervalos abiertos de la recta real. Es posible considerar intervalos cerrados, pero nos tenemos que asegurar que la función en los extremos se pueda ``extender'':
 \begin{define}
 	Decimos que una aplicación $\alpha: I \rightarrow \reales^2$ (con $I$ un intervalo cerrado de $\reales$) de clase $\cinfinito$ es una \textbf{curva parametrizada diferenciable} si existe una curva paramétrica diferenciable $\beta: I^* \rightarrow \reales^2$ definida sobre un intervalo abierto $I^*$ que contiene a $I$ tal que $\beta  \big|_I = \alpha$ y $\beta^{(k)}  \big|_I = \alpha^{(k)}$ para todo $k \in \naturales$.
 \end{define}
@@ -86,7 +89,7 @@ Para esto hacemos un intento de formalizar curvas que tienen la misma traza:
 	Dada una curva diferenciable $\alpha: I \rightarrow \reales$ y un difeomorfismo $f: J \rightarrow I$ con $I,J$ intervalos abiertos decimos que la composición $\beta = \alpha \circ f : J \rightarrow \reales$ es una \textbf{reparametrización} de la curva $\alpha$, y $f$ es el \textbf{parámetro}.
 \end{define}
 
-Notamos que bajo esta definición es posible que al reparametrizar una curva obtengamos una que sea de clase menor que la original. Llevaremos un poco de cuidado con ello cuando lo necesitemos. También será importante tener en cuenta la orientación la orientación del difeomorfismo:
+Notamos que bajo esta definición es posible que al reparametrizar una curva con un parámetro que no sea infinitamente diferenciable obtengamos un curva que no sea $\cinfinito$. Llevaremos un poco de cuidado con ello cuando lo necesitemos. También será importante tener en cuenta la orientación la orientación del difeomorfismo:
 
 \begin{define}
 	Dado $f: J \rightarrow I$ difeomorfismo entonces o $f'(x) < 0\ \forall x \in J$ o $f'(x) > 0\ \forall x \in J$. En el primer caso se dice que f \textbf{invierte} la orientación y en el segundo que la \textbf{conserva}.
@@ -98,7 +101,7 @@ El hecho sobre el signo de la derivada del difeomorfismo es un hecho conocido de
 	Si $\alpha: I \rightarrow \reales$ es una curva diferenciable y $\beta: J \rightarrow \reales$ es una reparametrización de $\alpha$ entonces $\trace (\alpha) = \trace (\beta)$.
 \end{prop}
 
-La implicación conversa (trazas iguales implican que son reparametrizaciones) la demostraremos después. Para ello vamos a tener que introducir los conceptos que vamos a usar para estudiar las curvas localmente. Primero, veamos un ejemplo:
+La implicación conversa (trazas iguales implican que son reparametrizaciones) no es cierta, pero se pueden imponer más condiciones para que sea cierta. No nos preocuparemos por ello aquí.
 
 \begin{ejem}[Curva suave que no lo parece]
 	La curva $\alpha: [-1, 1] \rightarrow \reales^{2}$ dada por:
@@ -120,11 +123,7 @@ La situación de este ejemplo es algo que intuitivamente queremos evitar: contra
 	Una curva diferenciable $\alpha: I \rightarrow \reales^{n}$ se dice \textbf{regular} si $\alpha(t) \neq 0$ para todo $t \in I$. 
 \end{define}
 
-Una curva regular es tal que todo punto de la traza tiene por lo menos una recta tangente. Esto no significa que necesariamente sea única:
-
-\begin{ejem}[Lemniscata de Bernoulli]
-
-\end{ejem}
+Una curva regular es tal que todo punto de la traza tiene por lo menos una recta tangente. Esto no significa que necesariamente sea única, como se puede apreciar en el ejemplo de la lemniscata de Bernoulli (en el punto de autointersección).\\ 
 
 Ahora nuestro objetivo es establecer un parámetro que nos proporcione una forma ``natural'' de trabajar con una curva. De esta manera a una traza resultante de alguna curva regular le asignaremos una curva de alguna manera canónica (aunque esto no sea del todo posible, se ve más abajo).
 
@@ -145,9 +144,13 @@ Esta noción proporciona una invariante de una curva:
 
 Esto nos dará para cada traza una curva ideal:
 
-\begin{prop}	
+\begin{prop}\label{prop_arco_param}
 	Para toda curva diferenciable regular existe una reparametrización por la longitud del arco.
 \end{prop}
+
+\begin{proof}
+	La demostración nos enseña también como computar esta reparametrización. Sean $\alpha : I \rightarrow \reales$ una curva regular y $L : I \rightarrow J$ definida como $L(t) = L_{t_0}^{t}(\alpha)$ para algún $t_0 \in I$ fijo. $L$ es una función diferenciable y estrictamente creciente ya que la curva $\alpha$ es regular, por tanto tendrá una inversa que llamamos $s(t) = L^{-1} (t)$. Mediante la regla de la cadena es rutinario comprobar que $\beta : J \rightarrow \reales$ definida por $\beta(t) = \alpha(s(t))$ es una reparametrización de $\alpha$ y que $|\beta'(t)| = 1$ para todo $t \in J$.
+\end{proof}
 
 \begin{define}
 	La aplicación $s$ de la demostración anterior se denomina \textbf{parámetro longitud de arco}.
@@ -159,11 +162,7 @@ La última proposición demuestra que siempre es posible encontrar una reparamet
 	La circunferencia $\alpha(t) = (\cos t, \sin t)$ definida en todo $\reales$ está parametrizada por la longitud del arco (como se puede comprobar). La curva $\beta(t) = (\cos (-t), \sin (-t))$ definida en $\reales$ también es natural y es una reparametrización de $\alpha$ mediante $f(t) = -t$. 
 \end{ejem}
 
-Así, hablaremos de \textit{una} parametrización por arco. Ahora podemos demostrar el converso de la proposición \eqref{prop_curvas_traza} para cierta familia de curvas:
-
-\begin{cor}
-	Si dos curvas regulares tienen la misma traza entonces una curva es una reparametrización de la otra y conversamente.
-\end{cor}
+Así, hablaremos de \textit{una} parametrización por arco.\\ 
 
 Finalmente en esta sección hablamos de curvas cerradas. Intuitivamente, una curva cerrada es una curva $\alpha$ definida sobre un intervalo cerrado $[a, b]$ con $a,b \in \reales$ y $a < b$ tal que $\alpha(a) = \alpha(b)$. Esta definición no es perfecta:
 
@@ -174,16 +173,16 @@ Finalmente en esta sección hablamos de curvas cerradas. Intuitivamente, una cur
 En vista de esto, es necesario añadir algo más a la definición:
 
 \begin{define}
-	Una curva k-diferenciable $\alpha: I \rightarrow \reales^{n}$ con $I = [a, b]$ intervalo cerrado con $a < b$ ambos reales se dice \textbf{cerrada} si se cumple $\alpha^{(m)}(a) = \alpha^{(m)}(b)$ para todo $m \in \{1, \dots, k\}$.
+	Una curva diferenciable $\alpha: I \rightarrow \reales^{n}$ con $I = [a, b]$ intervalo cerrado con $a < b$ ambos reales se dice \textbf{cerrada} si se cumple $\alpha^{(m)}(a) = \alpha^{(m)}(b)$ para todo $m \in \naturales$.
 \end{define}
 
 Solo demostraremos la siguiente proposición:
 
 \begin{prop}
-	Sea $\alpha: [a, b] \rightarrow \reales^{n}$ una curva k-diferenciable cerrada. Entonces existe otra curva k-diferenciable $\beta: \reales \rightarrow \reales^{n}$ tal que:
+	Sea $\alpha: [a, b] \rightarrow \reales^{n}$ una curva diferenciable cerrada. Entonces existe otra curva diferenciable $\beta: \reales \rightarrow \reales^{n}$ tal que:
 	\begin{enumerate}
 		\item
-		$\beta^{(m)}(t) = \alpha^{(m)}(t)$ para todo $t \in [a, b]$ y $m \in \{1, \dots, k\}$.
+		$\beta^{(m)}(t) = \alpha^{(m)}(t)$ para todo $t \in [a, b]$ y $m \in \naturales$.
 		\item
 		$\beta$ es una aplicación periódica de periodo $b-a$.
 	\end{enumerate}
@@ -202,11 +201,21 @@ Solo demostraremos la siguiente proposición:
 
 
 \section{Curvatura de curvas planas}
-El objetivo final de esta sección será establecer una caracterización de las curvas en $\reales^{2}$, y crear un sistema de coordenadas ``local'' para describir curvas. En esta sección asumiremos que las curvas con las que tratamos son 2-diferenciables, e inicialmente que están parametrizadas por la longitud del arco.\\ 
+El objetivo final de esta sección será establecer una caracterización de las curvas en $\reales^{2}$, y crear un sistema de coordenadas ``local'' para describir curvas. En esta sección asumiremos que las curvas con las que tratamos son por lo menos de clase $\claseck{2}$, e inicialmente que están parametrizadas por la longitud del arco.\\ 
 
-En geometría diferencial, el instrumento más útil de estudio de un objeto geométrico son los espacios lineales tangentes a él. En la anterior sección hemos visto que una curva regular tiene en cada punto del dominio (no de la traza) una única recta tangente, en la dirección del vector derivada. 
+Para lograr nuestro objetivo, estudiaremos el comportamiento del vector derivada. Para esto introducimos una definición:
 
-\begin{prop}\label{prop_direccion_normal}
+\begin{define}\label{def_curva_vector_tangente1}
+	Si $\alpha: I \rightarrow \reales^2$ es una curva natural y $s_0 \in I$ entonces definimos el \textbf{vector tangente unitario} en $s_0$ como $T(s_0) = \alpha'(s_0)$.
+\end{define}
+
+Como $\alpha$ es natural, el módulo del vector derivada siempre es $1$ y por tanto no nos tenemos que preocupar de normalizar el vector. Antes de seguir necesitamos unos resultados pequeños:
+
+\begin{lemma}\label{lemma_vectores_unitarios}
+	Si $\alpha: I \rightarrow \reales^{n}$ es cualquier función vectorial tal que $|\alpha(t)| = 1$ para todo $t \in I$ entonces $\langle \alpha(t),\alpha'(t) \rangle = 0$ para todo $t \in I$. Es decir, el vector derivada y el vector son ortogonales en todo el dominio.
+\end{lemma}
+
+\begin{lemma}\label{lemma_direccion_normal}
 	Existen exactamente dos aplicaciones $J:\reales^{2} \rightarrow \reales^{2}$ que satisfacen:
 	\begin{enumerate}
 		\item
@@ -216,31 +225,112 @@ En geometría diferencial, el instrumento más útil de estudio de un objeto geo
 		\item
 		$J$ es continua en todo $\reales^{2}$.
 	\end{enumerate}
-\end{prop}
+\end{lemma}
+
+El primer lema es algo que constantemente usaremos. El segundo lema no es tan útil y solo nos sirve para darle algo más de sentido a esta definición:
 
 \begin{define}
-	La aplicación $J:\reales^{2} \rightarrow \reales^{2}$ dada por la expresión $J(x, y) = (-y, x)$ la denominaremos \textbf{dirección normal elegida}.
+	La aplicación $J:\reales^{2} \rightarrow \reales^{2}$ dada por la expresión $J(x, y) = (-y, x)$ la denominaremos \textbf{orientación normal elegida}.
 \end{define}
 
-La dirección normal elegida es una de las dos aplicaciones de la proposición \eqref{prop_direccion_normal}. Perfectamente podríamos haber elegido la otra aplicación, pero nosotros usaremos esta.
+La orientación normal elegida es una de las dos aplicaciones de la proposición \eqref{lemma_direccion_normal}. El lema existe para saber que existen dos formas ``canónicas'' de elegir una orientación para los vectores normales en $\reales^2$, y la definición nos sirve para definir el vector normal:
 
+\begin{define}\label{def_curva_vector_normal1}
+	Si $\alpha: I \rightarrow \reales^2$ es una curva natural y $s_0 \in I$ entonces definimos el \textbf{vector normal unitario} en $s_0$ como $n(s_0) = J(T(s_0))$.
+\end{define}
 
+Como $T(s_0)$ es unitario, $n(s_0)$ también lo es. Al ser estos dos vectores ortogonales, podemos definir una base vectorial de $\reales^2$:
 
+\begin{define}
+	Dada una curva natural $\alpha: I \rightarrow \reales^2$, se define la \textbf{base de Frenet} (o diedro) en cada punto $s_0 \in I$ a la base vectorial $\{T(s_0), n(s_0) \}$.
+\end{define}
 
+La base de Frenet es ortonormal, y nos va a permitir definir el concepto más importante de esta sección:
 
+\begin{define}\label{def_curva_curvatura1}
+	Se define la \textbf{curvatura} de $\alpha$ en $s_0 \in I$ como el número $\kappa(s_0)$ tal que $T'(s_0) = \kappa(s_0)n(s_0)$.
+\end{define}
 
+\begin{proof}
+	Vamos a demostrar la existencia de tal número. Fijamos $s_0 \in I$, y por el lema \eqref{lemma_vectores_unitarios} $\langle T'(s_0), T(s_0) \rangle = 0$. Considerando la base de Frenet, sabemos de \textit{Álgebra Lineal} las coordenadas de un vector en una base ortonormal: 
+	\begin{equation*}
+		T'(s_0) = \langle T'(s_0), T(s_0) \rangle T(s_0) + \langle T'(s_0), n(s_0) \rangle n(s_0)
+	\end{equation*}		
+	y así $T'(s_0) = \langle T'(s_0), n(s_0) \rangle n(s_0)$. Así $\kappa(s_0) = \langle T'(s_0), n(s_0) \rangle n(s_0)$ es lo que buscamos.
+\end{proof}
 
+La curvatura mide cuanto de \textit{curvada} esta una curva. Son también importantes las siguientes fórmulas:
 
+\begin{prop}[Fórmulas de Frenet]
+	Para toda curva natural:
+	\begin{eqnarray}
+		T' = \kappa n \label{eq_frenet2d_1}\\ 
+		n' = -\kappa T \label{eq_frenet2d_2}
+	\end{eqnarray}
+\end{prop}
 
+\begin{proof}
+	La ecuación \eqref{eq_frenet2d_1} es la definición de curvatura. Para \eqref{eq_frenet2d_2}, como $\{T(s), n(s) \}$ es una base para todo $s \in I$ podemos escribir
+	\begin{equation*}
+		n'(s) = \langle n'(s), T(s) \rangle T(s) + \langle n'(s), n(s) \rangle n(s)
+	\end{equation*}
+	Por ser $n(s)$ unitario, aplicando el lema \eqref{lemma_vectores_unitarios} obtenemos $\langle n'(s), n(s) \rangle = 0$. Sabemos que $\langle T(s), n(s) \rangle = 0$. Derivando esta expresión y simplificando obtenemos:
+	\begin{equation*}
+	\begin{split}
+		0 & = \langle T'(s), n(s) \rangle + \langle T(s), n'(s) \rangle \\ 
+		& = \langle \kappa(s)n(s), n(s) \rangle + \langle T(s), n'(s) \rangle \\
+		& = \kappa(s) + \langle T(s), n'(s) \rangle
+		\Rightarrow \langle T(s), n'(s) \rangle = -\kappa(s)
+	\end{split}
+	\end{equation*}
+	y así:
+	\begin{equation*}
+		n'(s) = -\kappa(s) T(s)
+	\end{equation*}
+\end{proof}
 
+\begin{ejem}
+	Vamos a demostrar que $\kappa \equiv 0$ si y solo sí $\alpha$ es un segmento (posiblemente no acotado) de recta. Sea $\alpha : (a, b) \rightarrow \reales^2$ una curva natural con curvatura $0$. Por la definición de curvatura $\alpha'' = T' = \kappa n = 0$. Integrando ambas componentes de $\alpha$ podemos escribir $\alpha(t) = ct + d$ para todo $t \in (a, b)$ y algunas constantes $c, d \in \reales^2$, y por tanto $\alpha$ es o un punto (en cuyo caso $\alpha'(t) = 0$ y por tanto $\alpha$ no sería regular) o un segmento de recta. Conversamente, si $\alpha$ es un segmento de recta parametrizado por la longitud del arco existirá una reparametrización en la que tengamos $\alpha(t) = ct + d$ para todo $t \in (a, b)$ con $c, d \in \reales^2$ constantes con $|c| = 1$. Por la definición de la curvatura $\kappa(t) = |T'(t)| = |\alpha''(t)| = 0$.
+\end{ejem}
 
+Es fácil extender los conceptos definidos para curvas naturales a curvas regulares que no están parametrizadas por la longitud del arco.
 
+\begin{define}
+	Sea $\alpha : I \rightarrow \reales^2$ una curva regular. Por \eqref{prop_arco_param} existe una reparametrización natural $\beta : J \rightarrow \reales^2$ bajo un parámetro $L : I \rightarrow J$. Definimos:
+	\begin{enumerate}
+		\item
+		El \textbf{vector tangente unitario} de $\alpha$ en $t_0$ como $T_{\alpha}(t_0) = T_{\beta}(L(t_0))$ donde $T_{\beta}(L(t_0))$ es el vector tangente unitario a $\beta$ en $L(t_0)$ definido en \eqref{def_curva_vector_tangente1}.
+		\item
+		El \textbf{vector normal unitario} de $\alpha$ en $t_0$ como $n_{\alpha}(t_0) = n_{\beta}(L(t_0))$ donde $n_{\beta}(L(t_0))$ es el vector normal unitario a $\beta$ en $L(t_0)$ definido en \eqref{def_curva_vector_normal1}.
+		\item
+		La \textbf{curvatura} de $\alpha$ en $t_0$ como $\kappa_{\alpha}(t_0) = \kappa_{\beta}(L(t_0))$ donde $\kappa_{\beta}(L(t_0))$ es la curvatura a $\beta$ en $L(t_0)$ definido en \eqref{def_curva_curvatura1}.
+	\end{enumerate}
+\end{define}
 
+Es habitual poner en el subíndice de $T$, $n$ y $\kappa$ a que curva nos referimos para hacer la lectura más fácil.\\ 
+En términos de cálculo, calcular la parametrización por longitud de arco de una curva es algo que puede resultar complicado. La integral de la longitud puede resultar ser no elemental, y después es probable que la inversa de la función longitud tampoco sea elemental. Es entonces sorprendente que para la curvatura exista una fórmula cerrada para calcularla en cualquier parametrización.
 
+\begin{prop}
+	Sea $\alpha : I \rightarrow \reales^2$ una curva regular no necesariamente natural. Entonces:
+	\begin{equation*}
+	\begin{split}
+		& T_{\alpha}(t_0) = \frac{\alpha'(t_0)}{|\alpha'(t_0)|} \\ 
+		& n_{\alpha}(t_0) = \frac{J(\alpha'(t_0))}{|\alpha'(t_0)|} \\ 
+		& \kappa_{\alpha(t_0)} = \frac{1}{|\alpha'(t_0)|^3} \langle J(\alpha'(t_0)), \alpha''(t_0) \rangle
+	\end{split}
+	\end{equation*}
+	para todo $t_0 \in I$. 
+\end{prop}
 
+\begin{theorem}
+	Sea $\kappa : I \rightarrow \reales$ una función continua. Entonces existe una curva $\alpha : I \rightarrow \reales^2$ parametrizada por la longitud del arco tal que $\kappa_{\alpha}(t) = \kappa(t)$ para todo $t \in I$. Además, si $\beta : I \rightarrow \reales^2$ es otra curva natural con la misma curvatura que $\alpha$, existe un movimiento rígido $M$ del plano tal que $\beta = M \circ \alpha$.
+\end{theorem}	
+	
+\begin{theorem}
+	Sea $\kappa : I \rightarrow \reales$ y $s : I \rightarrow \reales$ dos funciones continua. Entonces existe una curva $\alpha : I \rightarrow \reales^2$ tal que $\kappa_{\alpha}(t) = \kappa(t)$ y $L_{t_0}^{t} = s(t)$ para todo $t \in I$, y un $t_0 \in I$ fijo.
+\end{theorem}
 
-
-
+La longitud del arco y la curvatura entonces dan un sistema de coordenadas local para la curva.
 
 
 
@@ -251,4 +341,33 @@ La dirección normal elegida es una de las dos aplicaciones de la proposición \
 
 
 \section{Curvatura y torsión de curvas alabeadas}
+Las curvas alabeadas son las curvas $\alpha : I \rightarrow \reales^3$. \\ 
+Para curvas planas, hemos estudiado la variación de la base de Frenet para estudiar la curva. En ese caso la base tenía $2$ vectores, y sus derivadas vienen tienen las relaciones dadas en \eqref{eq_frenet2d_1} y \eqref{eq_frenet2d_2}. En $\reales^3$ una base vectorial necesita tener $3$ vectores. Si tomamos el vector tangente a una curva (es decir, el vector derivada) el conjunto de los vectores ortogonales a él es un espacio vectorial de dimensión $2$, y por tanto no podemos ``elegir'' un solo vector como hacíamos con el automorfismo $J$ de la sección anterior. Esto cambiara las cosas ligeramente, entre otras hará que la curvatura no tenga signo y sea una cantidad no negativa. \\
+Como al principio de la anterior sección, primero trabajamos con curvas parametrizadas por la longitud de arco.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \end{document}
