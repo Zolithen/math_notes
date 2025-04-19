@@ -252,11 +252,11 @@ La base de Frenet es ortonormal, y nos va a permitir definir el concepto más im
 \end{define}
 
 \begin{proof}
-	Vamos a demostrar la existencia de tal número. Fijamos $s_0 \in I$, y por el lema \eqref{lemma_vectores_unitarios} $\langle T'(s_0), T(s_0) \rangle = 0$. Considerando la base de Frenet, sabemos de \textit{Álgebra Lineal} las coordenadas de un vector en una base ortonormal: 
+	Vamos a demostrar la existencia de tal número. Fijamos $s_0 \in I$, y por el lema \eqref{lemma_vectores_unitarios} $\langle T'(s_0), T(s_0) \rangle = 0$. Considerando la base de Frenet, sabemos las coordenadas de un vector cualquiera en una base ortonormal: 
 	\begin{equation*}
 		T'(s_0) = \langle T'(s_0), T(s_0) \rangle T(s_0) + \langle T'(s_0), n(s_0) \rangle n(s_0)
 	\end{equation*}		
-	y así $T'(s_0) = \langle T'(s_0), n(s_0) \rangle n(s_0)$. Así $\kappa(s_0) = \langle T'(s_0), n(s_0) \rangle n(s_0)$ es lo que buscamos.
+	y así $T'(s_0) = \langle T'(s_0), n(s_0) \rangle n(s_0)$. $\kappa(s_0) = \langle T'(s_0), n(s_0) \rangle$ es lo que buscamos.
 \end{proof}
 
 La curvatura mide cuanto de \textit{curvada} esta una curva. Son también importantes las siguientes fórmulas:
@@ -322,12 +322,14 @@ En términos de cálculo, calcular la parametrización por longitud de arco de u
 	para todo $t_0 \in I$. 
 \end{prop}
 
+Para terminar esta sección, constatamos que la longitud de arco y la curvatura definen completamente una curva:
+
 \begin{theorem}
 	Sea $\kappa : I \rightarrow \reales$ una función continua. Entonces existe una curva $\alpha : I \rightarrow \reales^2$ parametrizada por la longitud del arco tal que $\kappa_{\alpha}(t) = \kappa(t)$ para todo $t \in I$. Además, si $\beta : I \rightarrow \reales^2$ es otra curva natural con la misma curvatura que $\alpha$, existe un movimiento rígido $M$ del plano tal que $\beta = M \circ \alpha$.
 \end{theorem}	
 	
 \begin{theorem}
-	Sea $\kappa : I \rightarrow \reales$ y $s : I \rightarrow \reales$ dos funciones continua. Entonces existe una curva $\alpha : I \rightarrow \reales^2$ tal que $\kappa_{\alpha}(t) = \kappa(t)$ y $L_{t_0}^{t} = s(t)$ para todo $t \in I$, y un $t_0 \in I$ fijo.
+	Sea $\kappa : I \rightarrow \reales$ y $s : I \rightarrow \reales$ dos funciones continuas. Entonces existe una curva $\alpha : I \rightarrow \reales^2$ tal que $\kappa_{\alpha}(t) = \kappa(t)$ y $L_{t_0}^{t} = s(t)$ para todo $t \in I$, y un $t_0 \in I$ fijo.
 \end{theorem}
 
 La longitud del arco y la curvatura entonces dan un sistema de coordenadas local para la curva.
@@ -345,12 +347,112 @@ Las curvas alabeadas son las curvas $\alpha : I \rightarrow \reales^3$. \\
 Para curvas planas, hemos estudiado la variación de la base de Frenet para estudiar la curva. En ese caso la base tenía $2$ vectores, y sus derivadas vienen tienen las relaciones dadas en \eqref{eq_frenet2d_1} y \eqref{eq_frenet2d_2}. En $\reales^3$ una base vectorial necesita tener $3$ vectores. Si tomamos el vector tangente a una curva (es decir, el vector derivada) el conjunto de los vectores ortogonales a él es un espacio vectorial de dimensión $2$, y por tanto no podemos ``elegir'' un solo vector como hacíamos con el automorfismo $J$ de la sección anterior. Esto cambiara las cosas ligeramente, entre otras hará que la curvatura no tenga signo y sea una cantidad no negativa. \\
 Como al principio de la anterior sección, primero trabajamos con curvas parametrizadas por la longitud de arco.
 
+\begin{define}
+	Una curva $\alpha : I \rightarrow \reales^3$ regular se dice \textbf{1-regular} si y solo si $\alpha''(s)\neq 0\ \forall s \in I$ .
+\end{define}
+
+Para poder definir una base de Frenet en curvas alabeadas necesitamos trabajar con curvas 1-regulares. Asumiremos por ahora que las curvas con las que trabajamos son 1-regulares.
+
+\begin{define}
+	Dada una curva $\alpha : I \rightarrow \reales^3$ 1-regular natural definimos:
+	\begin{itemize}
+		\item
+		El \textbf{vector tangente unitario} en $s_0 \in I$ como $T(s_0) = \alpha'(s_0)$.
+		\item
+		La \textbf{curvatura} en $s_0 \in I$ como el número $\kappa(s_0) = |\alpha''(s_0)| = |T'(s_0)|$.
+		\item
+		El \textbf{vector normal unitario} en $s_0 \in I$ como el vector $n(s_0)$ tal que $T'(s_0) = \kappa(s_0)n(s_0)$.
+		\item
+		El \textbf{vector binormal unitario} en $s_0 \in I$ como $b(s_0) = T(s_0) \wedge n(s_0)$.
+		\item
+		La tupla $\{T(s_0), n(s_0), b(s_0)\}$ es una base ortonormal de $\reales^3$ para todo $s_0 \in I$ y la denominamos \textbf{base} o \textbf{triedro de Frenet}.
+	\end{itemize}
+\end{define}
+
+Si $\alpha$ no fuera 1-regular, el vector binormal unitario sería el vector nulo, y por tanto ni sería unitario ni podríamos formar la base de Frenet.
+
+\begin{prop}
+	Existe un número $\tau(s_0)$ para cada $s_0 \in I$ tal que $b'(s_0) = \tau(s_0)n(s_0)$. A este número se le llama la \textbf{torsión}.
+\end{prop}
+
+\begin{proof}
+	Derivando la definición de $b(s)$ obtenemos:
+	\begin{equation*}
+		b'(s_0) = T'(s_0) \wedge n(s_0) + T(s_0) \wedge n'(s_0) = T(s_0) \wedge n'(s_0)
+	\end{equation*}
+	donde $T'(s_0) \wedge n(s_0) = 0$ por la definición del vector normal. Por el lema \eqref{lemma_vectores_unitarios} $n'(s_0)$ es ortogonal a $n(s_0)$ y por ser $\{T(s_0), n(s_0), b(s_0)\}$ base ortonormal, $n'(s_0)$ es paralelo al subespacio generado por $T(s_0)$ y $b(s_0)$. Así, si $n'(s_0)$ no es paralelo a $T(s_0)$, $T(s_0) \wedge n'(s_0)$ será perpendicular a este subespacio y por tanto múltiplo de $n(s_0)$. Si $n(s_0)$ fuera paralelo a $T(s_0)$, $T(s_0) \wedge n'(s_0)$ sería cero.
+\end{proof}
+
+La curvatura y la torsión son las dos funciones que necesitamos para caracterizar una curva alabeada (junto con la longitud de arco). Primero vemos el resultado análogo a las fórmulas de Frenet:
+
+\begin{theorem}
+	Si $\alpha: I \rightarrow \reales^3$ es una curva natural 1-regular se cumple:
+	\begin{equation*}
+		\begin{bmatrix}
+			T' \\
+			n' \\
+			b' 
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			0 & \kappa & 0 \\
+			-\kappa & 0 & -\tau \\
+			0 & \tau & 0 
+		\end{bmatrix}
+		\begin{bmatrix}
+			T \\
+			n \\
+			b 
+		\end{bmatrix}
+	\end{equation*}
+\end{theorem}
+
+\begin{proof}
+	Las fórmulas correspondientes a la primera y última fila de la matriz son la definición de la curvatura y la torsión. Solo hace falta demostrar la segunda. Por la base de Frenet tenemos $\langle T(s_0), n(s_0) \rangle = 0$ y $\langle b(s_0), n(s_0) \rangle = 0$. Derivando y reordenando obtenemos $\langle T(s_0), n'(s_0) \rangle = - \langle T'(s_0), n(s_0) \rangle = -\kappa(s_0)$ y $\langle b(s_0), n'(s_0) \rangle = - \langle b'(s_0), n(s_0) \rangle = -\tau(s_0)$. Por ser la base de Frenet ortonormal y $n'(s_0)$ ortogonal a $n(s_0)$ tenemos $n'(s_0) = \langle T(s_0), n'(s_0) \rangle T(s_0) + \langle b(s_0), n'(s_0) \rangle b(s_0) = -\kappa(s_0)T(s_0) - \tau(s_0) b(s_0)$.
+\end{proof}
+
+Todo esto se extiende de forma similar a curvas que no están parametrizadas por la longitud del arco, y de la misma forma tenemos las siguientes fórmulas:
+
+\begin{prop}
+	Sea $\alpha : I \rightarrow \reales^3$ una curva regular y 1-regular no necesariamente natural. Se cumple:
+	\begin{equation*}
+	\begin{split}
+		& T_{\alpha} = \frac{\alpha'}{|\alpha'|} \\ 
+		& b_{\alpha} = \frac{\alpha' \wedge \alpha''}{|\alpha' \wedge \alpha''|}\\ 
+		& n_{\alpha} = b_{\alpha} \wedge T_{\alpha}\\
+		& \kappa_{\alpha} = \frac{1}{|\alpha'|^3} |\alpha' \wedge \alpha''|\\
+		& \tau_{\alpha} = -\frac{[\alpha', \alpha'', \alpha''']}{|\alpha' \wedge \alpha''|^2}
+	\end{split}
+	\end{equation*}
+\end{prop}
 
 
 
 
 
 
+
+
+\section{La definición de superficie regular}
+El concepto de superficie regular es una ``versión bidimensional'' del concepto de curva regular. Intuitivamente una curva es un objeto unidimensional continuo y suave, mientras que una superficie será un objeto bidimensional con características similares. Resulta que, no tan sorprendemente, tratar con este tipo de geometría correctamente es más complicado que trabajar con la geometría de las curvas. Además, la definición de superficie será una definición ``geométrica'', contrariamente al punto de vista dinámico que hemos usado para curvas: para nosotros, una curva era una aplicación diferenciable, más que un subconjunto de $\reales^n$. Esto equivale a hablar de la traza de la curva con un sistema de coordenadas predeterminado dado por la aplicación en sí. Contrasta por ejemplo a como se tratan los sistemas de coordenadas (bases) en espacios vectoriales: tenemos un objeto del que podemos hablar sin asignarle coordenadas y además dependiendo de que queramos hacer con él le podemos aplicar las coordenadas que más nos convengan. En el caso de las curvas esto no es muy atractivo, pero con superficies puede resultar más interesante.
+
+\begin{define}
+	Llamamos a un subconjunto no vacío $S \subseteq \reales^3$ una \textbf{superficie regular} si para todo $p \in S$ existe un abierto no vacío $U \in \reales^2$ y un homeomorfismo topológico $X: U \rightarrow X(U) \subseteq S$ tal que:
+	\begin{itemize}
+		\item
+		$X(U)$ es un entorno abierto de $p$ en la topología heredada de $S$ en $\reales^3$.
+		\item
+		La diferencial $dX_q$ es inyectiva para todo $q \in X(U)$.
+	\end{itemize}
+\end{define}
+
+\section{Plano tangente y aplicaciones diferenciables}
+\section{Primera forma fundamental}
+\section{Segunda forma fundamental}
+\section{Indicatriz de Dupin}
+
+\section{Espacios seudoeuclídeos}
+\section{Hipersuperficies}
 
 
 

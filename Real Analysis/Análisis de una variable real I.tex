@@ -19,6 +19,8 @@
 \newtheorem{note}{Nota}
 \newtheorem{ejem}{Ejemplo}
 
+\DeclareMathOperator{\graf}{graf}
+
 \author{NyKi}
 \date{Diciembre 2024}
 
@@ -573,7 +575,7 @@ La completitud se puede generalizar a espacios métricos generales, y podemos ha
 \begin{ejem}[Los racionales no son completos]
 	Sea $A \subseteq \racionales$ definido como $A = \{ a\in \racionales\ :\ a^2 < 2\}$. Entonces $\sqrt{2} \not\in \racionales$ es el supremo de este conjunto en los reales, y por tanto existirá una sucesión de elementos de $A$ que converge a $\sqrt{2}$, vamos a llamarla $\sucesion{a} \subseteq \racionales$. En los reales la sucesión converge, y por el teorema de completitud es de Cauchy. Como es de Cauchy en los reales entonces es de Cauchy en los racionales, pero como converge a $\sqrt{2}$ y este número es irracional al existir un único límite para toda sucesión convergente, concluimos que no converge en $\racionales$.
 \end{ejem}
-Con este concepto ya podemos hacer una construcción de los números reales.
+Podemos usar las sucesiones de Cauchy para hacer una construcción de los números reales.
 
 
 
@@ -841,6 +843,7 @@ Hay muchos detalles sobre esta definición. Al conjunto $A$ lo llamamos \textbf{
 	\end{enumerate}
 \end{ejem}
 
+En la mayoría de ocasiones en nuestras definiciones asumiremos que el codominio es $\reales$, y asumiremos tácitamente que podemos extenderlas a casos donde el codominio sean otros subconjuntos reales.\\ 
 Espero que el lector haya visto ya algunas funciones importantes. Usando funciones ya dadas podemos construir nuevas funciones (esto es un hecho intuitivo):
 \begin{define}
 	Sean $f:A \rightarrow \reales$ y $g:B \rightarrow \reales$ con $A,B \subseteq \reales$. Definimos:
@@ -863,9 +866,9 @@ Al igual que las sucesiones, las funciones pueden estar acotadas o ser monótona
 	Sea $f:A \rightarrow \reales$ una función. Decimos que:
 	\begin{enumerate}
 		\item
-		$f$ está \textbf{acotada superiormente} si existe un $\alpha \in \reales$ tal que $f(x) \geq \alpha\ \forall x \in A$.
+		$f$ está \textbf{acotada superiormente} si existe un $\alpha \in \reales$ tal que $f(x) \leq \alpha\ \forall x \in A$.
 		\item
-		$f$ está \textbf{acotada inferiormente} si existe un $\alpha \in \reales$ tal que $f(x) \leq \alpha\ \forall x \in A$.
+		$f$ está \textbf{acotada inferiormente} si existe un $\alpha \in \reales$ tal que $f(x) \geq \alpha\ \forall x \in A$.
 		\item
 		$f$ está \textbf{acotada} si lo está superiormente e inferiormente.
 	\end{enumerate}
@@ -903,7 +906,7 @@ Al igual que las sucesiones, las funciones pueden estar acotadas o ser monótona
 	\end{enumerate}
 \end{ejem}
 
-El último ejemplo es "patológico``: es una función definida en todo $\reales$, que no está acotada en ningún intervalo acotado (que no sean un único punto) y no presenta ninguna asíntota en el sentido de la función $f(x) = \frac{1}{x}$.\\ 
+El último ejemplo es "patológico``: es una función definida en todo $\reales$, que no está acotada en ningún intervalo acotado (que no sean un único punto) y no presenta ninguna asíntota en el sentido de la función $f(x) = \frac{1}{x}$. No tiene ningún interés más.\\ 
 Presentamos ahora definiciones de la teoría de conjuntos:
 \begin{define}
 	Sea $f:A \rightarrow B$ con $A,B \subseteq \reales$ una función. Decimos que $f$ es:
@@ -917,7 +920,36 @@ Presentamos ahora definiciones de la teoría de conjuntos:
 	\end{enumerate}
 \end{define}
 
-TODO: faltan cotas, monotonía, grafica, inversa, inyectiva, suprayectiva, paridad, periodicidad, preimagen y mas ejemplos
+\begin{ejem}
+	\begin{enumerate}
+		\item
+		La función $f: \reales \rightarrow \reales$ dada por $f(x) = x^2$ no es inyectiva mientras que $g: [0, +\infty] \rightarrow \reales$ dada por $g(x) = x^2$ sí que lo es.
+	\end{enumerate}
+\end{ejem}
+
+Las funciones biyectivas son importantes, ya que son aquellas que como a cada elemento de la imagen le corresponde un elemento del dominio se pueden invertir:
+\begin{define}
+	Dada una aplicación $f: A \rightarrow B$ biyectiva definimos la \textbf{aplicación inversa} a la aplicación biyectiva $f^{-1}: B \rightarrow A$ dada por la regla $f^{-1}(b) = a$ si y solo si $f(a) = b$.
+\end{define}
+\begin{proof}
+	Es necesario demostrar que esta regla define una aplicación biyectiva. Sea $b \in B$ cualquiera. Por ser $f$ suprayectiva $\exists a \in A$ tal que $f(a) = b$ y por ser inyectiva si $a' \in A$ es otro elemento tal que $f(a') = f(a) = b$ entonces $a' = a$. Por tanto tal $a$ es único y la regla define una aplicación. Ahora bien, si $a \in A$ entonces $f^{-1}(f(a)) = b$ por definición y por tanto $f^{-1}$ es suprayectiva. Además, si $a = f^{-1}(b) = f^{-1}(b')$ para algunos $b, b' \in B$ y $a \in A$ entonces $f(a) = b' = b$ y por tanto $f$ también es inyectiva.
+\end{proof}
+
+También decimos que una aplicación biyectiva es inversible o invertible.\\ 
+La mayoría de funciones que nos vamos a encontrar no van a ser biyectivas, pero serán especialmente importantes a la hora de hablar de cosas específicas como la regla de la cadena o el cambio de variable en integrales. En el caso que una función sea inyectiva, es posible ``restringir'' el codominio para obtener una aplicación biyectiva y por tanto inversible. En estos casos decimos que la aplicación original es inversible, y tomaremos su inversa como la inversa de la nueva aplicación. No llevaremos mucho cuidado con esta terminología.\\ 
+Si una función no es inversible, aún podemos darle sentido a la notación $f^{-1}$:
+
+\begin{define}
+	Dada una función $f: A \rightarrow \reales$ y un subconjunto $B \subseteq \reales$ definimos la \textbf{preimagen} de $B$ bajo $f$ como el conjunto $f^{-1}(B) = \{x \in A\ | \ f(x) \in B \}$.
+\end{define}
+
+Por último, dejamos más definiciones que son parcialmente importantes:
+
+\begin{define}
+	Dada una función $f: A \rightarrow \reales$ definimos la \textbf{gráfica} de $f$ como el conjunto $\graf f = \{(x, f(x)) : x \in A \} \subseteq \reales^2$.
+\end{define}
+
+TODO: paridad, periodicidad y mas ejemplos
 
 
 
@@ -927,7 +959,61 @@ El concepto de límite formaliza la idea de \textit{acercarse}. Para una funció
 TODO: limites en un punto e infinito, laterales, caracterización por sucesiones, operaciones con limites, limite inferior y superior, limites de funciones monótonas, equivalencias, notacion o y O
 
 \subsection{Continuidad}
-TODO: definiciones, continuidad lateral, operaciones, lipschitz, holder, uniformemente continua, teoremas del valor intermedio (bolzano), weierstrass, borel, 
+\begin{define}
+	Sea $f: A \rightarrow \reales$ una función. Decimos que $f$ es \textbf{continua} en un punto $a \in A$ si y solo si se cumple:
+	\begin{enumerate}
+		\item
+		Si $a$ es un punto aislado de $A$.
+		\item
+		O si $a$ es un punto de acumulación de $A$ y $\lim_{x \rightarrow a} f(x) = f(a)$.
+	\end{enumerate}
+	Si $f$ es continua en todo $p \in P \subseteq A$ se dice que $f$ es continua en $P$, y si es continua en todo punto de su dominio simplemente se dice continua.
+\end{define}
+
+\begin{define}
+	Decimos que una función $f: A \rightarrow \reales$ es \textbf{continua de Lipschitz} si $\exists K \in \reales$ tal que
+	\begin{equation*}
+		|f(x) - f(y)| \leq K|x - y|\ \forall x,y \in A.
+	\end{equation*}
+\end{define}
+
+\begin{prop}
+	Una función continua de Lipschitz es continua.
+\end{prop}
+
+\begin{prop}
+	Si $f: A \rightarrow \reales$ es función continua en $p$ y $g: B \rightarrow \reales$ también, entonces $f + g$, $fg$, $-f$ también lo son. Además, si $g(p) \neq 0$ entonces $\frac{f}{g}$ también lo es.
+\end{prop}
+
+\begin{prop}
+	Sean $f: A \rightarrow B$ y $g: B \rightarrow C$ funciones continuas en $p\in A$ y $f(p)$ respectivamente. Entonces $g \circ f$ es continua en $p$.
+\end{prop}
+
+\begin{prop}
+	Una función $f: A \rightarrow B \subseteq \reales$ es continua si y solo si para todo abierto $U \subseteq \reales$ el conjunto $f^{-1}(B \cap U)$ es abierto.
+\end{prop}
+
+\begin{prop}
+	Si $f: A \rightarrow \reales$ es continua y $A$ es compacto entonces $f(A)$ es compacto. 
+\end{prop}
+
+\begin{theorem}[Teorema de Weierstrass]
+	Si $f: A \rightarrow \reales$ es continua y $A$ es compacto entonces $f$ alcanza su máximo y su mínimo en $A$.
+\end{theorem}
+
+\begin{prop}[Teorema de Bolzano]
+	Si $f: [a, b] \rightarrow \reales$ es continua tal que $f(a)f(b) < 0$ entonces $\exists x_0 \in [a, b]$ tal que $f(x_0) = 0$.
+\end{prop}
+
+\begin{theorem}[Teorema de los valores intermedios]
+	Si $f: [a, b] \rightarrow \reales$ es continua entonces $f(A)$ es un intervalo.
+\end{theorem}
+
+\begin{define}
+	Una función $f: A \rightarrow \reales$ es uniformemente continua si
+\end{define}
+
+TODO: funciones continuas monotonas, definiciones, continuidad lateral, operaciones, lipschitz, holder, uniformemente continua, teoremas del valor intermedio (bolzano), weierstrass, borel, 
 
 
 \section{Derivabilidad de funciones reales}
@@ -972,4 +1058,8 @@ TODO: definiciones, continuidad lateral, operaciones, lipschitz, holder, uniform
 
 
 \section{Funciones especiales}
+
+\subsection{Funciones trigonométricas}
+
+\subsection{Función gamma y beta}
 \end{document}
