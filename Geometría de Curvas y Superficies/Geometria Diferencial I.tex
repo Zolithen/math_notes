@@ -442,11 +442,18 @@ El concepto de superficie regular es una ``versión bidimensional'' del concepto
 		\item
 		$X(U)$ es un entorno abierto de $p$ en la topología heredada de $S$ en $\reales^3$.
 		\item
-		La diferencial $dX_q$ es inyectiva para todo $q \in X(U)$.
+		$X$ como aplicación $X: U \rightarrow \reales^{3}$ es diferenciable y la diferencial $dX_q$ es inyectiva para todo $q \in X(U)$.
 	\end{itemize}
 \end{define}
 
+\begin{prop}
+	Sea $S$ una superficie regular y $X: U \rightarrow S$, $Y: V \rightarrow S$ dos parametrizaciones regulares alrededor de $p \in S$. Entonces la aplicación $X^{-1} \circ Y : V \rightarrow U$ es una aplicación diferenciable.
+\end{prop}
+
 \section{Plano tangente y aplicaciones diferenciables}
+\begin{define}
+	Sea $S$ una superficie regular y $p \in S$. Decimos que $v \in \reales^3$ es un \textbf{vector tangente} si existe una parametrización regular $X: U \rightarrow S$ alrededor de $p$ y una curva regular $\alpha: (-\varepsilon, \varepsilon) \rightarrow U$ tal que $(X \circ \alpha)' (0) = v$.
+\end{define}
 \section{Primera forma fundamental}
 \section{Segunda forma fundamental}
 \section{Indicatriz de Dupin}

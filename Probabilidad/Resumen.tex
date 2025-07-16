@@ -1,0 +1,327 @@
+\documentclass{article}
+
+\usepackage[spanish]{babel}
+\usepackage{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[left=30pt,right=40pt,top=40pt,bottom=60pt]{geometry}
+\usepackage{physics}
+
+\newtheorem{theorem}{Teorema}
+\newtheorem{prop}{Proposición}
+\newtheorem{cor}{Corolario}
+\newtheorem{axiom}{Axioma}
+\theoremstyle{definition}
+\newtheorem{define}{Definición}
+\newtheorem{distr}{Distribución notable}
+\theoremstyle{remark}
+\newtheorem{note}{Nota}
+\newtheorem{ejem}{Ejemplo}
+
+\DeclareMathOperator{\graf}{graf}
+\DeclareMathOperator{\binomial}{Bn}
+\DeclareMathOperator{\binomialneg}{BN}
+\DeclareMathOperator{\geometrica}{G}
+\DeclareMathOperator{\hipergeom}{H}
+\DeclareMathOperator{\poisson}{P}
+\DeclareMathOperator{\normal}{N}
+\DeclareMathOperator{\gammad}{Gm}
+\DeclareMathOperator{\exponencial}{Exp}
+
+
+\author{NyKi}
+\date{Diciembre 2024}
+
+\newcommand{\reales}{\mathbb{R}}
+\newcommand{\naturales}{\mathbb{N}}
+\newcommand{\racionales}{\mathbb{Q}}
+
+\begin{document}
+
+Tratamiento informal.
+
+\begin{define}
+	Una \textbf{variable aleatoria} $X$ es una aplicación de un espacio muestral a los números reales. El rango de tal aplicación se denota por $R_X$.
+\end{define}
+\begin{define}[Axiomática de Kolmogorov]
+	Una función $P: \mathcal{A} \rightarrow \reales$ con $\mathcal{A}$ una $\sigma$-álgebra de $\Omega$ se dice \textbf{función de probabilidad} si satisface:
+	\begin{enumerate}
+		\item
+		$P(S) \geq 0$ para todo $S \in \mathcal{A}$.
+		\item
+		$P(\Omega) = 1$.
+		\item
+		Si $\{S_n \}_{n=1}^{+\infty} \subseteq \mathcal{A}$ son tales que $S_i \cap S_j = \emptyset$ para todo $i,j$ distintos, entonces:
+		\begin{equation*}
+			P(\bigcup_{n=1}^{\infty} S_n) = \sum_{n=1}^{\infty} P(S_n).
+		\end{equation*}			 
+	\end{enumerate}
+\end{define}
+
+\begin{note}
+	Una $\sigma$-álgebra de un conjunto $\Omega$ es una famila de subconjuntos de $\Omega$ que está cerrada bajo tomar complementos, uniones numerables y que contiene al total $\Omega$.
+\end{note}
+
+\begin{define}
+	Una variable aleatoria se llama \textbf{discreta} si su rango es numerable.
+\end{define}
+	
+\section{Variables aleatorias discretas}
+Dada una variable aleatoria discreta $X$, denotamos por $P(X = x)$ o $p(x)$ la probabilidad de que $X$ sea igual a $x$.
+
+\begin{define}
+	La \textbf{función de distribución}:
+	\begin{equation*}
+		F(x) = P(X \leq x) = \sum_{\substack{y \in R_X \\ y \leq x}} P(X = y)
+	\end{equation*}
+\end{define}
+
+\begin{define}
+	La \textbf{esperanza} de $g(X)$:
+	\begin{equation*}
+		E(g(X)) = \sum_{x \in R_X} g(x)P(X = x)
+	\end{equation*}
+\end{define}
+
+\begin{define}
+	La \textbf{varianza} de $X$:
+	\begin{equation*}
+		Var(X) = E((X - E(X))^2) = E(X^2) - (E(X))^2.
+	\end{equation*}
+\end{define}
+
+\begin{theorem}
+	Para una variable aleatoria discreta $X$ y $a, b \in \reales$:
+	\begin{align*}
+		E(aX + b) = aE(X) + b && Var(aX + b) = a^2Var(X)
+	\end{align*}
+	y si $g_i$, $i=1, 2, \ldots, n$ son $n$ funciones de $X$ entonces:
+	\begin{equation*}
+		E(\sum_{k=1}^{n} g_i(X)) = \sum_{k=1}^{n} E(g_i(X)).
+	\end{equation*}
+\end{theorem}
+
+\begin{define}
+	El \textbf{momento} de orden $k$ centrado en $a$ como $E((X-a)^k)$.
+\end{define}
+
+\begin{define}
+	La \textbf{función generatriz de momentos} $m_X (t) = E(e^{tx})$. Puede que no exista para algunas variables discretas.
+\end{define}
+
+\begin{theorem}
+\begin{itemize}
+	\item
+	Dos variables aleatorias discretas tales que existan sus funciones generatrices tienen la misma función probabilidad si y solo si tienen la misma función generatriz de momentos.
+	
+	\item
+	Para todo $k \in \naturales$ distinto de cero:
+	\begin{equation}
+		(\frac{\partial^k}{\partial t^k} m_X)(0) = E(X^k)
+	\end{equation}
+	\end{itemize}
+\end{theorem}
+
+\begin{distr}[De Bernoulli]
+	$X = \text{número de éxitos en una realización de un experimento binomial} \sim \binomial(1, p)$.\\
+	$p$ es la probabilidad de éxito.
+	\begin{itemize}
+		\item
+		$p(x) = p^x (1-p)^x$
+		\item
+		$E(x) = p$
+		\item
+		$Var(X) = p(1-p)$
+		\item
+		$m_X(t) = 1 - p + pe^t$
+	\end{itemize}
+\end{distr}
+
+\begin{distr}[Geométrica]
+	$X = \text{número de realizaciones hasta el primer éxito en un experimento binomial} \sim \geometrica(p)$.\\
+	$p$ es la probabilidad de éxito.
+	\begin{itemize}
+		\item
+		$p(x) = p(1-p)^{x-1}$
+		\item
+		$E(x) = \frac{1}{p}$
+		\item
+		$Var(X) = \frac{1-p}{p^2}$
+		\item
+		$m_X(t) = \frac{pe^t}{1 - (1 - p)e^t}$
+	\end{itemize}
+\end{distr}
+
+\begin{distr}[Binomial]
+	$X = \text{número de éxitos tras n realizaciones en un experimento binomial} \sim \binomial(n, p)$.
+\end{distr}
+
+\begin{distr}[Binomial negativa]
+	$X = \text{número de realizaciones hasta obtener el r-ésimo éxito en un experimento binomial} \sim \binomialneg(r, p)$.
+\end{distr}
+
+\begin{distr}[Hipergeométrica]
+	$X = \text{número de éxitos en n realizaciones en un experimento hipergeométrioca} \sim \hipergeom(M,N,n)$.\\
+	$N$ es el tamaño de la población.\\
+	$M$ el número de individuos que se consideran éxito.
+\end{distr}
+
+\begin{distr}[De Poisson]
+	$X = \text{número de acontecimientos en un intervalo de amplitud t} \sim \poisson(\lambda t)$.\\
+	$\lambda$ es la media de acontecimientos por una unidad de tiempo.
+\end{distr}
+
+
+
+
+
+\section{Variables aleatorias continuas}
+Dada una variable aleatoria no discreta $X$, no siempre podemos hablar de la probabilidad puntual. Construimos la teoría usando la función de distribución.
+
+\begin{define}
+	Una variable aleatoria no discreta $X$ es \textbf{continua} si su función de distribución $F(x)$ es continua.
+\end{define}
+
+En esta sección asumiremos que $X$ es continua.
+
+\begin{define}
+	La \textbf{función de densidad}:
+	\begin{equation*}
+		f(x) = (\pdv{F}{t})(x).
+	\end{equation*}
+\end{define}
+
+La función de densidad cumple la función de la probabilidad $p(x)$ en la sección anterior. Recordamos que una función de distribución es una función de probabilidad y por tanto tiene que satisfacer la axiomática de Kolmogorov, aunque para la función de distribución no existen parejas de sucesos no triviales que no intersequen.
+
+\begin{define}
+	La \textbf{esperanza} de $g(X)$:
+	\begin{equation*}
+		E(g(X)) = \int_{x \in R_X} g(x)f(x) dx
+	\end{equation*}
+\end{define}
+
+\begin{define}
+	La \textbf{varianza} de $X$:
+	\begin{equation*}
+		Var(X) = E((X - E(X))^2) = E(X^2) - (E(X))^2.
+	\end{equation*}
+\end{define}
+
+Todo lo de la sección anterior sobre esperanza y varianza es válido para variables aleatorias continuas.
+
+\begin{distr}[Normal]
+	$X \sim \normal(\mu, \sigma^2)$
+\end{distr}
+
+La distribución normal no tiene función de distribución en forma cerrada con funciones elementales. Se usan tablas para su cálculo. Estas tablas vienen generalmente para normales \textit{tipificadas}, es decir para $\normal(0, 1)$.
+
+\begin{theorem}
+	\begin{equation*}
+		X \sim N(\mu, \sigma^2)\ \text{si y solo si}\ Z = \frac{X - \mu}{\sigma} \sim N(0, 1).
+	\end{equation*}
+\end{theorem}
+
+La normal se puede usar para aproximar distribuciones Poisson y binomiales discretas.
+
+\begin{theorem}
+	\begin{align*}
+		X \sim \binomial(n, p) &\Rightarrow X \approx \normal(np, np(1-p))\\
+		Y \sim P(\lambda) &\Rightarrow Y \approx \normal(\lambda, \lambda)
+	\end{align*}
+\end{theorem}
+
+\begin{define}
+	La función \textbf{gamma}:
+	\begin{equation*}
+		\Gamma(\alpha) = \int_{0}^{\infty} x^{\alpha - 1}e^{-x} dx.
+	\end{equation*}
+\end{define}
+
+\begin{distr}[Gamma]
+	$X \sim \gammad(\alpha, \beta)$.
+\end{distr}
+
+\begin{distr}[Chi cuadrado]
+	$X \sim \chi_{(n)}^{2} = \gammad(\frac{n}{2}, 2)$.
+\end{distr}
+
+\begin{distr}[Exponencial]
+	$X \sim \exponencial(\beta) = \gammad(1, \beta)$.
+\end{distr}
+
+\begin{theorem}
+	\begin{equation*}
+		\frac{1}{\Gamma(\alpha)} \int_{\lambda}^{\infty} x^{\alpha-1}e^{-x} = \sum_{x = 0}^{\alpha - 1} \frac{\lambda^x e^{-\lambda}}{x!}
+	\end{equation*}
+\end{theorem}
+
+\begin{theorem}
+	En un proceso de Poisson, son equivalentes:
+	\begin{itemize}
+		\item
+		Número de acontecimientos en un intervalo de amplitud t $\sim \poisson(\lambda t)$.
+		\item
+		Tiempo entre dos acontecimientos consecutivos $\sim \exponencial(\frac{1}{\lambda})$.
+		\item
+		Tiempo hasta el n-ésimo acontecimiento $\sim \gammad(n, \frac{1}{\lambda})$.
+	\end{itemize}
+\end{theorem}
+
+
+\section{Vectores aleatorios}
+
+\section{Distribuciones muestrales}
+\begin{define}
+	Una \textbf{muestra aleatoria} es un conjunto de variables aleatorias que siguen la misma distribución.
+\end{define}
+
+\begin{define}
+	Un \textbf{estadístico} es una función de las variables aleatorias que componen una muestra.
+\end{define}
+
+Supongamos que tenemos una población de individuos, y queremos saber cierta característica de todos ellos. El objetivo es conocer una aproximación examinando un subconjunto pequeño de individuos (una muestra). Tratamos con distribuciones normales
+
+\begin{theorem}[Media]
+	Sea $X_i$ para $i=1,2,\ldots,n$ una muestra aleatoria de tamaño $n$, con $X_i \sim \normal(\mu, \sigma^2)$ para todo $i$. Entonces
+	\begin{equation*}
+		\frac{1}{n} \sum_{i=1}^{n} X_i \sim \normal(\mu, \frac{\sigma^2}{n}).
+	\end{equation*}
+	El sumatorio es la media de la muestra y se denota por $\overline{X}$.
+\end{theorem}
+
+\begin{theorem}
+	Sea $X_i$ para $i=1,2,\ldots,n$ una muestra aleatoria de tamaño $n$, con $X_i \sim \normal(\mu, \sigma^2)$ para todo $i$. Entonces
+	\begin{equation*}
+		\sum_{i=1}^{n} \left(\frac{X_i - \mu}{\sigma}\right)^2 \sim \chi_{(n)}^2.
+	\end{equation*}
+\end{theorem}
+
+\begin{theorem}[Varianza]
+	Sea $X_i$ para $i=1,2,\ldots,n$ una muestra aleatoria de tamaño $n$, con $X_i \sim \normal(\mu, \sigma^2)$ para todo $i$. Sea $\overline{X}$ la media muestral y $S^2$ la varianza muestral. Entonces
+	\begin{equation*}
+		\frac{(n-1)S^2}{\sigma^2} = \frac{1}{\sigma^2} \sum_{i=1}^{n} (X_i - \overline{X})^2 = \sum_{i=1}^{n} \left( \frac{X_i - \overline{X}}{\sigma}\right) \sim \chi_{(n-1)}^2
+	\end{equation*}
+\end{theorem}
+
+\begin{distr}[t de Student]
+	Sea $Z \sim \normal(0, 1)$ e $Y$ una variable aleatoria que sigue una distribución $\chi_{v}^2$ independiente de $Z$. Entonces:
+	\begin{equation*}
+		\frac{Z\sqrt{v}}{\sqrt{Y}} \sim t_{(v)}
+	\end{equation*}
+	la $v$ son los grados de libertad de la $t$ de Student.
+\end{distr}
+
+\begin{distr}[F de Snedecor]
+	Sean $X_1$ y $X_2$ dos variables aleatorias independientes que siguen distribuciones chi-cuadrado $\chi_{(v)}^2$ y $\chi_{(b)}^2$ respectivamente. Entonces:
+	\begin{equation*}
+		\frac{X_1}{X_2} \sim F_{(v;b)}.
+	\end{equation*}
+	La distribución F es la F de Snedecor con v grados de libertad en el numerador y b grados de libertad en el denominador. 
+\end{distr}
+
+\end{document}
