@@ -201,7 +201,7 @@ La definición parece ajena al ejemplo de ''agujero'' que hemos dado en la \text
 \begin{define}[Números reales]
 	Al conjunto $\mathbb{R}$ con $\mathbb{Q} \subseteq \mathbb{R}$ y que cumpla el \textit{Axioma \ref{ax_supr}} lo llamamos los \textbf{números reales}.
 \end{define}
-Este conjunto no es único, pero si es único bajo isomorfismos, que viene a decir que cualesquiera dos conjuntos con estas propiedades tienen la misma estructura y por tanto no hace falta distinguirlos. En una sección posterior, nos centraremos en la construcción de los números reales: lo que hemos dado aquí es solo una definición axiomática.
+Este conjunto no es único, pero si es único bajo isomorfismos, que viene a decir que cualesquiera dos conjuntos con estas propiedades tienen la misma estructura y por tanto no hace falta distinguirlos. Aquí no hemos dado una construcción de los números reales, lo que hemos dado aquí es solo una definición axiomática. Es decir, estamos asumiendo que existe un conjunto con estas características.
 
 
 
@@ -258,6 +258,12 @@ El ínfimo de $A$ existe si y solo sí existe un número $\alpha \in \mathbb{R}$
 \end{enumerate}
 \end{prop}
 
+\begin{proof}
+	TODO: Añadir espacio\\ 
+	Vamos a hacer la demostración en el caso del supremo, el caso del ínfimo es igual pero cambiando la dirección de las desigualdades.\\ 
+	$\Rightarrow)$ Supongamos que existe el supremo de $\alpha$, y sea $\omega = \sup A$. Si $\varepsilon > 0$ entonces $\omega - \varepsilon$ no será cota superior de $A$ (ya que el supremo es la mínima cota superior) y por tanto existirá $x \in A$ tal que $x > \omega - \varepsilon$. Además, $\omega$ es una cota superior de $A$, y así es el número que buscamos.\\ 
+	$\Leftarrow)$ Tal $\omega$ es una cota superior por hipótesis, veamos que es la mínima. Sea $\alpha$ una cota superior distinta de $\omega$, y supongamos que $\alpha < \omega$. Sea $\varepsilon = \omega - \alpha > 0$. Por hipótesis existirá un $x \in A$ tal que $x > \omega - \varepsilon = \alpha$, que contradice que $\alpha$ sea cota superior de $A$. Esto también demuestra la unicidad del número que satisface las condiciones de $\omega$ (el supremo es único) y la última parte del enunciado.
+\end{proof}
 
 Cuando estudiemos sucesiones, nos será muy útil tener herramientas para relacionar los números naturales con los números reales.
 
@@ -265,20 +271,52 @@ Cuando estudiemos sucesiones, nos será muy útil tener herramientas para relaci
 \begin{theorem}[Propiedad arquimediana]
 $\forall x,y \in \mathbb{R}$ tales que $x>0$ $\exists n \in \mathbb{N}$ con $nx>y$.
 \end{theorem}
-Podemos entender el teorema así: si tenemos una longitud muy pequeña siempre vamos a juntar muchas de ellas para poder formar una longitud grande. Este teorema nos va a servir para demostrar dos corolarios que son intuitivamente verdad:
+\begin{proof}
+	Procedemos por contradicción. Supongamos que existen $x,y$ reales con $x > 0$ tales que para todo $n \in \naturales$ se tiene $nx \leq y$. Consideramos el conjunto $A = \{nx\ |\ n \in \naturales \}$ que no es vacío (ya que $\naturales$ no es vacío) y es acotado superiormente (por hipótesis). Por el axioma del supremo, existe el supremo de $A$. Sea $\alpha = \sup A$. Por la proposición anterior, tomando $\varepsilon = x > 0$ tendremos que existirá un $n \in \naturales$ tal que $nx > \alpha - \varepsilon = \alpha - x$, que implica $(n+1)x > \alpha$ pero como $n+1 \in \naturales$ se tiene $(n+1)x \in A$ y así $\alpha$ no sería una cota superior de $A$, que contradice la definición de supremo.
+\end{proof}
+
+Podemos entender el teorema así: si tenemos una longitud muy pequeña siempre vamos a juntar muchas de ellas para poder formar una longitud grande. Este teorema y la proposición anterior nos van a servir para demostrar corolarios que son intuitivamente verdad:
 \begin{cor}
 	El conjunto de los números naturales no está acotado superiormente.
 \end{cor}
+\begin{proof}
+	Si $\naturales$ tuviera una cota superior, aplicando la propiedad arquimediana con $x=1$ e $y$ la cota superior tendríamos un número natural mayor que la cota superior, contradicción.
+\end{proof}
+TODO: Es necesario el corolario siguiente? Ponerlo con el otro corolario
 \begin{cor}
 	Todo subconjunto no vacío de los números naturales que esté acotado superiormente tiene máximo y mínimo.
 \end{cor}
+\begin{proof}
+	Sea $A$ un subconjunto no vacío de números naturales. Tiene mínimo por el principio de inducción, y al estar acotado superiormente y no ser vacío existe el supremo que llamamos $\omega$. Si $\omega \not \in A$ tendríamos que para cada $n \in \naturales$ existiría un $x_n \in A$ tal que $\omega > x_n > \omega - \frac{1}{n}$. Considerando $x_{n+1}$ y $x_n$ en la desigualdad anterior llegamos a que $|x_{n+1} - x_n| < \frac{1}{n}$ y por tanto $x_{n+1} = x_n = x \in \naturales$ para todo $n \in \naturales$ (ya que $|x_{n+1} - x_n|$ será un número natural o $0$, pero ningún número natural es menor a $1$ por construcción). Como $x > \omega - \frac{1}{n}$ para todo $n$ se puede ver que $x > \omega$, pero también $\omega > x$, contradicción.
+\end{proof}
 \begin{cor}
-	Todo subconjunto finito de los números reales esta acotado y tiene máximo y mínimo.
+	Un subconjunto no vacío de números naturales es finito si y solo sí está acotado si y solo sí tiene máximo.
+\end{cor}
+\begin{proof} 
+	Es obvio que si se tiene un máximo entonces un subconjunto es acotado. Si un conjunto es acotado, por el corolario anterior tiene máximo. Esto demuestra la segunda doble implicación. Demostramos la primera doble implicación.\\ 
+	$\Rightarrow)$ Demostramos que un conjunto $A \subseteq \naturales$ no vacío tiene máximo mediante inducción sobre el número de elementos del conjunto. Si tal conjunto tiene un único elemento, trivialmente ese elemento es el máximo. Supongamos entonces que todo subconjunto de $n$ elementos tiene máximo, y sea $A_{n+1}$ un conjunto con $n+1$ elementos. Escogiendo un elemento $a \in A_{n+1}$ tenemos $A_{n+1} = \{a \} \cup A_{n}$ con $A_{n}$ un conjunto de $n$ elementos, que por hipótesis tiene un máximo $a_n$. Entonces existen dos casos: $a_n > a$ y $a_n < a$. En el primero, $a_n$ es el máximo de $A_{n+1}$ y en el segundo $a$ es el máximo de $A_{n+1}$ por la transitividad del orden. En cualquier caso hemos encontrado el máximo de $A_{n+1}$.\\ 
+	$\Leftarrow)$ Si $A$ es tal conjunto, por ser acotado $\exists \omega \in \reales$ cota superior de $A$. Aplicando la propiedada arquimediana con $x = 1, y = \omega$ encontramos que $\exists n_0 \in \naturales$ con $n_0 > \omega$, lo que implica que $n_0$ es cota superior de $A$, y además que $A \subseteq \{n\ |\ n\in\naturales \text{ y } n_0 \geq n \}$, siendo este último conjunto finito y por tanto $A$ es finito.
+\end{proof}
+\begin{cor}
+	Todo subconjunto finito no vacío de los números reales esta acotado y tiene máximo y mínimo.
+\end{cor}
+\begin{proof}
+	Demostramos el enunciado solo para el máximo, el mínimo se demuestra igual. Procedemos por inducción sobre el número $n$ de elementos del conjunto. El caso $n = 1$ es trivial. Supongamos que el enunciado es cierto para conjuntos con un número de elementos igual a $n$, y sea $A_{n+1}$ un conjunto con $|A_{n+1}| = n+1$. Sea $a$ un elemento cualquiera de $A_{n+1}$, y tenemos $A_{n+1} = \{a\} \cup A_{n}$ con $A_n$ un conjunto de $n$ elementos. Por hipótesis tendrá un máximo $b$, y por la ley de tricotomía  se tiene $a > b$ o $a < b$ (no se puede tener $a = b$ ya que son distintos). En el primer caso $a$ es el máximo de $A_{n+1}$ y en el segundo $b$ es el máximo de $A_n$
+\end{proof}
+\begin{cor}
+	Un subconjunto no vacío de números enteros está acotado superiormente (resp. inferiormente) si y solo sí tiene máximo (resp. mínimo).
 \end{cor}
 
+
+
+
 \begin{theorem}[Existencia de la parte entera]
-$\forall x \in \mathbb{R}$ existe un único $k \in \mathbb{Z}$ tal que $k\leq x < k+1$.
+	$\forall x \in \mathbb{R}$ existe un único $k \in \mathbb{Z}$ tal que $k\leq x < k+1$.
 \end{theorem}
+\begin{proof}
+	Sea $A = \{ k \in \mathbb{Z}\ |\ k \leq x\}$. Es un conjunto acotado superiormente y es no vacío por la propiedad arquimediana (tomando $y' = -x$  y $x' = 1$). Por tanto, tiene un máximo que llamamos $n$. Como $n+1 > n$ y $n$ es el supremo de $A$, $n+1 \not \in A$ lo que implica $n+1 > x$. $n$ es el número que buscamos.
+\end{proof}
+
 \begin{define}[Parte entera]
 Dado $x \in \mathbb{R}$ definimos la \textbf{parte entera} como:
 \begin{equation}
@@ -338,7 +376,37 @@ Por conveniencia, definimos las sucesiones aquí:
 \end{define}
 Introducir las sucesiones aquí nos va a permitir establecer algunos ejemplos de inducción:
 \begin{ejem}[Números triangulares]
-	Definimos la sucesión $\sucreal{T}$ mediante la fórmula $T_n = \sum_{k = 1}^{n} k$. Estos son los \textbf{números triangulares}. El objetivo es establecer una expresión cerrada para la sucesión.
+	Definimos la sucesión $\sucreal{T}$ mediante la fórmula $T_n = \sum_{k = 1}^{n} k$. Estos son los \textbf{números triangulares}. El objetivo es establecer una expresión cerrada para la sucesión. Para ello, vamos a intentar encontrar una posible fórmula cerrada y después usamos inducción para demostrarla. Primero notamos que
+	\begin{equation}\label{ej_triang1}
+		T_{n} - T_{n-1} = n 
+	\end{equation}
+	para todo $n > 1$. Veamos que también vamos a tener
+	\begin{equation}\label{ej_triang2}
+		T_{n} + T_{n-1} = n^2
+	\end{equation}
+	mediante un dibujo: \\ 
+	En vista de esto, podemos sumar \eqref{ej_triang1} y \eqref{ej_triang2} para obtener
+	\begin{equation*}
+		2T_{n} = n^2 + n
+	\end{equation*}
+	y finalmente
+	\begin{equation}\label{ej_triang}
+		T_n = \frac{n(n+1)}{2}.
+	\end{equation}
+	Esta igualdad es la que vamos a demostrar por inducción. Primero vemos que \eqref{ej_triang} se cumple para $n=1$:
+	\begin{equation*}
+		T_1 = \sum_{k = 1}^{1} k = 1 = \frac{1*2}{2} = \frac{1(1+1)}{2}.
+	\end{equation*}
+	Ahora, suponemos que la expresión \eqref{ej_triang} es válida para un natural $n \geq 1$, y veamos que
+	\begin{eqnarray*}
+		T_{n+1} = \sum_{k = 1}^{n+1} k & = (n+1) + \sum_{k = 1}^{n} k \\ 
+		& = (n+1) + T_n \\ 
+		& = (n+1) + \frac{n(n+1)}{2} \\
+		& = (n+1)(1+ \frac{n}{2}) \\  
+		& = (n+1)\frac{2 + n}{2} \\  
+		& = \frac{(n+1)((n+1) + 1)}{2}
+	\end{eqnarray*}
+	que es la expresión \eqref{ej_triang} con $n+1$, y por tanto queda demostrado.
 \end{ejem}
 
 
@@ -1361,4 +1429,5 @@ La identidad del ángulo triple tiene una consecuencia interesante: se puede usa
 \subsection{Funciones definidas por integrales}
 
 \subsection{Función gamma, beta y digamma}
+
 \end{document}
