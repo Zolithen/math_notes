@@ -282,12 +282,13 @@ Podemos entender el teorema así: si tenemos una longitud muy pequeña siempre v
 \begin{proof}
 	Si $\naturales$ tuviera una cota superior, aplicando la propiedad arquimediana con $x=1$ e $y$ la cota superior tendríamos un número natural mayor que la cota superior, contradicción.
 \end{proof}
+Es importante notar lo que estamos demostrando: como subconjunto de $\reales$, $\naturales$ no está acotado superiormente. Si quisieramos demostrar que $\naturales$ no está acotado en los $\naturales$, simplemente notaríamos que $n+1 > n$. Esta distinción es importante, ya que vamos a trabajar con números reales la mayoría del tiempo.\\ 
 TODO: Es necesario el corolario siguiente? Ponerlo con el otro corolario
 \begin{cor}
 	Todo subconjunto no vacío de los números naturales que esté acotado superiormente tiene máximo y mínimo.
 \end{cor}
 \begin{proof}
-	Sea $A$ un subconjunto no vacío de números naturales. Tiene mínimo por el principio de inducción, y al estar acotado superiormente y no ser vacío existe el supremo que llamamos $\omega$. Si $\omega \not \in A$ tendríamos que para cada $n \in \naturales$ existiría un $x_n \in A$ tal que $\omega > x_n > \omega - \frac{1}{n}$. Considerando $x_{n+1}$ y $x_n$ en la desigualdad anterior llegamos a que $|x_{n+1} - x_n| < \frac{1}{n}$ y por tanto $x_{n+1} = x_n = x \in \naturales$ para todo $n \in \naturales$ (ya que $|x_{n+1} - x_n|$ será un número natural o $0$, pero ningún número natural es menor a $1$ por construcción). Como $x > \omega - \frac{1}{n}$ para todo $n$ se puede ver que $x > \omega$, pero también $\omega > x$, contradicción.
+	Sea $A$ un subconjunto no vacío de números naturales. Tiene mínimo por el principio de inducción, y al estar acotado superiormente y no ser vacío existe el supremo que llamamos $\omega$. Si $\omega \not \in A$ tendríamos que para cada $n \in \naturales$ existiría un $x_n \in A$ tal que $\omega > x_n > \omega - \frac{1}{n}$. Considerando $x_{n+1}$ y $x_n$ en la desigualdad anterior llegamos a que $|x_{n+1} - x_n| < \frac{1}{n}$ y por tanto $x_{n+1} = x_n = x \in \naturales$ para todo $n \in \naturales$ (ya que $|x_{n+1} - x_n|$ será un número natural o $0$, pero ningún número natural es menor a $1$ por construcción). Como $x > \omega - \frac{1}{n}$ para todo $n$ se puede ver que $x \geq \omega$, pero también $\omega > x$, contradicción.
 \end{proof}
 \begin{cor}
 	Un subconjunto no vacío de números naturales es finito si y solo sí está acotado si y solo sí tiene máximo.
@@ -1064,37 +1065,27 @@ El concepto de límite formaliza la idea de \textit{acercarse}. Para una funció
 		\item
 		Sea $f: (a, \infty) \rightarrow \reales$. Decimos que $f$ \textbf{converge} a un valor $L\in \reales$ en el infinito positivo si $\forall \varepsilon > 0$ existe un $\delta > 0$ tal que si $x > \delta$ se tiene $|f(x) - L| < \varepsilon$. Si en cambio ocurre que $\forall K \in \reales$ existe un $\delta > 0$ tal que si $x > \delta$ se tiene $f(x) > K$ entonces decimos que $f$ \textbf{diverge a $+\infty$}. Análogamente se pueden definir para el infinito negativo y para $-\infty$.
 		\item
-		Sea $f: A \rightarrow \reales$ y $p$ un punto de acumulación de $A$. Decimos que $f$ \textbf{converge} a un valor $L\in \reales$ en $p$ si $\forall \varepsilon > 0$ existe un $\delta > 0$ tal que si $|x - p| < \delta$ se tiene $|f(x) - L| < \varepsilon$. Si en cambio ocurre que $\forall K \in \reales$ existe un $\delta > 0$ tal que si $|x - p| > \delta$ se tiene $f(x) > K$ entonces decimos que $f$ \textbf{diverge a $+\infty$} en $p$. Análogamente se define para $-\infty$.
+		Sea $f: A \rightarrow \reales$ y $p$ un punto de acumulación de $A$. Decimos que $f$ \textbf{converge} a un valor $L\in \reales$ en $p$ si $\forall \varepsilon > 0$ existe un $\delta > 0$ tal que si $|x - p| < \delta$ se tiene $|f(x) - L| < \varepsilon$. Si en cambio ocurre que $\forall K \in \reales$ existe un $\delta > 0$ tal que si $|x - p| < \delta$ se tiene $f(x) > K$ entonces decimos que $f$ \textbf{diverge a $+\infty$} en $p$. Análogamente se define para $-\infty$.
+		\item
+		Sea $f: (p, b) \rightarrow \reales$. Decimos que $f$ \textbf{converge por la derecha} a un valor $L \in \reales$ en $p$ si $\forall \varepsilon > 0$ existe un $\delta > 0$ tal que si $x \in (p, p + \delta)$ se tiene $|f(x) - L| < \varepsilon$. Si en cambio ocurre que $\forall K \in \reales$ existe un $\delta > 0$ tal que si $x \in (p, p + \delta)$ se tiene $f(x) > K$ entonces decimos que $f$ \textbf{diverge por la derecha a $+\infty$} en $p$. Análogamente se define para $-\infty$.		
+		\item
+		Sea $f: (a, p) \rightarrow \reales$. Decimos que $f$ \textbf{converge por la izquierda} a un valor $L \in \reales$ en $p$ si $\forall \varepsilon > 0$ existe un $\delta > 0$ tal que si $x \in (p - \delta, p)$ se tiene $|f(x) - L| < \varepsilon$. Si en cambio ocurre que $\forall K \in \reales$ existe un $\delta > 0$ tal que si $x \in (p - \delta, p)$ se tiene $f(x) > K$ entonces decimos que $f$ \textbf{diverge por la derecha a $+\infty$} en $p$. Análogamente se define para $-\infty$.
 	\end{itemize}
 \end{define}
 
-Existen muchas combinaciones posibles para cubrir todos los casos. Aquí hemos puesto las básicas.\\ 
-El primer paso en el estudio de límites es ver que efectivamente una función solo puede converger a un único valor. Por comodidad, solo enunciamos el resultado para límites en un punto. Para funciones en el infinito es similar.
+Existen muchas combinaciones posibles para cubrir todos los casos. Aquí hemos puesto las básicas. En el caso de la convergencia por la derecha e izquierda, los valores a los que converge la función se dicen \textbf{límites laterales}
+
+El primer paso en el estudio de límites es ver que efectivamente una función solo puede converger a un único valor. Por comodidad, solo enunciamos el resultado para límites no laterales en un punto. Para funciones en el infinito y límites laterales es similar.
 
 \begin{prop}
-	Sea $f: A \rightarrow \reales$ y $p$ punto de acumulación de $A$. Entonces se tiene uno y solo uno de los siguientes casos:
-	\begin{itemize}
-		\item
-		$f$ diverge a $+\infty$ en $p$.
-		
-		\item
-		$f$ diverge a $-\infty$ en $p$.
-		
-		\item
-		$f$ converge a exactamente un único valor $L \in \reales$ en $p$.
-		
-		\item
-		$f$ ni converge ni diverge.
-	\end{itemize}
+	Sea $f: A \rightarrow \reales$ y $p$ punto de acumulación de $A$. Si $f$ converge a $L$ en $p$ entonces no existe un $R$ distinto a $L$ tal que $f$ converja a $R$ en $p$.
 \end{prop}
 
 \begin{define}
 	Si $f: A \rightarrow \reales$ converge en $p$ punto de acumulación de $A$ a un valor $L \in \reales$ este valor es único y se denomina \textbf{límite} de la función $f$ en $p$. Se denota por $\lim_{x \rightarrow p} f(x) = L$.
 \end{define}
 
-Otra vez, también se puede definir análogamente para funciones divergentes en un punto o límites en el infinito.\\ 
-
-Como hemos dicho, el límite formaliza la idea de que una función se acerque a un valor $L$ conforme el input se acerca a otro valor $p$. Obviamente es necesario que nos podamos acercar a $p$, es por esto que pedimos que sea punto de acumulación del dominio. La definición de límite nos garantiza que da igual de que forma nos acerquemos a $p$, que siempre vamos $f$ siempre va a acercarse a $L$. El siguiente teorema especifica más esta idea:
+Como hemos dicho, el límite formaliza la idea de que una función se acerque a un valor $L$ conforme el input se acerca a otro valor $p$. Obviamente es necesario que nos podamos acercar a $p$, es por esto que pedimos que sea punto de acumulación del dominio. La definición de límite nos garantiza que da igual de que forma nos acerquemos a $p$, que $f$ siempre va a acercarse a $L$. El siguiente teorema especifica más esta idea:
 \begin{theorem}[Caracterización del límite por sucesiones]
 	Sea $f: A \rightarrow \reales$ una función y $p$ un punto de acumulación de $A$. Entonces dado $L \in \reales$ son equivalentes:
 	\begin{itemize}
@@ -1107,7 +1098,11 @@ Como hemos dicho, el límite formaliza la idea de que una función se acerque a 
 
 Generalmente, el teorema anterior se usa para demostrar que algunos límites no existen:
 \begin{ejem}
-	El límite de $f(x) = \sin (\frac{1}{x})$ conforme $x$ tiende a $0$ no existe.
+	El límite de $f(x) = \sin (\frac{1}{x})$ conforme $x$ tiende a $0$ no existe. En efecto, tomando las siguientes sucesiones:
+	\begin{align*}
+		x_n = \frac{1}{2n\pi} \qquad y_n = \frac{1}{2n\pi + \frac{\pi}{2}}
+	\end{align*}
+	se puede comprobar fácilmente que $\lim_{n\rightarrow\infty} x_n = 0$ y $\lim_{n\rightarrow\infty} y_n = 0$ por lo que los límites $\lim_{n\rightarrow\infty}f(x_n) = 0$ y $\lim_{n\rightarrow\infty}f(y_n) = 1$ y el teorema anterior demuestran que no existe el límite.
 \end{ejem}
 
 Es importante tener herramientas para poder calcular límites sin tener que recurrir a la definición.
@@ -1126,19 +1121,95 @@ Es importante tener herramientas para poder calcular límites sin tener que recu
 	\end{itemize}
 \end{theorem}
 
+\begin{theorem}[Orden de los límites]
+	Sean $f,g: A \rightarrow \reales$ y $p$ un punto de acumulación de $A$. Supongamos que $\lim_{x\rightarrow p} f(x) = L_f$ y $\lim_{x\rightarrow p} g(x) = L_g$.
+	\begin{itemize}
+		\item
+		Si $L_f < L_g$ entonces existe un entorno reducido $U$ de $p$ tal que $f(x) < g(x)$ para todo $x \in U \cap A$. TODO: Hemos definido entorno reducido?
+		\item
+		Si $f(x) < g(x)$ para todo $x \in U \cap A$ en un entorno reducido $U$ de $p$ entonces $L_f \leq L_g$.
+	\end{itemize}
+\end{theorem}
 
+\begin{theorem}[Regla del sandwich]
+	Sean $f,g,h: A \rightarrow \reales$ y $p$ un punto de acumulación de $A$, tales que se cumpla $f(x) \leq h(x) \leq g(x)$ para todo $x \in A$ y $\lim_{x\rightarrow p} f(x) = \lim_{x\rightarrow p} g(x) = L$, con $L$ posiblemente infinito. Entonces $\exists \lim_{x\rightarrow p} h(x) = L$.
+\end{theorem}
 
+\begin{ejem}
+	Calculamos el límite
+	\begin{equation*}
+		\lim_{x\rightarrow 0} \frac{x^2 \sin(\frac{1}{x})}{x + 3\sqrt{x}}.
+	\end{equation*}
+	Primero notamos que es igual a 
+	\begin{equation*}
+		\lim_{x\rightarrow 0} \frac{x^{\frac{3}{2}} \sin(\frac{1}{x})}{\sqrt{x} + 3}.
+	\end{equation*}
+	cuyo numerador vamos a demostrar que tiende a $0$, y como su denominador tiende a $3$ vamos a tener que el límite original vale $0$.
+	Como $-1 \leq \sin(x) \leq 1$ se tiene $-1 \leq \sin(\frac{1}{x}) \leq 1$ y como la función solo está definida para $x \geq 0$ tendremos $-x^{\frac{3}{2}} \leq x^{\frac{3}{2}}\sin(\frac{1}{x}) \leq x^{\frac{3}{2}}$, y como el mayorando y el minorando tienden a $0$ por la regla del sandwich $\exists \lim_{x\rightarrow 0}x^{\frac{3}{2}}\sin(\frac{1}{x}) = 0$.
+\end{ejem}
 
-TODO: limites en un punto e infinito, laterales, caracterización por sucesiones, operaciones con limites, limite inferior y superior, limites de funciones monótonas, equivalencias, notacion o y O
+\begin{define}
+	Sean $f,g: A \rightarrow \reales$ y $p$ un punto interior de $A$. Se dice que $f$ y $g$ son \textbf{equivalentes} en $p$ si existe una función $h:A \rightarrow \reales$ que satisface $\lim_{x \rightarrow p} h(x) = 1$ y $f(x) = g(x)h(x)$ para todo $x \in A \smallsetminus \{p \}$. Lo denotamos por $f \sim_p g$.
+\end{define}
+
+\begin{prop}
+	Sean $f,g: A \rightarrow \reales$ y $p$ un punto interior de $A$. Supongamos que en un entorno reducido $U$ de $p$ se tiene $g(x) \neq 0$ para todo $x \in U \cap A$. Entonces son equivalentes:
+	\begin{itemize}
+		\item
+		$\lim_{x\rightarrow p} \frac{f(x)}{g(x)} = 1$.
+		\item
+		$f \sim_p g$.
+	\end{itemize}
+\end{prop}
+
+Esta proposición permite una demostración más fácil de distintas equivalencias y da una mejor intuición que la definición. Aun así, existen funciones con ceros en todo entorno de un punto que tienen equivalencias.
+
+\begin{prop}[Lista básica de equivalencias]
+	Se cumple:
+	\begin{itemize}
+		\item
+		$\sin(x) \sim_0 x$.
+		
+		\item
+		$1 - \cos(x) \sim_0 \frac{x^2}{2}$.
+		
+		\item
+		$\tan(x) \sim_0 x$.		
+		
+		\item
+		Si $a > 1$, $a^x \sim_0 x\log(a)$. En concreto $e^x - 1 \sim_0 x$.
+
+		\item
+		$\log(1 + x) \sim_0 x$.		
+		
+	\end{itemize}
+\end{prop}
+
+\begin{ejem}
+	\begin{enumerate}
+		\item
+		\begin{equation*}
+			\lim_{x\rightarrow 0} \frac{x^2(1-\cos(x))}{\sin^4(x)} = \lim_{x\rightarrow 0} \frac{x^2 \frac{x^2}{2}}{x^4} = \frac{1}{2}.
+		\end{equation*}
+		\item
+		Sean $a, b$ constantes reales y positivas. Si $a \geq b$:
+		\begin{equation*}
+			\lim_{x\rightarrow 0} \frac{a^x - b^x}{x} = \lim_{x\rightarrow 0} b^x \frac{\frac{a^x}{b^x} - 1}{x} = \lim_{x\rightarrow 0} \frac{x\log(\frac{a}{b})}{x} = \log(\frac{a}{b}).
+		\end{equation*}
+		Si $a < b$, dividimos por $a^x$ en vez de $b^x$ y terminamos obteniendo el mismo resultado.
+	\end{enumerate}
+\end{ejem}
+
+TODO: limites en un punto e infinito, laterales, caracterización por sucesiones, operaciones con limites, limite inferior y superior, limites de funciones monótonas, equivalencias, notacion o y O, condición de cauchy
 
 \subsection{Continuidad}
 \begin{define}
-	Sea $f: A \rightarrow \reales$ una función. Decimos que $f$ es \textbf{continua} en un punto $a \in A$ si y solo si se cumple:
+	Sea $f: A \rightarrow \reales$ una función. Decimos que $f$ es \textbf{continua} en un punto $a \in A$ si y solo si se cumple una de estas dos condiciones:
 	\begin{enumerate}
 		\item
-		Si $a$ es un punto aislado de $A$.
+		$a$ es un punto aislado de $A$.
 		\item
-		O si $a$ es un punto de acumulación de $A$ y $\lim_{x \rightarrow a} f(x) = f(a)$.
+		$a$ es un punto de acumulación de $A$ y $\lim_{x \rightarrow a} f(x) = f(a)$.
 	\end{enumerate}
 	Si $f$ es continua en todo $p \in P \subseteq A$ se dice que $f$ es continua en $P$, y si es continua en todo punto de su dominio simplemente se dice continua.
 \end{define}
@@ -1208,9 +1279,12 @@ TODO: funciones continuas monotonas, definiciones, continuidad lateral, operacio
 
 
 
+
+
+
 \newpage
 \section{Derivabilidad de funciones reales}
-El objetivo elemental de la derivada es el estudio de como varia cierta función. TODO: Explicación con tasas de variacion y asi
+El objetivo elemental de la derivada es el estudio de como varia cierta función. TODO: Explicación 
 
 \begin{define}
 	Sea $f: A \rightarrow \reales$ una función y $p \in A$ un punto interior de $A$. Decimos que $f$ es \textbf{derivable} en $p$ si y solo si existe el siguiente límite
@@ -1220,11 +1294,27 @@ El objetivo elemental de la derivada es el estudio de como varia cierta función
 	y en caso de que exista, el valor de tal límite se denomina \textbf{derivada} de $f$ en el punto $p$ y se denota $f'(p)$. Si $f$ es derivable en todo punto de un conjunto $B \subseteq A$ se dice \textbf{derivable} en $B$ y se define la \textbf{función derivada} como la función que en cada punto de $B$ toma el valor de la derivada de $f$ en ese punto. Tal función se denota por $f'$. 
 \end{define}
 
+\begin{ejem}
+	$f(x) = x$ es derivable en todo $\reales$ y su derivada es igual a $1$. En efecto, si $p \in \reales$
+	\begin{equation*}
+		\lim_{x \rightarrow p} \frac{f(x) - f(p)}{x - p} = \lim_{x \rightarrow p} \frac{x - p}{x - p} = \lim_{x \rightarrow p} 1 = 1.
+	\end{equation*}
+\end{ejem}
+TODO: Derivadas de $x^n$, trigonometricas, exponenciales, logaritmos. 
+
 Una función derivable posee cierta ``suavidad'' que es más fuerte que una función continua:
 
 \begin{prop}
 	Si $f: A \rightarrow \reales$ es derivable en $p \in A$ entonces $f$ es continua en $p$.
 \end{prop}
+
+\begin{proof}
+	Como $p$ es punto interior de $A$, es también punto de acumulación de $A$. Por eso
+	\begin{align*}
+		\lim_{x\rightarrow p} f(x) = \lim_{x\rightarrow p} \frac{f(x) - f(p)}{x - p} (x-p) + f(p) = f'(p)*0 + f(p) = f(p)
+	\end{align*}
+	implica que $f$ es continua en $p$.
+\end{proof}
 
 Otra propiedad importante de las funciones derivables es que se pueden ``aproximar'' en cierto sentido por funciones más simples, las funciones afines, en cada punto. Esto no parece intuitivo de primeras (la noción de derivada solo parecía tener que ver con el cambio), y de hecho para funciones de varias variables (que no tratamos en este documento) esto no es cierto. Primero, tenemos que definir una noción adecuada de ``ser aproximable por una función afín''.
 
@@ -1236,11 +1326,19 @@ Otra propiedad importante de las funciones derivables es que se pueden ``aproxim
 	La función $T$ se denomina \textbf{diferencial} de $f$ en $p$.
 \end{define}
 
+Reescribiendo la definición obtenemos
+\begin{equation*}
+	f(x) = f(p) + T(x-p) + o_p(x-p)
+\end{equation*}
+lo que implica que cerca del punto $p$ la función afín $f(p) + T(x-p)$ aproxima a $f(x)$ de forma que el resto de la aproximación tiende a $0$ más rápido que $x-p$. Esto resulta ser equivalente a que la función $f$ sea derivable en un punto $p$:
+
 \begin{prop}
 	Una función $f$ es derivable en $p$ si y solo si es diferenciable en $p$.
 \end{prop}
 
-La idea de aproximar funciones por funciones más simples se expande en la sección de desarrollos de Taylor, en los que se busca aproximar funciones por polinomios.
+Esta forma de aproximar funciones es muy pobre, ya que solo nos sirve cerca de puntos donde sepamos el valor de la función y no tenemos una forma de acotar el error.
+La idea de aproximar funciones por funciones más simples se expande en la sección de desarrollos de Taylor, en los que se busca aproximar funciones por polinomios. Estas aproximaciones resultan ser más precisas que usar funciones afines.\\ 
+Como es costumbre, relacionamos las operaciones aritméticas con el concepto de derivada.
 
 \begin{prop}
 	Sean $f: A \rightarrow \reales$ y $g: B \rightarrow \reales$ funciones, con $p \in A \cap B$ un punto interior de $A$ y $B$. Si $f$ y $g$ son derivables en $p$, entonces las funciones $f + g$, $fg$ y $af$ para todo $a \in \reales$ son derivables en $p$, además sus derivadas valiendo $f'(p) + g'(p)$, $f'(p)g(p) + f(p)g'(p)$ y $af'(p)$. Si $g'(p) \neq 0$ entonces $\frac{f}{g}$ es derivable en $p$, y su derivada vale $\frac{f'(p)g(p) - f(p)g'(p)}{(g(p))^2}$.
@@ -1250,6 +1348,10 @@ La idea de aproximar funciones por funciones más simples se expande en la secci
 	Sean $f: A \rightarrow \reales$ y $g: B \rightarrow \reales$ funciones, con $p$ punto interior de $B$, $g(p)$ punto interior de $A$ y además $g(B) \subseteq A$. Entonces la función $g \circ f$ es derivable en $p$ y se tiene $(g \circ f)'(p) = g'(f(p))f'(p)$.
 \end{prop} 
 
+Estas proposiciones sirven para obtener derivadas de muchas funciones una vez se conocen unas pocas derivadas de funciones elementales:
+\begin{prop}[Tabla de derivadas]
+
+\end{prop}
 La derivada tiene una relación importante con los máximos y mínimos de una función.
 
 \begin{prop}
@@ -1259,7 +1361,7 @@ La derivada tiene una relación importante con los máximos y mínimos de una fu
 	Hacemos la demostración para un máximo local en $p$. Como $p$ es un máximo local de $f$, existirá un entorno intervalo $E=(p-\varepsilon,\ p+\varepsilon)$ para él que $f(p) \geq f(x)$ para todo $x \in E$. Esto implica que en este intervalo se tiene $f(p) - f(x) \geq 0$. Si $x_{-} \in E$ y $x_{-} < p$ se tiene $p - x_{-} \geq 0$ y por tanto $\frac{f(p) - f(x_{-})}{p - x_{-}} \geq 0$ y por el orden de los límites $f'(p) \geq 0$. En cambio, si $x_{+} \in E$ con $x_{+} > p$ se tendrá $p - x_{+} \leq 0$, por lo que $\frac{f(p) - f(x_{-})}{p - x_{-}} \leq 0$ y así $f'(p) \leq 0$. Como tenemos $0 \geq f'(p) \geq 0$ por las propiedades del orden se tiene $f'(p) = 0$.
 \end{proof}
 
-Esta relación se expande en la sección de comportamiento local.
+Esta relación se expande en la sección de comportamiento local. La hemos presentado aquí para poder hacer la demostración de los siguientes teoremas.
 
 \begin{theorem}[Teorema de Rolle]
 	Sea $f: [a, b] \rightarrow \reales$ continua en $[a, b]$ y derivable en $(a, b)$. Si se tiene $f(a) = f(b)$ entonces $\exists c \in (a, b)$ tal que $f'(c) = 0$.
@@ -1333,6 +1435,32 @@ TODO: Desarrollos de funciones resultantes de operaciones (sumas, multiplicacion
 \begin{cor}
 	Sea $f$ una función derivable $n-1$ veces en un entorno $E$ de un punto $x_0$, tal que exista la derivada $n$-ésima en $x_0$ con $n$ par. Supongamos que se cumple $f'(x_0) = f''(x_0) = \cdots = f^{(n-1)}(x_0) = 0$ y que $f^{(n)}(x_0) \neq 0$. Entonces si $f^{(n)}(x_0) < 0$ $x_0$ es un máximo local, y si $f^{(n)}(x_0) > 0$ $x_0$ es un mínimo local.
 \end{cor}
+
+\begin{prop}
+	Sea $f: I \rightarrow \reales$ una función derivable en $I$ y dos veces derivable en un punto $x_0 \in I$, tal que $f'(x_0) = 0$.
+	\begin{itemize}
+		\item
+		Si $f''(x_0) > 0$ entonces $x_0$ es un mínimo local.
+	
+		\item
+		Si $f''(x_0) < 0$ entonces $x_0$ es un máximo local.
+	\end{itemize}
+\end{prop}
+
+\begin{define}
+	Sea $f$ una función derivable en $x_0$. $x_0$ se dice \textbf{punto crítico} de $f$ si $f'(x_0)=0$.
+\end{define}
+
+\begin{prop}
+	Sea $f: [a, b] \rightarrow \reales$ derivable en $(a, b)$ y continua en $[a, b]$.
+	\begin{itemize}
+		\item
+		Si $f'(x) > 0$ para todo $x \in (a, b)$ entonces $f$ es creciente en $[a, b]$.
+		
+		\item
+		Si $f'(x) < 0$ para todo $x \in (a, b)$ entonces $f$ es decreciente en $[a, b]$.
+	\end{itemize}
+\end{prop}
 
 TODO: Puntos críticos, crecimiento y decrecimiento, convexidad y concavidad
 
