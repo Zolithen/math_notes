@@ -261,7 +261,7 @@ El ínfimo de $A$ existe si y solo sí existe un número $\alpha \in \mathbb{R}$
 \begin{proof}
 	TODO: Añadir espacio\\ 
 	Vamos a hacer la demostración en el caso del supremo, el caso del ínfimo es igual pero cambiando la dirección de las desigualdades.\\ 
-	$\Rightarrow)$ Supongamos que existe el supremo de $\alpha$, y sea $\omega = \sup A$. Si $\varepsilon > 0$ entonces $\omega - \varepsilon$ no será cota superior de $A$ (ya que el supremo es la mínima cota superior) y por tanto existirá $x \in A$ tal que $x > \omega - \varepsilon$. Además, $\omega$ es una cota superior de $A$, y así es el número que buscamos.\\ 
+	$\Rightarrow)$ Supongamos que existe el supremo de $A$, y sea $\omega = \sup A$. Si $\varepsilon > 0$ entonces $\omega - \varepsilon$ no será cota superior de $A$ (ya que el supremo es la mínima cota superior) y por tanto existirá $x \in A$ tal que $x > \omega - \varepsilon$. Además, $\omega$ es una cota superior de $A$, y así es el número que buscamos.\\ 
 	$\Leftarrow)$ Tal $\omega$ es una cota superior por hipótesis, veamos que es la mínima. Sea $\alpha$ una cota superior distinta de $\omega$, y supongamos que $\alpha < \omega$. Sea $\varepsilon = \omega - \alpha > 0$. Por hipótesis existirá un $x \in A$ tal que $x > \omega - \varepsilon = \alpha$, que contradice que $\alpha$ sea cota superior de $A$. Esto también demuestra la unicidad del número que satisface las condiciones de $\omega$ (el supremo es único) y la última parte del enunciado.
 \end{proof}
 
@@ -710,6 +710,23 @@ Los límites superior e inferior no tienen mucho interés práctico. Sirven por 
 
 \subsection{El número e}
 
+\begin{define}
+	Definimos el número $e$ como $e = \lim_{n \rightarrow \infty} \sum_{m=1}^{n} \frac{1}{m!}$. 
+\end{define}
+
+\begin{prop}
+	El límite en la definición del número $e$ existe.
+\end{prop}
+
+\begin{prop}
+	$\lim_{n \rightarrow \infty} \sum_{m=1}^{n} \frac{1}{m!} = \lim_{n \rightarrow \infty} (1 + \frac{1}{n})^n$.
+\end{prop}
+
+\begin{prop}
+	El número $e$ es irracional.
+\end{prop}
+Resulta que $e$ también es más que irracional, es \textit{transcendental}. Esto es una cualidad meramente algebraica de demostración más complicada, que no trataremos aquí.
+
 \subsection{Sucesiones de Cauchy y completitud}
 \begin{define}
 	Sea $\sucreal{a}$ una sucesión. Decimos que es una \textbf{sucesión de Cauchy} si para todo $\varepsilon > 0$ existe un $N \in \naturales$ tal que si $m,\ n \in \naturales$ son números naturales mayores o iguales que $N$ se tiene $|a_n - a_m| < \varepsilon$.
@@ -1073,12 +1090,12 @@ El concepto de límite formaliza la idea de \textit{acercarse}. Para una funció
 	\end{itemize}
 \end{define}
 
-Existen muchas combinaciones posibles para cubrir todos los casos. Aquí hemos puesto las básicas. En el caso de la convergencia por la derecha e izquierda, los valores a los que converge la función se dicen \textbf{límites laterales}
+Existen muchas combinaciones posibles para cubrir todos los casos. Aquí hemos puesto las básicas. En el caso de la convergencia por la derecha e izquierda, los valores a los que converge la función se dicen \textbf{límites laterales}.
 
 El primer paso en el estudio de límites es ver que efectivamente una función solo puede converger a un único valor. Por comodidad, solo enunciamos el resultado para límites no laterales en un punto. Para funciones en el infinito y límites laterales es similar.
 
 \begin{prop}
-	Sea $f: A \rightarrow \reales$ y $p$ punto de acumulación de $A$. Si $f$ converge a $L$ en $p$ entonces no existe un $R$ distinto a $L$ tal que $f$ converja a $R$ en $p$.
+	Sea $f: A \rightarrow \reales$ y $p$ punto de acumulación de $A$. Si $f$ converge a $L_1$ y $L_2$ en $p$ entonces no $L_1 = L_2$.
 \end{prop}
 
 \begin{define}
@@ -1105,6 +1122,7 @@ Generalmente, el teorema anterior se usa para demostrar que algunos límites no 
 	se puede comprobar fácilmente que $\lim_{n\rightarrow\infty} x_n = 0$ y $\lim_{n\rightarrow\infty} y_n = 0$ por lo que los límites $\lim_{n\rightarrow\infty}f(x_n) = 0$ y $\lim_{n\rightarrow\infty}f(y_n) = 1$ y el teorema anterior demuestran que no existe el límite.
 \end{ejem}
 
+Pero veremos que también se puede usar para demostrar la existencia de algunos límites.\\ 
 Es importante tener herramientas para poder calcular límites sin tener que recurrir a la definición.
 
 \begin{theorem}[Aritmética de los límites]
@@ -1148,11 +1166,17 @@ Es importante tener herramientas para poder calcular límites sin tener que recu
 	Como $-1 \leq \sin(x) \leq 1$ se tiene $-1 \leq \sin(\frac{1}{x}) \leq 1$ y como la función solo está definida para $x \geq 0$ tendremos $-x^{\frac{3}{2}} \leq x^{\frac{3}{2}}\sin(\frac{1}{x}) \leq x^{\frac{3}{2}}$, y como el mayorando y el minorando tienden a $0$ por la regla del sandwich $\exists \lim_{x\rightarrow 0}x^{\frac{3}{2}}\sin(\frac{1}{x}) = 0$.
 \end{ejem}
 
+Otra herramienta poderosa para calcular límites que abre las puertas al campo del análisis asintótico son las equivalencias.
+
 \begin{define}
 	Sean $f,g: A \rightarrow \reales$ y $p$ un punto interior de $A$. Se dice que $f$ y $g$ son \textbf{equivalentes} en $p$ si existe una función $h:A \rightarrow \reales$ que satisface $\lim_{x \rightarrow p} h(x) = 1$ y $f(x) = g(x)h(x)$ para todo $x \in A \smallsetminus \{p \}$. Lo denotamos por $f \sim_p g$.
 \end{define}
 
-\begin{prop}
+\begin{define}
+	Sean $f,g: (a, +\infty) \rightarrow \reales$. Se dice que $f$ y $g$ son \textbf{equivalentes en el infinito} positivo si existe una función $h:A \rightarrow \reales$ que satisface $\lim_{x \rightarrow +\infty} h(x) = 1$ y $f(x) = g(x)h(x)$ para todo $x \in (b, +\infty)$ con $b \geq a$. Lo denotamos por $f \sim_{+\infty} g$. También se definen análogamente para el infinito negativo.
+\end{define}
+
+\begin{prop}\label{prop_equivalencia}
 	Sean $f,g: A \rightarrow \reales$ y $p$ un punto interior de $A$. Supongamos que en un entorno reducido $U$ de $p$ se tiene $g(x) \neq 0$ para todo $x \in U \cap A$. Entonces son equivalentes:
 	\begin{itemize}
 		\item
@@ -1162,7 +1186,23 @@ Es importante tener herramientas para poder calcular límites sin tener que recu
 	\end{itemize}
 \end{prop}
 
-Esta proposición permite una demostración más fácil de distintas equivalencias y da una mejor intuición que la definición. Aun así, existen funciones con ceros en todo entorno de un punto que tienen equivalencias.
+Esta proposición permite una demostración más fácil de distintas equivalencias y da una mejor intuición que la definición. Podríamos tomar la definición de equivalencias como la equivalencia del teorema, pero estaríamos excluyendo el caso en el que ambas funciones tengan ceros en todo entorno reducido de $p$, y además haría de la relación de ser equivalente una relación no equivalente.
+
+\begin{prop}
+	\begin{itemize}
+		\item
+		Las relaciones $\sim_p$ y $\sim_{\infty}$ son relaciones binarias de equivalencia (RBE).
+		
+		\item
+		Si $f_1 \sim_p g_1$ y $f_2 \sim_p g_2$ entonces $f_1 f_2 \sim_p g_1 g_2$.
+		
+		\item
+		Si $f_1 \sim_p g_1$, $f_2 \sim_p g_2$ y $f_2,g_2$ no se anulan en un entorno reducido de $p$ entonces $\frac{f_1}{f_2} \sim_p \frac{g_1}{g_2}$.
+		
+		\item
+		TODO: Comp
+	\end{itemize}
+\end{prop}
 
 \begin{prop}[Lista básica de equivalencias]
 	Se cumple:
@@ -1177,13 +1217,15 @@ Esta proposición permite una demostración más fácil de distintas equivalenci
 		$\tan(x) \sim_0 x$.		
 		
 		\item
-		Si $a > 1$, $a^x \sim_0 x\log(a)$. En concreto $e^x - 1 \sim_0 x$.
+		Si $a > 1$, $a^x - 1\sim_0 x\log(a)$. En concreto $e^x - 1 \sim_0 x$.
 
 		\item
 		$\log(1 + x) \sim_0 x$.		
 		
 	\end{itemize}
 \end{prop}
+
+Ahora podemos usarlas para calcular algunos límites.
 
 \begin{ejem}
 	\begin{enumerate}
@@ -1199,6 +1241,39 @@ Esta proposición permite una demostración más fácil de distintas equivalenci
 		Si $a < b$, dividimos por $a^x$ en vez de $b^x$ y terminamos obteniendo el mismo resultado.
 	\end{enumerate}
 \end{ejem}
+
+Más concretamente, la proposición \eqref{prop_equivalencia} es una forma más clara de ver que la tendencia de dos funciones equivalentes en un punto $p$ (o en el infinito) alrededor de $p$ es ``la misma''. También existe notación para expresar que una función tiende a $0$ más rápido que otra:
+TODO: Generalizarla al estilo de las equivalencias?
+\begin{define}
+	Supongamos que $g: I \rightarrow \reales$ es una función definida en un intervalo abierto $I$, tal que $g(p) = 0$ en $p \in I$ y $g(x) \neq 0$ en un entorno reducido de $p$. Decimos que otra función $f: A \rightarrow \reales$ con $p \in \interior{A}$ es una \textbf{o pequeña} de $g$ en $p$ si
+	\begin{equation*}
+		\lim_{x \rightarrow p} \frac{f(x)}{g(x)} = 0
+	\end{equation*}
+	y en tal caso escribimos $f \in o_{p}(g)$, donde $o_{p}(g)$ es el conjunto de todas las funciones o pequeña de $g$ en $p$.
+\end{define}
+
+Generalmente, el punto $p$ de la notación $o_{p}(g)$ se excluye en los casos en los que sea obvio de que punto se habla. También se suele realizar el siguiente abuso de notación, en vez de hablar de $o_{p}(g)$ como conjunto se trata como una ``función'':
+\begin{equation*}
+	f(x) = o_p (g(x)).
+\end{equation*}
+Esto simplemente significa que $f$ es igual a alguna función del conjunto $o_p(g(x))$.\\ 
+Aunque hayamos introducido la definición con cierta generalidad, su mayor uso será el la sección de Taylor, considerando o pequeñas de funciones de la forma $(x-p)^n$ para $p \in \reales$ y $n \in \naturales$. Es por esto que introducimos algunas propiedades de estas o pequeñas aquí:
+
+\begin{prop}
+	Para toda pareja de naturales $m \leq n$:
+	\begin{equation*}
+		o((x-p)^m) \subseteq o((x-p)^n).
+	\end{equation*}
+\end{prop}
+
+\begin{prop}
+	Para toda pareja de naturales $m \leq n$:
+	\begin{equation*}
+		o((x-p)^m) + o((x-p)^n) = o((x-p)^m).
+	\end{equation*}
+	(Aquí la suma denota la suma estándar de conjuntos: $A+B = \{a+b\ |\ a\in A,\ b\in B \}$.)
+\end{prop}
+
 
 TODO: limites en un punto e infinito, laterales, caracterización por sucesiones, operaciones con limites, limite inferior y superior, limites de funciones monótonas, equivalencias, notacion o y O, condición de cauchy
 
@@ -1398,8 +1473,22 @@ Esta relación se expande en la sección de comportamiento local. La hemos prese
 \end{define}
 
 \begin{prop}
+	Sea $f: A \rightarrow \reales$ y $x_0 \in \interior{A}$. Si $f$ es $n-1$ veces derivable en $p$ entonces son equivalentes:
+	\begin{itemize}
+		\item
+		$f(x) = o((x-x_0)^n)$.
+		\item
+		Existe la $n$-ésima derivada en $x_0$ y además $f(x_0) = f'(x_0) = \cdots = f^{(n)}(x_0) = 0$.
+	\end{itemize}
+\end{prop}
+
+\begin{prop}
 	Si $f$ admite un desarrollo polinomial $p_n$ de grado $n$ en un punto $x_0$ entonces todo desarrollo polinomial de grado $n$ en $x_0$ es igual a $p_n$.
 \end{prop}
+
+\begin{proof} TODO: Se puede hacer más claro\\ 
+	Sea $q_n$ un desarrollo polinomial de $f$ de grado $n$ en $x_0$. Aplicando el teorema anterior a $f(x) - q_n(x)$ obtenemos que $f^{(k)}(x_0) = q_n^{(k)}(x_0)$ para todo $k=0,\ 1,\dots\ n$. Si consideramos los $n+1$ coeficientes del polinomio $q_n$ como indeterminados obtenemos de $f^{(k)}(x_0) = q_n^{(k)}(x_0)$ un sistema de $n+1$ ecuaciones lineales que son linealmente independientes entre sí, por tanto tal sistema es compatible determinado y tiene una única solución.
+\end{proof}
 
 \begin{theorem}[Teorema de Taylor]
 	Sea $f: A \rightarrow \reales$ una función $n-1$ veces derivable en un entorno de $x_0 \in \reales$, con $n$-ésima derivada en $x_0$. Entonces $f$ admite un desarrollo polinomial de grado $n$ en $x_0$
@@ -1432,9 +1521,13 @@ TODO: Desarrollos de funciones resultantes de operaciones (sumas, multiplicacion
 
 \subsection{Comportamiento local}
 
+El teorema de Taylor nos permite obtener una caracterización del comportamiento local de una función en lo que respecta al crecimiento y decrecimiento.
+
 \begin{cor}
-	Sea $f$ una función derivable $n-1$ veces en un entorno $E$ de un punto $x_0$, tal que exista la derivada $n$-ésima en $x_0$ con $n$ par. Supongamos que se cumple $f'(x_0) = f''(x_0) = \cdots = f^{(n-1)}(x_0) = 0$ y que $f^{(n)}(x_0) \neq 0$. Entonces si $f^{(n)}(x_0) < 0$ $x_0$ es un máximo local, y si $f^{(n)}(x_0) > 0$ $x_0$ es un mínimo local.
+	Sea $f$ una función derivable $n-1$ veces en un entorno $E$ de un punto $x_0$, tal que exista la derivada $n$-ésima en $x_0$ con $n$ par. Supongamos que se cumple $f'(x_0) = f''(x_0) = \cdots = f^{(n-1)}(x_0) = 0$ y que $f^{(n)}(x_0) \neq 0$. Entonces si $f^{(n)}(x_0) < 0$ $x_0$ es un máximo local, y si $f^{(n)}(x_0) > 0$ $x_0$ es un mínimo local. Si $n$ fuera impar, si $f^{(n)}(x_0) < 0$ $f$ es localmente decreciente en $x_0$ y si $f^{(n)}(x_0) > 0$ $f$ es localmente creciente en $x_0$.
 \end{cor}
+
+Aunque este corolario sea todo lo que vayamos a necesitar, es importante dar dos resultados más pequeños que generalmente son suficientes.
 
 \begin{prop}
 	Sea $f: I \rightarrow \reales$ una función derivable en $I$ y dos veces derivable en un punto $x_0 \in I$, tal que $f'(x_0) = 0$.
@@ -1484,9 +1577,79 @@ TODO: Puntos críticos, crecimiento y decrecimiento, convexidad y concavidad
 
 \subsection{Integrabilidad impropia}
 
+\subsection{Funciones beta y gamma}
+
+\subsection{Integrales definidas no elementales}
+Es interesante que incluso en el caso que una función no tenga primitiva expresable con funciones elementales se puede dar un valor exacto a algunas integrales definidas. Generalmente, estas integrales se hacen todas de forma diferente y existen muchos trucos para calcularlas, aquí presentamos solo algunos.
+
+\begin{prop}[Regla de King]
+	Si $f: (a, b) \rightarrow \reales$ es integrable entonces:
+	\begin{equation*}
+		\int_a^b f(x) \,dx = \int_a^b f(a+b-x) \,dx.
+	\end{equation*}
+\end{prop}
+\begin{proof}
+	Aplicar la sustitución $u = a + b - x$.
+\end{proof}
+
+\begin{ejem}
+	Procedemos al cálculo de integrales de la forma
+	\begin{equation*}
+		I = \int_a^b \frac{f(x)}{f(x) + f(a + b - x)} \,dx.
+	\end{equation*}
+	Por la regla de King
+	\begin{equation*}
+		I = \int_a^b \frac{f(x)}{f(x) + f(a + b - x)} \,dx = \int_a^b \frac{f(a+b-x)}{f(x) + f(a + b - x)} \,dx.
+	\end{equation*}
+	Tomando dos veces $I$, una sustituyendo la primera expresión y después sustituyendo la segunda se obtiene
+	\begin{equation*}
+		2I = \int_a^b \frac{f(x) + f(a + b - x)}{f(x) + f(a + b - x)} \,dx = \int_a^b 1 \,dx = a - b,
+	\end{equation*}
+	y finalmente
+	\begin{equation*}
+		\int_a^b \frac{f(x)}{f(x) + f(a + b - x)} \,dx = \frac{a-b}{2}.
+	\end{equation*}
+	Por ejemplo, aplicando la fórmula obtendríamos
+	\begin{equation*}
+		\int_0^1 \frac{\arctan(x)}{\arctan(x) + \arctan(1 - x)} \,dx = \frac{1}{2}.
+	\end{equation*}
+\end{ejem}
+
+\begin{ejem}
+	\begin{equation*}
+		\int_0^{\frac{\pi}{2}} \log(\tan x)dx = 0
+	\end{equation*}
+\end{ejem}
+
+\begin{ejem}
+	\begin{equation*}
+		\int_0^{\frac{\pi}{2}} \log(\sin x)dx = \frac{-\pi}{2} \log(2)
+	\end{equation*}
+	Esta integral es bastante interesante y se puede calcular de muchas formas. La más elemental usa la regla de King, como detallamos ahora.
+\end{ejem}
+
+Aparte de la sustitución de la regla de King, otras sustituciones son útiles.
+
+\begin{ejem}
+	\begin{equation*}
+		\int_0^{\infty} \frac{\log(x)}{(1+x)^2} \,dx = 0
+	\end{equation*}
+\end{ejem}
+
+Otra técnica es la derivación bajo el signo integral
 
 
+\begin{ejem}
+	\begin{equation*}
+		\int_0^{\infty} \frac{1 - e^{-x^2}}{x^2} dx
+	\end{equation*}
+\end{ejem}
 
+\begin{ejem}
+	\begin{equation*}
+		\int_0^{\frac{\pi}{2}} (\log(\sin x))^2 dx
+	\end{equation*}
+\end{ejem}
 
 \section{Series numéricas}
 
@@ -1508,14 +1671,7 @@ TODO: Puntos críticos, crecimiento y decrecimiento, convexidad y concavidad
 
 
 \newpage
-\section{Funciones especiales}
-No existe una definición de función especial. Se le denomina así generalmente a funciones diferentes de las que se construyen con polinomios, potencias, exponenciales, logaritmos, trigonométricas mediante las operaciones de sumas, restas, multiplicaciones, divisiones y composiciones (es decir, otras que las funciones elementales).
-
-
-\subsection{Funciones trigonométricas}
-\begin{note}
-	Técnicamente, las funciones trigonométricas no son funciones especiales. Aun así, he decidido ponerlas aquí para poder hablar de ellas de forma rigurosa y agrupar todo el temario de funciones específicas.
-\end{note}
+\section{Anexo: Funciones trignométricas}
 La introducción de las funciones trigonométricas en estos apuntes no ha sido de una manera rigurosa. Se asume que el lector ha aprendido trigonometría anteriormente, y allí se definen de una forma geométrica. Si hablamos en términos formales, podemos introducir las funciones trigonométricas mediante sus series de Taylor:
 
 \begin{define}
@@ -1553,9 +1709,5 @@ Con esta fórmula demostrar las siguientes identidades es fácil.
 \end{prop}
 
 La identidad del ángulo triple tiene una consecuencia interesante: se puede usar para obtener una solución general a ecuaciones polinomiales de tercer grado.
-
-\subsection{Funciones definidas por integrales}
-
-\subsection{Función gamma, beta y digamma}
 
 \end{document}

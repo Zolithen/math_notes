@@ -1,0 +1,466 @@
+\documentclass[a4paper]{book}
+\usepackage[spanish]{babel}
+\usepackage{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems}
+\tcbuselibrary{breakable}
+\tcbuselibrary{skins}
+%\usepackage[left=30pt,right=40pt,top=40pt,bottom=60pt]{geometry}
+\usepackage[bottom=60pt]{geometry}
+
+\newtheoremstyle{ejemplo}% name
+{5pt}% Space above
+{5pt}% Space below
+{}% Body font
+{}% Indent amount
+{\bfseries}% Theorem head font
+{.}% Punctuation after theorem head
+{.5em}% Space after theorem head
+{}% Theorem head spec (can be left empty, meaning ‘normal’)
+
+\newtheoremstyle{demostracion}% name
+{5pt}% Space above
+{5pt}% Space below
+{}% Body font
+{}% Indent amount
+{\scshape}% Theorem head font
+{.}% Punctuation after theorem head
+{.5em}% Space after theorem head
+{Demostración}% Theorem head spec (can be left empty, meaning ‘normal’)
+
+% TODO: Fix spacing 
+\theoremstyle{definition}
+\newtcbtheorem[number within = section]{define}{Definición}{enhanced jigsaw, breakable, before skip=10pt, after skip=10pt, sharp corners=all, colframe=purple, fonttitle=\bfseries%
+	}{defn}	
+	
+\newtheorem{theorem}{Teorema}[section]
+\tcolorboxenvironment{theorem}{%
+	colframe=blue, enhanced jigsaw, breakable,%
+	before skip=10pt,after skip=10pt, sharp corners=all}
+
+\newtheorem{note}{Nota}[section]
+
+\theoremstyle{ejemplo}
+\newtheorem{ejem}{Ejemplo}[section]
+\newtheorem{nota}{Nota}[section]
+
+\theoremstyle{demostracion}
+\newtheorem{dem}{Demostración}
+\tcolorboxenvironment{dem}{%
+	colframe=black, opacityback = 0, enhanced jigsaw, breakable,%
+	before skip=10pt,after skip=10pt, sharp corners=all}
+
+\newcommand{\complejos}{\mathbb{C}}
+\newcommand{\reales}{\mathbb{R}}
+\newcommand{\racionales}{\mathbb{Q}}
+\newcommand{\enteros}{\mathbb{Z}}
+\newcommand{\naturales}{\mathbb{N}}
+\newcommand{\realnmatrix}[1]{\mathcal{M}_{#1}(\reales)}
+
+\DeclareMathOperator{\apl}{Apl}
+\DeclareMathOperator{\biy}{Biy}
+\DeclareMathOperator{\simgroup}{\mathcal{S}}
+
+\makeatletter
+%\def\thickhrulefill{\leavevmode \leaders \hrule height 1ex \hfill \kern \z@}
+\def\@makechapterhead#1{%
+  \vspace*{10\p@}%
+  {\parindent \z@ \raggedleft \reset@font
+            \scshape \@chapapp{} \thechapter
+        \par\nobreak
+        \interlinepenalty\@M
+    \Huge \bfseries #1\par\nobreak
+    %\vspace*{1\p@}%
+    \hrulefill
+    \par\nobreak
+    \vskip 100\p@
+  }}
+\def\@makeschapterhead#1{%
+  \vspace*{10\p@}%
+  {\parindent \z@ \raggedleft \reset@font
+            \scshape \vphantom{\@chapapp{} \thechapter}
+        \par\nobreak
+        \interlinepenalty\@M
+    \Huge \bfseries #1\par\nobreak
+    %\vspace*{1\p@}%
+    \hrulefill
+    \par\nobreak
+    \vskip 100\p@
+  }}
+
+\pagestyle{empty}
+
+\author{NyKi}
+\title{Estructuras Algebraicas}
+\date{Curso de 2025-2026}
+
+\begin{document}
+\maketitle
+\clearpage
+\tableofcontents
+
+\pagestyle{fancy}
+
+\chapter{Introducción}
+
+El estudio de las estructuras algebraicas comienza con una exposición básica sobre las operaciones binarias.
+
+\section{Definiciones básicas}
+
+\begin{define}{Operación binaria}{bin_op}
+	Sea $S$ un conjunto no vacío. Se dice que una aplicación $* : S \times S \rightarrow S$ es una \textbf{operación binaria} (interna) sobre $S$.
+\end{define}
+
+Generalmente, se usa la notación interna: $a*b = *(a, b)$ ya que es mucho más cómoda que la típica de aplicaciones, y en el contexto que esté claro a que operación nos referimos excluiremos el símbolo: $ab = a*b$.\\ 
+Una simple operación no tiene nada de interesante que no sepamos de teoría de conjuntos. La riqueza de la teoría algebraica viene de ciertos axiomas que una operación puede satisfacer:
+
+%\begin{define}
+%	Sea $S$ un conjunto no vacío y $n$ un número natural mayor que $1$. Se dice que una aplicación $* : S^n \rightarrow S$ es una \textbf{operación n-aria} (interna) sobre $S$.
+%\end{define}
+
+\begin{define}{Asociatividad}{bin_asoc}
+	Sea $S \neq \emptyset$. Una operación binaria $*$ sobre $S$ se dice \textbf{asociativa} si se cumple $(a*b)*c = a*(b*c)$ para todo $a,b,c \in S$. 
+\end{define}
+
+Este primer axioma es lo más básico que podemos imponer a una operación binaria. Intuitivamente, la asociatividad permite definir sin ambigüedad los productos de una cantidad finita de elementos bajo la operación $*$. Por ejemplo, al escribir $a*b*c*d$ podemos referirnos a cualquiera de las siguientes formas de poner paréntesis a la operación: $(((a*b)*c)*d),\ (a*b)*(c*d),\ ((a*(b*c))*d),\ (a*(b*(c*d))),\ \ldots$ pero bajo la hipótesis de asociatividad todas estas son iguales y por tanto podemos referirnos a cada una de ellas simplemente con $a*b*c*d$. Antes de dar ejemplos vamos a nombrar nuestra primera estructura algebraica.
+
+\begin{define}{Semigrupo}{semigroup}
+	Sea $S$ un conjunto no vacío y $*$ una operación binaria interna sobre $S$. La tupla $(S,\ *)$ se dice \textbf{semigrupo} si la operación $*$ es asociativa.
+\end{define}
+
+Generalmente, una estructura algebraica consiste de uno o varios conjuntos con una o varias operaciones binarias que pueden ser internas o no. El semigrupo es la más simple que vamos a nombrar.
+
+\begin{ejem}
+	La operación interna de suma $+$ sobre los números naturales, enteros, racionales, reales o complejos es una operación asociativa. El producto $*$ también es asociativo sobre cualquiera de estos.
+\end{ejem}
+\begin{ejem}
+	Para cada dos vectores del espacio $\reales^3$ podemos definir su \textbf{producto vectorial}. Esto es un ejemplo de operación no asociativa.
+\end{ejem}
+\begin{ejem}
+	Sea $S$ un conjunto no vacío. Tomamos el conjunto de todas las aplicaciones $f: S \rightarrow S$ de $S$ en $S$, y lo denotamos por $\apl(S)$. Sobre este conjunto, la operación de composición de aplicaciones $\circ$ es una operación interna asociativa. Es decir, $(\apl(S),\ \circ)$ es un semigrupo.
+\end{ejem}
+
+Las estructuras no asociativas son interesantes pero no son nuestro objetivo. Mayoritariamente todas las estructuras que vamos a estudiar son asociativas.
+
+\begin{define}{Conmutatividad}{op_com}
+	Sea $S \neq \emptyset$. Una aplicación binaria $*$ sobre $S$ se dice \textbf{conmutativa} si se cumple $a*b = b*a$ para todo $a,b \in S$. 
+\end{define}
+
+Este es una convención que usaremos mucho: cuando la operación de una estructura algebraica sea conmutativa añadiremos el adjetivo \textbf{abeliano} a la estructura algebraica.
+
+\begin{ejem}
+	Los semigrupos $(\naturales,\ +),\ (\enteros,\ +),\ (\racionales,\ +),\ (\reales,\ +)$ y $(\complejos,\ +)$ son semigrupos abelianos.
+\end{ejem}
+\begin{ejem}
+	La estructura $(\mathcal{M}_{n}(\reales),\ *)$, donde $\mathcal{M}_{n}(\reales)$ es el conjunto de matrices cuadradas con entradas reales de orden $n$ y $*$ es la multiplicación de matrices es un semigrupo no abeliano.
+\end{ejem}
+
+\begin{define}{Elemento neutro}{bin_ident}
+	Sea $S \neq \emptyset$ y $*$ una aplicación binaria sobre $S$.
+	\begin{itemize}
+		\item
+		A un elemento $e_L \in S$ tal que $e_L * a = a$ para todo $a \in S$ se le conoce como \textbf{elemento neutro por la izquierda} de $*$.
+		\item
+		A un elemento $e_R \in S$ tal que $a * e_R = a$ para todo $a \in S$ se le conoce como \textbf{elemento neutro por la derecha} de $*$.
+		\item
+		A un elemento $e \in S$ tal que $e * a = a * e = a$ para todo $a \in S$ se le conoce como \textbf{elemento neutro} o \textbf{identidad} de $*$.
+	\end{itemize}
+\end{define}
+
+\begin{theorem}
+	Sea $(S,\ *)$ un semigrupo. Si $S$ posee un elemento neutro, entonces este es único.
+\end{theorem}
+
+\begin{dem}
+	Sean $e_1,\ e_2 \in S$ dos elementos neutros. Entonces:
+	\begin{equation*}
+		e_1 = e_1 * e_2 = e_2.
+	\end{equation*}
+\end{dem}
+
+\begin{nota}
+	Existen muchas notaciones distintas para operaciones binarias. Generalmente, se suele usar $*$, $\cdot$ o se excluye el símbolo cuando la operación no es conmutativa, y en tal caso el elemento neutro único de un semigrupo $(S,\ *)$ se denota por $1_S$ o por $1$. Esta notación recibe el nombre de \textbf{notación multiplicativa} (por la multiplicación de matrices, ya que no es conmutativa). Otros símbolos para esta notación pueden ser $\otimes$, $\odot$, $\star$, etc\ldots\ . Si la operación es conmutativa, se usa la \textbf{notación aditiva}, con símbolos como $+$, $\oplus$, etc\ldots\ , y representando el elemento neutro con $0$.
+	Esto solo se hace por comodidad y tradición. En un contexto más general, $e_S$ representará el elemento neutro de $(S,\ *)$ si se tiene clara la operación que se está usando.
+\end{nota}
+
+\begin{theorem}
+	Sea $(S,\ *)$ un semigrupo. Si $S$ posee al menos un elemento neutro por la izquierda $e_L$ y un elemento neutro por la derecha $e_R$ entonces $e_L = e_R$ y por tanto $S$ contiene un elemento neutro.
+\end{theorem}
+
+\begin{dem}
+	Sea $e_L$ elemento neutro por la izquierda y $e_R$ elemento neutro por la derecha. Entonces:
+	\begin{equation*}
+		e_L = e_L * e_R = e_R.
+	\end{equation*}
+\end{dem}
+
+\begin{define}{Monoide}{monoid}
+	Un semigrupo $(S,\ *)$ que contiene elemento neutro se conoce como \textbf{monoide}.
+\end{define}
+
+\begin{ejem}
+	$(\mathcal{M}_{n}(\reales),\ *)$ es un monoide, con elemento neutro la matriz identidad de orden $n$.
+\end{ejem}
+
+\begin{define}{Inversos}{bin_inv}
+	Sea $(M,\ *)$ un monoide, sea $e \in M$ su elemento neutro y sea $a \in M$.
+	\begin{itemize}
+		\item
+		Si existe un $b$ tal que $a*b = e$ entonces se dice que $a$ es \textbf{invertible por la derecha} y que $b$ es su \textbf{inverso por la derecha}.
+		
+		\item
+		Si existe un $b$ tal que $b*a = e$ entonces se dice que $a$ es \textbf{invertible por la izquierda} y que $b$ es su \textbf{inverso por la izquierda}.
+		
+		\item
+		Si existe un $b$ tal que $a*b = b*a = e$ entonces se dice que $a$ es \textbf{invertible} y que $b$ es su \textbf{inverso} que denotaremos por $b = a^{-1}$.
+	\end{itemize}
+\end{define}
+
+\begin{theorem}
+	Sea $(M,\ *)$ un monoide. Si $a \in M$ es invertible entonces su inversa es única.
+\end{theorem}
+
+\begin{dem}
+	Sea $a \in M$, y sean $b,\ c \in M$ dos elementos que sean inversa de $a$. Entonces:
+	\begin{equation*}
+		ab = e \Rightarrow cab = ce = c \Rightarrow eb = c \Rightarrow b = c.
+	\end{equation*}
+\end{dem}
+
+Esto justifica la notación $b = a^{-1}$.
+
+\begin{theorem}
+	Sea $(M,\ *)$ un monoide. Se cumple, para todo $a,\ b \in M$ invertibles:
+	\begin{enumerate}
+		\item
+		$a^{-1}$ es invertible y $(a^{-1})^{-1} = a$. 
+		
+		\item
+		$ab$ es invertible y $(ab)^{-1} = b^{-1} a^{-1}$.
+	\end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+	Sea $(M,\ *)$ un monoide, y sea $a \in M$.
+	\begin{itemize}
+		\item
+		Si $a$ es invertible por la derecha entonces $xa = b$ tiene una única solución para cada $b \in M$.
+		
+		\item
+		Si $a$ es invertible por la izquierda entonces $ax = b$ tiene una única solución para cada $b \in M$.
+	\end{itemize}
+\end{theorem}
+
+\begin{theorem}
+	Sea $(M,\ *)$ un monoide abeliano. Si $a \in M$ es invertible por la izquierda (derecha) con inversa por la izquierda (derecha) $b \in M$ entonces es también invertible por la derecha (izquierda) y $b$ es también su inverso por la derecha (izquierda).
+\end{theorem}
+
+\begin{define}{Unidades}{mon_units}
+	Sea $(M,\ *)$ un monoide. Definimos su \textbf{conjunto de unidades} $U(M)$ como el conjunto de todos los elementos invertibles de $M$.
+\end{define}
+
+\begin{define}{Grupo}{group}
+	Sea $(G,\ *)$ un monoide. Decimos que $(G,\ *)$ es un \textbf{grupo} si y solo si $G = U(G)$ (es decir, $(G,\ *)$ es un monoide en el que todo elemento es invertible).
+\end{define}
+
+\begin{ejem}\label{ej:group_biy}
+	Un ejemplo de grupo muy importante es el grupo simétrico sobre $n$ elementos. Dado un conjunto no vacío $S$, consideramos el conjunto de aplicaciones biyectivas $f: S \rightarrow S$, que denotamos por $\biy(S)$. Esto es un grupo bajo la composición de aplicaciones (la composición es asociativa, la aplicación identidad $i: S \rightarrow S$ dada por $i(k) = k$ para todo $k \in S$ actúa como elemento neutro y cada aplicación tiene inversa biyectiva por ser biyectiva) para todo conjunto $S$. En concreto, para $S = \{1,\ 2,\ \cdots,\ n\}$ con $n \in \naturales$ mayor que $0$, llamaremos a este conjunto \textbf{grupo simétrico} sobre $n$ elementos, que denotaremos por $\simgroup_n$, y a cada elemento de este grupo lo llamaremos \textbf{permutación}.
+\end{ejem}
+
+
+\begin{define}{Anillo y cuerpo}{ring}
+	Sea $S \neq \emptyset$ y $+,\ *$ dos operaciones binarias sobre $S$. Decimos que $(S,\ +,\ *)$ es un \textbf{anillo} si se cumplen las siguientes condiciones:
+	\begin{enumerate}
+		\item
+		$(S,\ +)$ es un grupo.
+		
+		\item
+		$(S,\ *)$ es un monoide.
+		
+		\item
+		Se cumplen las propiedades distributivas: para todo $a,b,c \in S$:
+		\begin{itemize}
+			\item
+			$a*(b + c) = a*b + a*c$.
+			\item
+			$(b + c)*a = b*a + c*a$.
+		\end{itemize}
+	\end{enumerate}
+	Si además se cumple que $(S,\ *)$ es abeliano $(S,\ +,\ *)$ se denomina \textbf{anillo conmutativo}, y si además de esto $(S\setminus \{0\},\ *)$ es un grupo, $(S,\ +,\ *)$ es un \textbf{cuerpo}.
+\end{define}
+
+\begin{define}{Espacio vectorial y módulo}{vectspace}
+	Sea $(K,\ +,\ *)$ un cuerpo, $E$ un conjunto no vacío, $\oplus$ una operación interna sobre $E$ y $\cdot : K \times E \rightarrow E$ una aplicación, llamada \textbf{multiplicación por un escalar}. Decimos que $(E,\ \oplus)$ es un \textbf{espacio vectorial} sobre $K$ (al que llamamos \textbf{cuerpo de escalares}) si se cumplen:
+	\begin{enumerate}
+		\item
+		$(E,\ \oplus)$ es un grupo abeliano.
+		
+		\item
+		$(\alpha \beta)\cdot x = \alpha\cdot ( \beta\cdot  x)$ para todo $\alpha,\ \beta \in K$ y $x \in E$.
+		
+		\item
+		$(\alpha + \beta)\cdot x = \alpha\cdot  x \oplus \beta\cdot  x$ para todo $\alpha,\ \beta \in K$ y $x \in E$.
+		
+		\item
+		$\alpha\cdot  (x \oplus y) = \alpha\cdot  x \oplus \alpha\cdot  y$ para todo $\alpha \in K$ y $x,\ y \in E$.
+		
+		\item
+		$1\cdot x = x$ para $1$ la identidad multiplicativa de $K$ y cualquier $x \in K$.
+	\end{enumerate}
+	Si en vez de ser $(K,\ +,\ *)$ un cuerpo es un anillo, $(E,\ \oplus)$ se conoce como un \textbf{módulo} sobre $K$.
+\end{define}
+
+Generalmente la multiplicación por un escalar y la multiplicación del cuerpo se representan de la misma manera por omisión del símbolo multiplicativo, y la suma de ambos usa el mismo símbolo.
+
+\begin{define}{Álgebra}{algebra}
+	Sea $(K,\ +,\ *)$ un cuerpo. $E$ un conjunto no vacío, $\oplus$ y $\otimes$ dos operaciones internas sobre $E$ y $\cdot : K \times E \rightarrow E$ una aplicación, llamada \textbf{multiplicación por un escalar}. Decimos que $(E,\ \oplus,\ \otimes)$ es un \textbf{álgebra} sobre $K$ si se cumplen:
+	\begin{enumerate}
+		\item
+		$E$ es un espacio vectorial con la multiplicación $\cdot$.
+		
+		\item
+		$(E,\ \oplus,\ \otimes)$ es un anillo.
+		
+		\item
+		$\alpha (x y) = (\alpha x) y = x (\alpha)y$ para todo $\alpha \in K$ y $x,\ y \in E$. 
+	\end{enumerate}
+\end{define}
+
+\begin{define}{Conjunto cerrado}{bin_closed}
+	Sea $S$ no vacío y $*$ una operación binaria interna sobre $S$. Decimos que un subconjunto $T \subseteq S$ es \textbf{cerrado} bajo $*$ si y solo si
+	\begin{equation*}
+		ab \in T\ \forall a,\ b \in T.
+	\end{equation*}
+\end{define}
+
+\begin{theorem}\label{thm:bin_restr}
+	Sea $S$ no vacío, $*$ una operación binaria interna sobre $S$ y $T$ un conjunto no vacío cerrado bajo $*$. Entonces la imagen de la restricción de $*$ a $T \times T$ está contenida en $T$. Es decir, se puede restringir el codominio de $*|_{T \times T}$ a $T$.
+\end{theorem}
+
+\begin{dem}
+	Sea $a \in S$ un elemento de la imagen de $*|_{T \times T}$. Esto significa que $\exists x,\ y \in T$ tales que $xy = a$. Pero como $T$ es cerrado bajo $*$ se tiene $a = xy \in T$.
+\end{dem}
+
+
+
+
+
+
+\section{Subestructuras}
+\begin{define}{Subsemigrupo}{subsemigroup}
+	Sea $(S,\ *)$ un semigrupo y $T \subseteq S$ no vacío. Decimos que $(T,\ *|_{T \times T})$ es un \textbf{subsemigrupo} de $S$ si $(T,\ *|_{T \times T})$ es un semigrupo.
+\end{define}
+
+Generalmente, representaremos la operación de la subestructura mediante el mismo símbolo de la operación de la estructura mayor. En la definición es necesario que la operación esté restringida a $T \times T$ solo para ser coherente con la definición de semigrupo (la operación tiene que ser interna). Solo vamos a hacer eso en las definiciones siguientes, y después de eso haremos abuso de notación entendiendo $*$ como $*|_{T \times T}$.\\
+Junto a las definiciones, tendremos unos teoremas más o menos directos que ayudan a la hora de demostrar que algo es una subestructura.
+\begin{theorem}
+	Sea $(S,\ *)$ un semigrupo y $T \subseteq S$ no vacío. Entonces $(T,\ *)$ es un subsemigrupo si y solo sí $T$ es cerrado bajo $*$.
+\end{theorem}
+
+\begin{dem}
+	La implicación directa se cumple por la definición de operación binaria interna. Veamos la implicación contraria. Como $T$ es cerrado bajo $*$, podemos definir $*|_{T \times T} : T \times T \rightarrow T$ por el teorema \eqref{thm:bin_restr} y por tanto $*|_{T \times T}$ es operación interna sobre $T$. Para ver que es asociativa, simplemente vemos que para todo $a,\ b,\ c \in T$ tenemos:
+	\begin{equation*}
+		(a *|_{T \times T} b) *|_{T \times T} c = (a * b) * c = a * (b * c) = a *|_{T \times T} (b *|_{T \times T} c) .
+	\end{equation*}
+\end{dem}
+
+\begin{ejem}
+	Dado un conjunto $S$ no vacío, el grupo $(\biy(S),\ \circ)$ del ejemplo \eqref{ej:group_biy} es un subsemigrupo de $(\apl(S),\ \circ)$, ya que la composición de dos aplicaciones biyectivas es biyectiva, y el dominio y codominio de cada una es $S$.
+\end{ejem}
+
+\begin{define}{Submonoide}{submonoid}
+	Sea $(M,\ *)$ un monoide y $N \subseteq M$ no vacío. Decimos que $(N,\ *|_{N \times N})$ es un \textbf{submonoide} de $M$ si $(N,\ *|_{N \times N})$ es un monoide y la identidad de $(M,\ *)$ pertenece a $N$.
+\end{define}
+
+Es importante que la identidad de $(M,\ *)$ pertenezca al submonoide, ya que $(N,\ *|_{N \times N})$ puede ser monoide con otro elemento neutro, como en el siguiente ejemplo.
+
+\begin{ejem}
+	Consideramos el siguiente subconjunto de $\realnmatrix{n}$
+	\begin{equation*}
+		A = \bigg\{ \left( \begin{array}{cc}
+			x & 0 \\
+			0 & 0
+		\end{array} \right)\ :\ x \in \reales\bigg\}
+	\end{equation*}
+	bajo la multiplicación de matrices. Se puede comprobar que esto es un monoide, con identidad
+	\begin{equation*}
+		\left( \begin{array}{cc}
+			1 & 0 \\
+			0 & 0
+		\end{array} \right)
+	\end{equation*}
+	pero esta identidad es diferente a la del monoide $(\realnmatrix{n},\ *)$ y por tanto $(A,\ *)$ no es un submonoide de $\realnmatrix{n}$. Aun así, sí que es un subsemigrupo.
+\end{ejem}
+
+Al igual que para los semigrupos, tenemos el siguiente teorema:
+
+\begin{theorem}
+	Sea $(M,\ *)$ un monoide y $N \subseteq M$ no vacío. Entonces $(N,\ *)$ es un submonoide si y solo sí se cumplen:
+	\begin{enumerate}
+		\item
+		$N$ es cerrado bajo $*$.
+		\item
+		$N$ contiene el elemento neutro de $M$. 
+	\end{enumerate}
+\end{theorem}
+
+\begin{define}{Subgrupo}{subgroup}
+	Sea $(G,\ *)$ un grupo y $H \subseteq G$ no vacío. Decimos que $(H,\ *|_{H \times H})$ es un \textbf{subgrupo} de $G$ si $(H,\ *|_{H \times H})$ es un grupo.
+\end{define}
+
+\begin{theorem}
+	Sea $(G,\ *)$ un grupo y $H \subseteq G$ no vacío. Son equivalentes:
+	\begin{enumerate}
+		\item
+		$(H,\ *)$ es un subgrupo.
+		\item
+		$H$ es cerrado bajo $*$ y para todo $x \in H$ se tiene $x^{-1} \in H$.
+		\item
+		Para todo $x,\ y \in H$ se tiene $xy^{-1} \in H$.
+	\end{enumerate}
+\end{theorem}
+
+\begin{define}{Subanillo}{subring}
+	Sea $(R,\ +,\ *)$ un anillo y $S \subseteq R$ no vacío. Decimos que $(S,\ +|_{S \times S},\ *|_{S \times S})$ es un \textbf{subanillo} de $R$ si $(S,\ +|_{S \times S},\ *|_{S \times S})$ es un anillo y la identidad multiplicativa de $R$ está en $S$.
+\end{define}
+
+\begin{theorem}
+	Sea $(R,\ +,\ *)$ un anillo y $S \subseteq R$ no vacío. Entonces $(R,\ +,\ *)$ es un subanillo si y solo si se cumplen:
+	\begin{enumerate}
+		\item
+		Para todo $x,\ y \in S$ se tiene $x - y \in S$.
+		\item
+		$S$ es cerrado bajo $*$.
+		\item
+		$S$ contiene el elemento neutro (multiplicativo) de $R$.
+	\end{enumerate}
+\end{theorem}
+
+\begin{define}{Subcuerpo}{subfield}
+	Sea $(R,\ +,\ *)$ un cuerpo y $S \subseteq R$ no vacío. Decimos que $(S,\ +|_{S \times S},\ *|_{S \times S})$ es un \textbf{subcuerpo} de $R$ si $(S,\ +|_{S \times S},\ *|_{S \times S})$ es un cuerpo. Además, diremos que $R$ es una \textbf{extensión} de $S$.
+\end{define}
+
+\begin{theorem}
+	Sea $(K,\ +,\ *)$ un cuerpo y $L \subseteq K$ no vacío. Entonces $(L,\ +,\ *)$ es un subcuerpo si y solo si se cumplen:
+	\begin{enumerate}
+		\item
+		Para todo $x,\ y \in L$ se tiene $x - y \in L$ (es decir, $(L,\ +)$ es un subgrupo de $(K,\ +)$).
+		\item
+		Para todo $x,\ y \in L \setminus \{0 \}$ se tiene $xy^{-1} \in L$ (es decir, $(L\setminus \{0 \},\ *)$ es un subgrupo de $(K\setminus \{0 \},\ *)$).
+	\end{enumerate}
+\end{theorem}
+
+
+\section{Generadores}
+\section{Homomorfismos}
+
+\end{document}
