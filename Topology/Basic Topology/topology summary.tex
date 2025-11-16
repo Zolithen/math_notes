@@ -1,52 +1,819 @@
-\documentclass[a4paper]{article}
+\documentclass[a4paper]{book}
+%\usepackage[spanish]{babel}
+%\usepackage{fontenc}
+%\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amsfonts}
-\usepackage{bm}
-\usepackage[left=10pt,right=20pt,top=20pt,bottom=60pt]{geometry}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems}
+\tcbuselibrary{breakable}
+\tcbuselibrary{skins}
+%\usepackage[left=30pt,right=40pt,top=40pt,bottom=60pt]{geometry}
+\usepackage[bottom=60pt]{geometry}
 
+\raggedbottom
+
+\newtheoremstyle{ejemplo}% name
+{5pt}% Space above
+{5pt}% Space below
+{}% Body font
+{}% Indent amount
+{\bfseries}% Theorem head font
+{.}% Punctuation after theorem head
+{.5em}% Space after theorem head
+{}% Theorem head spec (can be left empty, meaning ‘normal’)
+
+\newtheoremstyle{demostracion}% name
+{5pt}% Space above
+{5pt}% Space below
+{}% Body font
+{}% Indent amount
+{\scshape}% Theorem head font
+{.}% Punctuation after theorem head
+{.5em}% Space after theorem head
+{Proof}% Theorem head spec (can be left empty, meaning ‘normal’)
+
+% TODO: Fix spacing 
+\theoremstyle{definition}
+\newtcbtheorem[number within = section]{define}{Definition}{enhanced jigsaw, breakable, before skip=10pt, after skip=10pt, sharp corners=all, colframe=purple, fonttitle=\bfseries%
+	}{defn}	
+	
 \newtheorem{theorem}{Theorem}[section]
-\newtheorem{lemma}{lemma}[section]
+\tcolorboxenvironment{theorem}{%
+	colframe=blue, enhanced jigsaw, breakable,%
+	before skip=10pt,after skip=10pt, sharp corners=all}
 
+\newtheorem{note}{Note}[section]
+
+\theoremstyle{ejemplo}
+\newtheorem{example}{Example}[section]
+\newtheorem{remark}{Remark}[section]
+
+\theoremstyle{demostracion}
+\newtheorem{dem}{Proof}
+\tcolorboxenvironment{dem}{%
+	colframe=black, opacityback = 0, enhanced jigsaw, breakable,%
+	before skip=10pt,after skip=10pt, sharp corners=all}
+
+\newcommand{\complejos}{\mathbb{C}}
+\newcommand{\reales}{\mathbb{R}}
+\newcommand{\racionales}{\mathbb{Q}}
+\newcommand{\enteros}{\mathbb{Z}}
+\newcommand{\naturales}{\mathbb{N}}
+\newcommand{\realnmatrix}[1]{\mathcal{M}_{#1}(\reales)}
+\newcommand{\quottop}{\stackrel{\sim}{\tau}}
+
+\DeclareMathOperator{\apl}{Apl}
+\DeclareMathOperator{\biy}{Biy}
+\DeclareMathOperator{\simgroup}{\mathcal{S}}
+\DeclareMathOperator{\interior}{Int}
+\DeclareMathOperator{\exterior}{Ext}
+\DeclareMathOperator{\closure}{Cl}
+\DeclareMathOperator{\boundary}{Fr}
+\DeclareMathOperator{\accumulation}{Ac}
+\DeclareMathOperator{\sats}{sats}
+
+%idr where did i get these
+\makeatletter
+%\def\thickhrulefill{\leavevmode \leaders \hrule height 1ex \hfill \kern \z@}
+\def\@makechapterhead#1{%
+  \vspace*{10\p@}%
+  {\parindent \z@ \raggedleft \reset@font
+            \scshape \@chapapp{} \thechapter
+        \par\nobreak
+        \interlinepenalty\@M
+    \Huge \bfseries #1\par\nobreak
+    %\vspace*{1\p@}%
+    \hrulefill
+    \par\nobreak
+    \vskip 100\p@
+  }}
+\def\@makeschapterhead#1{%
+  \vspace*{10\p@}%
+  {\parindent \z@ \raggedleft \reset@font
+            \scshape \vphantom{\@chapapp{} \thechapter}
+        \par\nobreak
+        \interlinepenalty\@M
+    \Huge \bfseries #1\par\nobreak
+    %\vspace*{1\p@}%
+    \hrulefill
+    \par\nobreak
+    \vskip 100\p@
+  }}
+
+\pagestyle{empty}
 \author{NyKi}
-\title{Summary of Basic Topology}
-\date{September 2024-January 2025}
+\title{Basic Topology}
 
 \begin{document}
 \maketitle
 \tableofcontents
+
+\pagestyle{fancy}
 %%Thing
-\section{Preface}
-This file contains my notes for our \textit{Basic Topology} class at my university. I have decided to add more stuff I find interesting, but there's no distinction between what comes from class and what comes from my own research. Only proofs I find interesting are provided, and the notes are all over the place right now; I still need to sort them properly into chapters.
-\section{Basic point set topology}
-This is an introduction to topological concepts.
+\chapter{Topological spaces}
+TODO\\ 
+Change all $\subseteq$ into $\subset$ (for clearer notation).
+\section{Topologies and bases}
+
+\begin{define}{Topological space}{top_space}
+	A \textbf{topological space} is a pair $(X,\ \tau)$ where $X$ is a nonempty set and $\tau$ is a family of subsets of $X$, such that:
+	\begin{enumerate}
+		\item
+		$X,\ \emptyset \in \tau$.
+		\item
+		Any arbitrary union of elements of $\tau$ is again in $\tau$.
+		\item
+		Any finite intersection of elements of $\tau$ is again in $\tau$.	
+	\end{enumerate}	 
+	The set $\tau$ is called a \textbf{topology} over $X$.
+	Subsets of $X$ which are in $\tau$ are called \textbf{open} in $X$ and sets which their complement is in $\tau$ are called \textbf{closed} in $X$.
+\end{define}
+
+Note that a topology $\tau$ is never empty by axiom $1$ in our definition.
+Generally, if the topology is clear we simply refer to the topological space as the set $X$, understanding that we are working with an implicit topology.
+
+\begin{example}
+	Over any nonempty set $X$ we can define the \textbf{discrete topology} by taking $\tau = \wp(X)$, where $\wp(X)$ is the set of all subsets of $X$ (the power set of $X$). It is easily checked that this satisfies every axiom of a topology.
+\end{example}
+
+\begin{example}
+	$\tau = \{X,\ \emptyset \}$ is also a topology over $X$, called the \textbf{trivial topology}.
+\end{example}
+
+\begin{example}
+	Given a point $p \in X$ in a nonempty set $X$ we can define the \textbf{special point topology} by taking $\tau = \{A \subseteq X\ : p \in A\} \cup \{ \emptyset \}$.
+\end{example}
+
+\begin{example}\label{top_euclidean}
+	For a more interesting example, we can consider over the real numbers the topology $\tau = \{A \subseteq \reales\ :\ \forall x \in A\ \exists I \text{ open interval s.t. } x \in I \subseteq A\}$. This one is called the \textbf{euclidean topology} over the real numbers.
+\end{example}
+
+\begin{define}{Comparison of topologies}{topology_comparison}
+	Let $X$ be a nonempty set and let $\tau_1$ and $\tau_2$ be two topologies over $X$. If $\tau_1 \subseteq \tau_2$ we say that $\tau_2$ is \textbf{finer} than $\tau_1$ and that $\tau_1$ is \textbf{thicker} than $\tau_2$.
+\end{define}
+
+The first problem that we have is finding non trivial topologies. For that purpose, we introduce the concept of a base.
+
+\begin{define}{Base}{base}
+	Let $X$ be a nonempty set. $\mathcal{B} \subseteq \wp(X)$ is called a \textbf{base} (for a topology) over $X$ if
+	\begin{enumerate}
+		\item
+		$\bigcup_{B \in \mathcal{B}} B = X$.
+		
+		\item
+		For every $B_1,\ B_2 \in \mathcal{B}$ with nonempty intersection and $x \in B_1 \cap B_2$ there exists a $B_3 \in \mathcal{B}$ such that $x \in B_3 \subseteq B_1 \cap B_2$.
+	\end{enumerate}
+	An element of a base is called a \textbf{basic element}.
+\end{define}
+
+Bases will allow us to characterize topological concepts using a family of sets much smaller than the family of open sets.
+First, we see how we can get a topology from a base.
+
+\begin{theorem}
+	Let $X$ be a nonempty set and $\mathcal{B}$ a base over $X$. The set
+	\begin{equation*}
+		\tau_{\mathcal{B}} = \{O \subseteq X\ :\ \forall x \in O\ \exists B \in \mathcal{B} \text{ s.t. } x \in B \subseteq O\}
+	\end{equation*}
+	is a topology over $X$, called the \textbf{topology generated} by $\mathcal{B}$. Moreover, if $\tau'$ is another topology such that $\mathcal{B} \subseteq \tau'$ then $\tau_{\mathcal{B}} \subseteq \tau'$ (that is to say $\tau_{\mathcal{B}}$ is the smallest topology that contains $\mathcal{B}$).
+\end{theorem}
+
+\begin{theorem}
+	Let $X$ be a nonempty set and $\mathcal{B}$ a base over $X$. Then the topology generated by $\mathcal{B}$ is equal to the set of all possible unions of elements of $\mathcal{B}$ (taking the empty union to equal the empty set).
+\end{theorem}
+
+\begin{example}
+	The euclidean topology of example \eqref{top_euclidean} is generated by the base $\mathcal{B}$ consisting of all open intervals, that is sets of the form $]a,\ b[\ = \{ x\in \reales : a < x < b\}$.
+\end{example}
+
+Now that we know how to get a topology from a base, it's convenient to be able to get a base from a topology.
+
+\begin{theorem}
+TODO: See if it's correct
+	Let $(X,\ \tau)$ be a topological space, and $\mathcal{B} \subseteq \wp(X)$ a set of subsets of $X$. Then $\mathcal{B}$ is a base for $\tau$ if and only if $\forall O \in \tau$ and $\forall x \in O$ there exists $B \in \mathcal{B}$ such that $x \in B \subseteq O$.
+\end{theorem}
+
+And finally, we have a result for comparing the topologies generated by two bases.
+
+\begin{theorem}[Hausdorff Criterion]
+	Let $X$ be a nonempty set and $\mathcal{B}_1,\ \mathcal{B}_2$ two bases over $X$. If for every $B_1 \in \mathcal{B}_1$ and every $x \in B_1$ there exists $B_2 \in \mathcal{B}_2$ such that $x \in B_2 \subseteq B_1$ then $\tau_{\mathcal{B}_1} \subseteq \tau_{\mathcal{B}_2}$.
+\end{theorem}
+
+We now introduce the concept of a subbase, a generalization of a base.
+
+\begin{define}{Subbase}{subbase}
+	Let $X$ be a nonempty set. A family of sets $\delta$ of $X$ is called a \textbf{subbase} for a topology over $X$ if the union of every set in $\delta$ equals $X$.
+\end{define}
+
+\begin{theorem}
+	Let $X$ be a nonempty set, and $\delta$ a subbase over $X$. Then the arbitrary union of finite intersections of sets in $\delta$ form the smallest topology that contains $\delta$, such a topology is called the \textbf{topology generated} by $\delta$.
+\end{theorem}
+
+This theorem is the important thing for subbases: they are almost arbitrary families of sets of $X$, and they provide a way of talking about the smallest topology that contains them.
+
+\begin{define}{Neighborhood}{neighborhood}
+	Let $(X,\ \tau)$ be a topological space and $x \in X$. A subset $U \subseteq X$ is called a \textbf{neighborhood} if there exists $O \in \tau$ such that $x \in O \subseteq U$. If $U$ is then open, it's called an \textbf{open neighborhood}, and if $U$ is an element of some base, it's called a \textbf{basic neighborhood}. We denote the set of all neighborhoods of $x$ with $\mathcal{N}(x)$.
+\end{define}
+
+\begin{define}{Neighborhood base}{neighborhood base}
+	Let $(X,\ \tau)$ be a topological space and $x \in X$. A set $\mathcal{B}$ of subsets of $X$ is called a \textbf{neighborhood base} if
+	\begin{enumerate}
+		\item
+		Every element of $\mathcal{B}$ is a neighborhood of $x$.
+		
+		\item
+		For every neighborhood $U$ of $x$ there exists $B \in \mathcal{B}$ such that $x \in B \subseteq U$.
+	\end{enumerate}
+\end{define}
+
+\section{Closed and open sets}
+
+Open and closed sets are important in the definition of a topology. It's no wonder that we study some of their properties.\\ 
+First, we see that closed sets satisfy properties similar to that of open sets.
+
+\begin{theorem}\label{closed_set_props}
+	Let $(X,\ \tau)$ be a topological space. Then the set $\mathcal{F}$ of closed sets of $(X,\ \tau)$ satisfy:
+	\begin{enumerate}
+		\item
+		$X,\ \emptyset \in \mathcal{F}$.
+		\item
+		Any finite union of elements of $\mathcal{F}$ is again in $\mathcal{F}$.
+		\item
+		Any arbitrary intersection of elements of $\mathcal{F}$ is again in $\mathcal{F}$.
+	\end{enumerate}	
+\end{theorem}
+
+We can also define a topology via a family of sets that satisfy the conditions in theorem \eqref{closed_set_props}, see exercise .
+
+\begin{define}{Closure}{closure}
+	Let $(X,\ \tau)$ be a topological space and $A \subseteq X$. We define the \textbf{closure} of $A$ to be the intersection of all closed subsets of $X$ that contain $A$, and denote it by $\closure(A)$.
+\end{define}
+
+In the definition of closure we assume that the intersection of a bounded below by inclusion subset of closed sets exists, but this is always true due to item 3 in theorem \eqref{closed_set_props}. The closure of a nonempty set $A$ is nonempty as there will always be a closed set containing $A$ (the set $X$), so the family of closed subsets containing $A$ will be nonempty, and the intersection of all closed sets that contain $A$ will, inevitably, contain $A$.
+
+\begin{define}{Limit and accumulation point}{limit_point}
+	Let $(X,\ \tau)$ be a topological space. $p \in X$ is said to be a \textbf{limit point} of a nonempty set $A \subseteq X$ if all neighborhoods of $p$ intersect $A$. If all neighborhoods of $p$ intersect $A \setminus \{ p\}$ then $p$ is said to be an \textbf{accumulation point} of $A$.
+\end{define}
+
+\begin{define}{Isolated point}{isolated_point}
+	Let $(X,\ \tau)$ be a topological space. $p \in X$ is said to be an \textbf{isolated point} of a nonempty set $A \subseteq X$ if $p \in A$ and there exists a neighborhood $U$ of $x$ such that $U \cap A = \{ p\}$.
+\end{define}
+
+\begin{define}{Interior and exterior}{interior}
+	Let $(X,\ \tau)$ be a topological space and $A \subseteq X$. We define the \textbf{interior} of $A$ to be the union of all open subsets of $X$ contained in $A$, and denote it by $\interior{A}$. The \textbf{exterior} of $A$ is defined as $\exterior(A) = \interior(X \setminus A)$.
+\end{define}
+
+\begin{define}{Interior and exterior point}{interior_point}
+	Let $(X,\ \tau)$ be a topological space. $p \in X$ is said to be an \textbf{interior point} of a nonempty set $A \subseteq X$ if $A$ is a neighborhood of $p$. If instead $X \setminus A$ is a neighborhood of $p$, $p$ is said to be an \textbf{exterior point} of $A$.
+\end{define}
+
+An interior point of a subset is also a limit point of the same subset. It may be believed that an interior point is also an accumulation point, but this is not always true:
+\begin{example}
+	Consider the set $X = \{ a,\ b,\ c\}$ with $a,b,c$ all distinct, and consider the discrete topology over $X$. Then, if $A = \{a,\ b \}$ it is easily checked that $a$ is an interior point of $A$ because $\{ a\}$ is open, but it is not an accumulation point because the open neighborhood $\{ a\}$ of $a$ doesn't intersect $A \setminus \{ a\} = \{ b\}$.
+\end{example}
+
+\begin{define}{Boundary}{boundary}
+	Let $(X,\ \tau)$ be a topological space and $A \subseteq X$. We define the \textbf{boundary} (or frontier) of $A$ to be $\boundary(A) = \closure(A) \setminus \interior(A)$, and a point inside the boundary of $A$ is called a \textbf{boundary point}.
+\end{define}
+
+\begin{theorem}
+	Let $(X,\ \tau)$ be a topological space and $A \subseteq X$. Then:
+	\begin{enumerate}
+		\item
+		$\interior(A)$ is equal to the biggest open set that is contained in $A$.
+		\item
+		$\closure(A)$ is equal to the smallest closed set that contains $A$.
+	\end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+	Let $(X,\ \tau)$ be a topological space and $A \subseteq X$.
+	\begin{enumerate}
+		\item
+		$A$ is open if and only if $\interior(A) = A$. That is to say, $A$ is open if and only if it's a neighborhood of every point inside it.
+		\item
+		$A$ is closed if and only if $\closure(A) = A$.
+	\end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+	Let $(X,\ \tau)$ be a topological space and $A \subseteq X$. Then:
+	\begin{enumerate}
+		\item
+		$\interior(A)$ is equal to the set of all interior points of $A$.
+		\item
+		$\closure(A)$ is equal to the set of all limit points of $A$.
+		\item
+		$\exterior(A)$ is equal to the set of all exterior points of $A$.
+	\end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+	Let $(X,\ \tau)$ be a topological space and $A,B \subseteq X$.
+	\begin{enumerate}
+		\item
+		If $A \subseteq B$ then $\closure(A) \subseteq \closure(B)$ and $\interior{A} \subseteq \interior{B}$. Nothing can be said for the boundary.
+		\item
+		$\closure(A) \cup \closure(B) = \closure(A \cup B)$ and $\interior{A} \cup \interior{B} \subseteq \interior{A \cup B}$.
+		\item
+		$\closure(A) \cap \closure(B) \supseteq \closure(A \cap B)$ and $\interior{A} \cap \interior{B} = \interior{A \cap B}$.
+		\item
+		$\interior(A) = X \setminus \closure(X \setminus A)$.
+	\end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+	Let $(X,\ \tau)$ be a topological space. If $A \subseteq X$, then
+	\begin{equation*}
+		X = \interior(A) \cup \boundary(A) \cup \exterior(A).		
+	\end{equation*}
+\end{theorem}
+
+We can also characterize previous definitions via bases and neighborhood bases.
+
+\begin{theorem}
+	Let $(X,\ \tau)$ be a topological space, $\mathcal{B}$ a base for $\tau$ and $A \subseteq X$. If $p \in X$, then
+	\begin{enumerate}
+		\item
+		$p$ is a limit point of $A$ if and only if every basic neighborhood of $p$ intersects $A$.
+		
+		\item
+		$p$ is an interior point of $A$ if and only if there exists some basic neighborhood of $p$ contained in $A$.
+		
+		\item
+		$p$ is a boundary point of $A$ if and only if every basic neighborhood of $p$ intersects $A$ and $X \setminus A$.
+		
+		\item
+		$p$ is an accumulation point of $A$ if and only if every basic neighborhood of $p$ intersects $A$ at a point different from $p$.
+		
+		\item
+		$p$ is an isolated point of $A$ if and only if $p \in A$ and there exists some basic neighborhood of $p$ that doesn't contain any other points of $A$.
+	\end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+	Let $(X,\ \tau)$ be a topological space and $A \subseteq X$. If $p \in X$ and $\mathcal{B}(p)$ is a neighborhood base for $p$, then
+	\begin{enumerate}
+		\item
+		$p$ is a limit point of $A$ if and only if every element of $\mathcal{B}(p)$ intersects $A$.
+		
+		\item
+		$p$ is an interior point of $A$ if and only if there exists some element of $\mathcal{B}(p)$ contained in $A$.
+		
+		\item
+		$p$ is a boundary point of $A$ if and only if every element of $\mathcal{B}(p)$ intersects $A$ and $X \setminus A$.
+		
+		\item
+		$p$ is an accumulation point of $A$ if and only if every element of $\mathcal{B}(p)$ intersects $A$ at a point different from $p$.
+		
+		\item
+		$p$ is an isolated point of $A$ if and only if $p \in A$ and there exists element of $\mathcal{B}(p)$ that doesn't contain any other points of $A$.
+	\end{enumerate}
+\end{theorem}
+
+
+\section{Subspaces}
+\begin{define}{Subspace topology}{subspace_topology}
+	Let $(X,\ \tau)$ be a topological space, and $A \subseteq X$ nonempty. We define the \textbf{subspace topology}
+	\begin{equation*}
+		\tau_A = \{O \cap A : O \in \tau \}.
+	\end{equation*}
+	The resulting topological space $(A, \tau_A)$ is called a \textbf{subspace} of $X$.
+\end{define}
+
+\begin{theorem}
+	The set defined in definition \ref{defn:subspace_topology} is a topology over $A$.
+\end{theorem}
+
+Note that we may equip a subset of a topological space with any topology we want, but that doesn't make it a subspace. The subspace topology is important as it is the one that ``makes'' sense to put on a subset, as if $A$ is an open set then $\tau_A \subseteq \tau$. We sometimes just refer to the subspace $(A,\ \tau_A)$ as $A$, just as with spaces.
+
+\begin{theorem}
+	Let $(X,\ \tau)$ be a topological space, and $A \subseteq X$ nonempty. The set of closed sets $\mathcal{F}_A$ of the space $(A,\ \tau_A)$ is
+	\begin{equation*}
+		\mathcal{F}_A = \{C \cap A : C \in \mathcal{F} \}.
+	\end{equation*}
+\end{theorem}
+
+We have to be careful when using the vocabulary of the last two sections in relation to subspaces. It may happen that a set is open in $A$, but not be open in $X$, or be closed in $A$ and not be in $X$, or viceversa:
+\begin{example}
+
+\end{example}
+
+We can however guarantee stronger transitivity under certain conditions:
+\begin{theorem}
+	Let $(X,\ \tau)$ be a topological space, and $A \subseteq X$ nonempty. Then
+	\begin{enumerate}
+		\item
+		If $A$ is open in $X$, then $B \subseteq A$ is open in $A$ iff $B$ is open in $X$.
+		
+		\item
+		If $A$ is closed in $X$, then $B \subseteq A$ is closed in $A$ iff $B$ is closed in $X$.
+	\end{enumerate}
+\end{theorem}
+This is a crude explanation of why open and closed subspaces are more interesting than other subspaces, more reasons will be given in the topological invariants chapter. For now, we will give properties of subspaces related to the parent space.
+
+\begin{theorem}
+	Let $(X,\ \tau)$ be a topological space, $\mathcal{B}$ a base for $\tau$ and $A \subseteq X$ nonempty. Then
+	\begin{equation*}
+		\mathcal{B}_A = \{ B \cap A : B \in \mathcal{B}\}
+	\end{equation*}
+	is a base for the subspace topology over $A$.
+\end{theorem}
+
+\begin{theorem}
+	Let $(X,\ \tau)$ be a topological space, $A \subseteq X$ nonempty and $x \in A$. Then
+	\begin{equation*}
+		\mathcal{N}_A(x) = \{ U \cap A : U \in \mathcal{N}(x)\}
+	\end{equation*}
+	is the family of neighborhoods of x in $(A, \tau_A)$.
+\end{theorem}
+
+\begin{theorem}
+	Let $(X,\ \tau)$ be a topological space, $A \subseteq X$ nonempty, $x \in A$ and $\mathcal{B}(x)$ a neighborhood base for $x$ in $X$. Then
+	\begin{equation*}
+		\mathcal{B}_A(x) = \{ B \cap A : B \in \mathcal{B}(x)\}
+	\end{equation*}
+	is a neighborhood base of x in $(A, \tau_A)$.
+\end{theorem}
+
+We can also talk about the closure, interior, exterior and boundary of a set inside a subspace. For notational convenience, in the corresponding operators we use a subscript to indicate which space we are talking about when there could be confusion: for example, if $S \subseteq A \subseteq X$ the closure of $S$ inside $A$ would be denoted by $\closure_A(S)$, meanwhile if $Y$ is a topological space which is disjoint from $X$ the closure of a subset $H$ of $Y$ shall be denoted by $\closure(H)$, as there can be no confusion of which space we are in.
+
+\begin{theorem}
+	Let $(X,\ \tau)$ be a topological space, $A \subseteq X$ nonempty and $S \subseteq A$. Then
+	\begin{equation*}
+		\closure_A(S) = \closure(S) \cap A.
+	\end{equation*}
+\end{theorem}
+
+This is quite nice compared to the cases of the interior and the boundary: TODO: Are they correct?
+\begin{theorem}\label{interior_in_subspace}
+	Let $(X,\ \tau)$ be a topological space, $A \subseteq X$ nonempty and $S \subseteq A$. Then
+	\begin{equation*}
+		 \interior(S) \cap A \subseteq \interior_A(S).
+	\end{equation*}
+	If $A$ is open, then the inclusion turns into equality.
+\end{theorem}
+
+\begin{theorem}
+	Let $(X,\ \tau)$ be a topological space, $A \subseteq X$ nonempty and $S \subseteq A$. Then
+	\begin{equation*}
+		 \boundary_A(S) \subseteq \boundary(S) \cap A.
+	\end{equation*}
+\end{theorem}
+
+The inclusion in theorem \eqref{interior_in_subspace} is not always an equality:
+\begin{example}
+	In the real numbers over the euclidean topology, consider the set of rational numbers $A = \racionales$. Then
+	\begin{equation*}
+		\interior(A) = \emptyset
+	\end{equation*}
+	but
+	\begin{equation*}
+		\interior_A(A) = A
+	\end{equation*}
+	so
+	\begin{equation*}
+		\interior(A) \cap A = \emptyset \subsetneq \interior_A(A) = \racionales.
+	\end{equation*}
+\end{example}
+
+\section{Continuous functions}
+\begin{define}{Continuous function}{cont_function}
+	Let $(X,\ \tau)$ and $(Y,\ \tau')$ be topological spaces. An application $f: X \rightarrow Y$ is \textbf{continuous} with respect to the topologies $\tau$ and $\tau'$ if for every $O \in \tau'$ we have $f^{-1}(O) \in \tau$. When talking about applications between topological spaces, we denote them by $f: (X,\ \tau) \rightarrow (Y,\ \tau')$.
+\end{define}
+
+
+\section{Product spaces}
+\section{Quotient topology}
+
+\begin{define}{Quotient space}{quotient_space}
+	Let $(X,\ \tau)$ be a topological space and let $\sim$ be an equivalence binary relation (ERB). We define over the quotient set $X / \sim$ the \textbf{quotient topology}
+	\begin{equation*}
+		\stackrel{\sim}{\tau} = \{ O \subseteq X / \sim \ :\ p^{-1}(O) \in \tau\}
+	\end{equation*}
+	(which is indeed a topology). The space $(X / \sim,\ \stackrel{\sim}{\tau})$ is called the \textbf{quotient space} of $(X,\ \tau)$ under $\sim$. The application $p: (X,\ \tau) \rightarrow (X/\sim, \quottop)$ defined by $p(x) = [x]$ for all $x \in X$ is called the \textbf{canonical projection}.
+\end{define}
+
+\begin{theorem}
+	The set $\stackrel{\sim}{\tau}$ defined in \eqref{defn:quotient_space} is a topology, and it is the finest topology for which the canonical projection $p: X \rightarrow X / \sim$ is continuous.
+\end{theorem}
+
+\begin{proof}
+	It is obvious that $p:(X,\ \tau) \rightarrow (X/\sim,\ \quottop)$ is continuous. Now, let $\tau'$ be any other topology over $X/\sim$ in which $p$ is continuous. Then for every $O' \in \tau'$ we have $p^{-1}(O') \in \tau$, which means $O' \in \quottop$ and so $\tau' \subseteq \quottop$.
+\end{proof}
+
+\begin{theorem}
+	A function $f: (X / \sim,\ \quottop) \rightarrow (Y,\ \tau')$ of a quotient space onto a topological space is continuous if and only if $f \circ p : (X,\ \tau) \rightarrow (Y,\ \tau')$ is continuous.
+\end{theorem}
+
+\begin{proof}
+	If $f$ is continuous, then $f \circ p$ is a composition of continuous functions, so it is continuous. Now, suppose $f \circ p$ is continuous for some $f: (X / \sim,\ \quottop) \rightarrow (Y,\ \tau')$. If $O' \in \tau'$ then $(f \circ p)^{-1}(O') \in \tau$, but it is known that for preimages $\tau \ni (f \circ p)^{-1}(O') = (p^{-1} \circ f^{-1})(O') = p^{-1}(f^{-1}(O'))$ and by definition of the quotient topology $f^{-1}(O') \in \quottop$, so $f$ is continuous.
+\end{proof}
+
+\begin{theorem}
+	The family of closed sets of $(X / \sim, \quottop)$ is exactly
+	\begin{equation*}
+		\stackrel{\sim}{\mathcal{F}} = \{ C \subseteq X/\sim\ :\ p^{-1}(C) \text{ is closed in } X\}.
+	\end{equation*}
+\end{theorem}
+
+\begin{define}{Saturated set}{saturated_set}
+	A set $S \subseteq X$ is called \textbf{saturated with respect to $\sim$} (or simply saturated) if 
+	\begin{equation*}
+		S = p^{-1} (p(S)).
+	\end{equation*}
+	We denote the set of all saturated subsets of $X$ by $\sats(X)$ (whenever the EBR is clear).
+\end{define}
+
+\begin{theorem}
+	A set $S \subseteq X$ is saturated if and only if it's an union of equivalence classes.
+\end{theorem}
+
+\begin{theorem}
+	\begin{equation*}
+		\sats(X) = \{p^{-1}(p(S))\ : S \subseteq X \}
+	\end{equation*}
+\end{theorem}
+
+\begin{theorem}
+	Arbitrary unions and arbitrary intersections of saturated sets are saturated (with respect to the same EBR). Moreover, $X \in \sats(X)$ and $\emptyset \in \sats(X)$, so $\sats(X)$ is a topology over $X$.
+\end{theorem}
+
+\begin{theorem}
+	Open sets in $X / \sim$ are exactly projections of open saturated sets, 
+	\begin{equation*}
+		\quottop = p(\sats(X) \cap \tau),
+	\end{equation*}
+	and closed sets in $X / \sim$ are exactly projections of closed saturated sets,
+	\begin{equation*}
+		\stackrel{\sim}{\mathcal{F}} = p(\sats(X) \cap \mathcal{F}).
+	\end{equation*}
+\end{theorem}
+
+These results lead neatly to a characterization of when is the projection open or closed.
+TODO: Characterization of open or closed for functions quotient to other space.
+\begin{theorem}
+Wrong?
+	\begin{itemize}
+		\item
+		The canonical projection $X$ is open if and only if the saturation of every open set in $\tau$ is open.
+		
+		\item
+		The canonical projection $X$ is closed if and only if the saturation of every closed set in $\tau$ is closed.
+	\end{itemize}
+\end{theorem}
+
+\begin{theorem}
+	For all $x \in X$
+	\begin{equation*}
+		\mathcal{N}([x]) = p(\{ U \in \sats(X)\ |\ \exists O_x \in \tau \cap \mathcal{N}(x) \cap \sats(X) \text{ with } x \in O_x \subseteq U\}),
+	\end{equation*}
+	which is a well defined set.
+\end{theorem}
+
+\begin{theorem}
+	$(X/\sim,\ \quottop)$ is T1 if and only if every equivalence class is closed in $(X,\ \tau)$.
+\end{theorem}
+
+\begin{proof}
+	By characterization of T1, 
+\end{proof}
+
+\begin{theorem}
+	$(X/\sim,\ \quottop)$ is Hausdorff if and only if for every $x, y \in X$ with $x \not \sim y$ there exist saturated sets $O_x \in \tau \cap \mathcal{N}(x)$ and $O_y \in \tau \cap \mathcal{N}(y)$ such that $O_x \cap O_y = \emptyset$.
+\end{theorem}
+
+This condition is hardly operative.\\ 
+
+One thing we may want is to find a space easier to work with that is homeomorphic to our quotient space.
+
+\begin{theorem}
+	Let $g: (X,\ \tau) \rightarrow (Y,\ \tau')$ be a continuous surjective function that induces an application $f$ on the quotient set $X/\sim$. If for all $O \subseteq Y$ we have that $g^{-1}(O) \in \tau$ implies $O \in \tau'$ then the application $f: (X/\sim,\ \quottop) \rightarrow (Y,\ \tau')$ is a homeomorphism.
+\end{theorem}
+
+Now, we can also understand an EBR over $X$ as a surjective function over some other set, $Y$ and viceversa:
+
+\begin{theorem}
+	Let $X$ and $Y$ be nonempty sets and $g: X \rightarrow Y$ a surjective application. Defining an EBR $\sim$ on $X$ by
+	\begin{equation*}
+		x \sim y \text{ iff } g(x) = g(y)
+	\end{equation*}
+	we get that $g$ induces a map on the quotient, $\stackrel{\sim}{g} : (X/\sim) \rightarrow Y$ which is a bijection. Also, for all $y \in Y$ we have $g^{-1}(y) = [x]$ for all $x \in g^{-1}(y)$.
+\end{theorem}
+
+If over some set $X$ we have an EBR $\sim$, this EBR uniquely defines the surjective application of projection over the quotient. This two results are purely set theoretical, and lead to an alternate definition of quotient topology, one more general using surjective functions:
+
+\begin{theorem}
+	Let $(X,\ \tau)$ be a topological space, $Y$ be a nonempty set and $g: X \rightarrow Y$ a surjective application. If we define a topology $\tau'$ over $Y$ by 
+	\begin{equation*}
+		\tau' = \{ O' \subseteq Y\ |\ g^{-1}(O') \in \tau\}
+	\end{equation*}
+	and an EBR $\sim$ on $X$ by
+	\begin{equation*}
+		x \sim y \text{ iff } g(x) = g(y)
+	\end{equation*}
+	we get that $g$ induces a map of spaces on the quotient, $\stackrel{\sim}{g} : (X/\sim,\ \quottop) \rightarrow (Y,\ \tau')$ which is a homeomorphism.
+\end{theorem}
+
+TODO: Kolmogorov, T1 and Hausdorff quotients
+
+\chapter{Topological properties}
+TODO: Stupid definitions?
+\begin{define}{Topological property}{top_property}
+	A predicate $P$ over topological spaces is called a \textbf{topological property} if homeomorphic spaces have the same truth value under $P$.
+\end{define}
+In simpler terms: $P$ is a topological property if whenever $X$ is homeomorphic to $Y$ we have that $X$ satistfies $P$ if and only if $Y$ satisfies $P$.
+
+\begin{define}{Fully hereditary}{fully_hereditary}
+	We say that a property $P$ is \textbf{fully hereditary} if whenever $X$ satisfies it then every subspace satisfies it too.
+\end{define}
+
+Rarely is a property fully hereditary.
+
+\begin{define}{Weakly hereditary}{weakly_hereditary}
+	We say that a property $P$ is \textbf{weakly hereditary} if whenever $X$ satisfies it then every closed subspace satisfies it too.
+\end{define}
+
+\begin{define}{Productory}{productory}
+	We say that a property $P$ is \textbf{productory} if whenever a collection of spaces $\{ X_i\}_{i \in I}$ then the product $\Pi X_i$ satisfies it too.
+\end{define}
+
+\begin{define}{Strongly productory}{strongly_productory}
+	We say that a property $P$ is \textbf{strongly productory} if it's productory and whenever a product of spaces satisfies $P$ then every factor in the product satisfies it too.
+\end{define}
+
+\section{Separation axioms}
+\begin{define}{Separation axioms}{sep_axioms}
+	Let $(X,\ \tau)$ be a topological space. We say that $X$ is
+	\begin{itemize}
+		\item
+		\textbf{T0} (or \textbf{Kolmogorov}) if for all $x,y \in X$ distinct there exist an open set $U$ such that one of $x,y$ is in $U$ and the other one isn't.
+		
+		\item
+		\textbf{T1} (or \textbf{Frechet}) if for all $x,y \in X$ distinct there exist 2 open sets $U$ and $V$ such that $x \in U, y \not \in U$ and $x \not \in V, y \in V$.
+		
+		\item
+		\textbf{T2} (or \textbf{Hausdorff}) if for all $x,y \in X$ distinct there exist 2 open sets $U$ and $V$ such that $x \in U$, $y \in V$ and $U \cap V = \emptyset$.
+		
+		\item
+		\textbf{regular} if for all $x \in X$ and closed sets $F \subset X$ with $x \not \in F$ there exist 2 open sets $U$ and $V$ such that $x \in U$, $F \subset V$ and $U \cap V = \emptyset$.
+		
+		\item
+		\textbf{T3} if it's regular and T1.
+		
+		\item
+		\textbf{normal} if for all closed sets $F,G \subset X$ with $F \cap G = \emptyset$ there exist 2 open sets $U$ and $V$ such that $F \subset U$, $G \subset V$ and $U \cap V = \emptyset$.
+		
+		\item
+		\textbf{T4} if it's normal and T1.
+	\end{itemize}
+\end{define}
+
+\section{Cardinal invariants}
+\begin{define}{Weight}{weight}
+	Let $(X,\ \tau)$ be a topological space. We define the \textbf{weight} of $X$ to be the smallest infinite cardinal $\alpha$ for which there exists a base $\mathcal{B}$ of $X$ with $|\mathcal{B}| = \alpha$. It is denoted by $w(X)$.
+\end{define}
+
+\begin{define}{Character}{character}
+	Let $(X,\ \tau)$ be a topological space. We define the \textbf{character of a point} $x\in X$ to be the smallest infinite cardinal $\alpha$ for which there exists a neighborhood base $\mathcal{B}$ of $x$ with $|\mathcal{B}| = \alpha$, and is denoted by $\chi(x, X)$. The \textbf{character} of $X$ is defined to be $\chi(X) = \sup\{\chi(x, X) : x \in X\}$.
+\end{define}
+
+Only allowing infinite cardinals makes arithmetic with these cardinal invariants a bit easier to handle.
+
+\begin{define}{Numerability axioms}{num_axioms}
 \begin{itemize}
+	\item
+	If $w(X)$ is countable, then $X$ is said to be \textbf{2AN}.
+	\item
+	If $\chi(X)$ is countable, then $X$ is said to be \textbf{1AN}.
+\end{itemize}
+\end{define}
 
-\item
-\textbf{Topological space: }A topological space is a pair $(X,T)$ where $X$ is a set and $T$ is a family of subsets of $X$ where:
-\begin{enumerate}
-\item
-$X,\emptyset\ \in T$
-\item
-Any arbitrary union of elements of $T$ is again in $T$.
-\item
-Any finite intersection of elements of $T$ is again in $T$.
-\end{enumerate}
-Sets in T are called \textbf{open}. Sets which their complement is in $T$ are called \textbf{closed}. We usually call $X$ the topological space when we know the topology we are working with. Here, letters like $X$ and $Y$ will denote topological spaces. We also normally call an open subset that has a point $x$ a \textbf{neighborhood} of $x$.
+As we will see when we talk about convergence, 1AN is an important axiom when talking about convergent sequences in an space.
 
-\item
-\textbf{Alternate definition of a topological space: }A topological space is a pair $(X, T)$ where $X$ is a set and $T$ is a family of subsets of $X$ where:
-\begin{enumerate}
-\item
-$X,\emptyset\ \in T$
-\item
-Any finite union of elements of $T$ is again in $T$.
-\item
-Any arbitrary intersection of elements of $T$ is again in $T$.
-\end{enumerate}
-The sets in $T$ are called closed. Both of the definitions given are practically equivalent. People tend to use the open set definition of a topology, but these one gives us some "rules" to manipulate closed sets whenever we use the open set definition. There also exist multiple other definitions for a topology, like Kuratowski's closure operator definition, but those are equivalent to the first one in here and so are not considered.
+\begin{theorem}
+	$w(x) \geq \chi(X)$.
+\end{theorem}
 
-\item
-\textbf{Directed set: }A partially preordered set X is called directed whenever for every $a,b\in X$ we have that there exists a $c\in X$ such that $a\leq c$ and $b\leq c$.
+\begin{theorem}
+	$\chi(X)|X| \geq w(x)$.
+\end{theorem}
+
+\begin{theorem}
+	Let $\mathcal{B}$ be a base over $X$. Then there exists a base $\mathcal{B}' \subset \mathcal{B}$ such that $|\mathcal{B}'| = w(X)$.
+\end{theorem}
+
+\section{Connectedness}
+\begin{define}{Connected space}{connected_space}
+	Let $(X,\ \tau)$ be a topological space. We say that $X$ is \textbf{connected} if $X = A \cup B$ with $A,\ B \in \tau$ and $A \cap B = \emptyset$ imply that either $A = X$ or $B = X$. Equivalently, if the only partition of $X$ into two open disjoint sets is the trivial partition $\{ X,\ \emptyset\}$.
+\end{define}
+
+\begin{theorem}
+	$X$ is connected if and only $\tau \cap \mathcal{F} = \{ \emptyset, X\}$ (the only open and closed sets are $\emptyset$ and $X$).
+\end{theorem}
+
+\begin{theorem}
+	Being a connected space is a topological property.
+\end{theorem}
+
+The definition of connectedness concerns only partitions into 2 sets. We can expand it to arbitrary collections:
+
+\begin{theorem}
+	Let $(X,\ \tau)$ be connected and $X = \bigcup_{i \in I} U_i$ a partition of $X$ into disjoint open sets $U_i$, with $I$ an arbitrary index set. Then $U_i = \emptyset$ for all $i \in I$ but one $i_0 \in I$, for which we have $U_{i_0} = X$.
+\end{theorem}
+
+The converse is not needed.\\ 
+When talking about the connectedness of subspaces associated with subsets of a topological space, we use the term connected set to mean that the subspace associated with it is connected.\\ 
+Given connected subsets, we can obtain new connected sets from them:
+\begin{theorem}
+	Let $S$ be a connected set and $S \subset H \subset \closure(S)$. Then $H$ is connected.
+\end{theorem}
+
+\begin{theorem}
+	Let $\{ S_i\}_{i \in I}$ be a collection of connected sets such that there exists $j \in I$ with $S_i \cap S_j \neq \emptyset$ for all $i \in I$. Then $\bigcup_{i \in I} S_i$ is connected.
+\end{theorem}
+
+\begin{define}{Connected component}{connected_component}
+	Let $(X,\ \tau)$ be a topological space. A \textbf{connected component} of $X$ is a connected subspace $C \subseteq X$ such that for all $C \subsetneq A \subseteq X$ we have that $A$ is not connected.
+\end{define}
+
+\begin{theorem}
+	Every connected component is a closed subset.
+\end{theorem}
+
+\begin{theorem}
+	The set of all connected components of a space $X$ is a partition of $X$.
+\end{theorem}
+
+\begin{theorem}
+	Let $x \in X$ be a point in a topological space. Then $x$ is contained in exactly one connected component, denoted by $C_x$ which is exactly the union of all connected subsets that contain $x$.
+\end{theorem}
+
+\begin{theorem}
+	If $f: (X,\ \tau) \rightarrow (Y,\ \tau')$ is continuous then $f(C_x) \subset C_{f(x)}$.
+\end{theorem}
+
+\begin{theorem}
+	The number of connected components is a topological property.
+\end{theorem}
+
+\begin{define}{Path connectedness}{path_connected}
+	Let $(X,\ \tau)$ be a topological space. We say that $X$ is \textbf{path connected} if for all $x,\ y \in X$ there exists a continuous function $f: [0,\ 1] \rightarrow X$ such that $f(0) = x$ and $f(1) = y$
+\end{define}
+
+\begin{theorem}
+	An open connected set in $\reales^n$ with the euclidean topology is path connected.
+\end{theorem}
+
+
+
+\section{Compactness}\label{sect_compactness}
+\section{Miscellaneous properties}
+Of course, we have not listed every topological property. Other, less important, examples of properties are listed here.
+\begin{define}{Fixed point property}{fixed_point_property}
+	An space $X$ is said to have the \textbf{fixed point property} (or to be \textbf{FPP}) if for every continuous function $f: X \rightarrow X$ there exists $x \in X$ such that $f(x) = x$ (that is to say every continous function has a fixed point). It is a topological property.
+\end{define}
+
+\begin{theorem}
+	Every FPP space is connected.
+\end{theorem}
+
+The converse is false (as can been seen with $(0, 1)$ in the euclidean topology).\\ 
+The problem of finding equivalent conditions for FPP is pretty hard.
+
+
+
+
+\chapter{Metric spaces}
+\section{Basic properties}
+\section{Completeness}
+\section{Metrizability}
+\begin{define}{Metrizable space}{met_space}
+	A topological space $(X,\ \tau)$ is said to be \textbf{metrizable} if there exists a metric $d$ on $X$ such that the topology generated by $d$ is equal to $\tau$. It is a topological property.
+\end{define}
+
+
+
+
+\chapter{Convergence and filters}
+
+\chapter{Compactness}
+Section \eqref{sect_compactness} gave an introduction to the notion of compactness. We provide a deeper exploration here.
+
+\section{Stone-Čech compactification}
+\section{Rings of continuous real valued functions}
+
+
+\chapter{Homotopy}
+
+
+\begin{itemize}
 
 \item
 \textbf{Nets: }A net is a function from a directed set to a topological space. They are generalizations of sequences, and they are usually denoted by $\{x_{a}\}_{a\in A}$ where $A$ is a directed set.
@@ -56,14 +823,6 @@ The sets in $T$ are called closed. Both of the definitions given are practically
 
 \item
 \textbf{Limit point: }A point $x$ is called a limit point of a subset $A\subseteq X$ if every neighborhood of $x$ intersects $A$ at a point different from $x$. This is equivalent to there existing a net fully inside $A$ that converges to $x$.
-
-\item
-\textbf{Closure of a set: }Let $A\subseteq X$ be a subset. We define it's closure $\bar{A}$ as the smallest closed set that contains $A$. Equivalently, it's the intersection of all closed subsets of $X$ that contain $A$.
-
-\begin{theorem}[Characterization of closure]
-Let $A\subseteq X$ and $A'$ be the set of its limit points. Then $\bar{A}=A\cup A'$.
-\end{theorem}
-From this theorem we can get the result that $x\in \bar{A}$ iff every neighborhood of $x$ intersects $A$.
 
 \item
 $\boldsymbol{T_{1}}$\textbf{ spaces: }A topological space $X$ is called a $\boldsymbol{T_{1}}$\textbf{ space} if every subset of $X$ that contains a finite amount of points is closed.
@@ -76,36 +835,6 @@ If a net $x_{a}$ converges in a Hausdorff space, then it converges to an unique 
 \end{theorem}
 This explains to us why Hausdorff spaces are interesting to study.
 
-\item
-\textbf{Base of a topology: }A base for a topology over a set $X$ is family of subsets B where:
-\begin{enumerate}
-\item
-The union of all sets in B is equal to X.
-\item
-For every $x \in X$, if $x \in B_{1} \cap B_{2}$ for some $B_{1},B_{2} \in B$ then there exists a $B_{3} \in B$ such that $x \in B_{3} \subset B_{1} \cap B_{2}$
-\end{enumerate}
-A subset from the base is called a \textbf{basic element}. A basic element that contains a point $x$ is called a basic neighborhood.\\
-From here, we can generate the topology T 2 equivalent ways:
-\begin{enumerate}
-
-\item
-A subset $U$ of $X$ is called open iff for every $x \in U$ there exists a $B_{0} \in B$ such that $x \in B_{0} \subset U$.
-\item
-The topology T is the collection of all unions of subsets in B.
-\end{enumerate}
-\begin{theorem}[Going from topology to base]
-Let $X$ be a topological space, and $C$ a collection of open subsets from $X$. If we have that for every open subset $U$ of $X$ and $x \in U$ there exists an element $C_{0} \in C$ such that $x \in C_{0} \subset U$ then $C$ is a base for the topology $T$.
-\end{theorem}
-
-\begin{theorem}[Comparison of topologies from bases]
-Let $B_{1},B_{2}$ be bases for the topologies $T_{1},T_{2}$ respectively. The following are equivalent:
-\begin{enumerate}
-\item
-$T_{1} \subset T_{2}$
-\item
-For every $x$ and subsets $b_{1} \in B_{1}$ that have $x \in b_{1}$ there exists a $b_{2} \in B_{2}$ such that $x \in b_{2} \subset b_{1}$.
-\end{enumerate}
-\end{theorem}
 
 \begin{theorem}[Closure and base]
 Let $A\subseteq X$ and the topology on $X$ be given by a base. Then $x\in\bar{A}$ iff every basic neighborhood of $x$ intersects $A$.
@@ -232,5 +961,4 @@ Let $f:A\rightarrow {\displaystyle \prod_{i\in I}X_{i} }$ be a function between 
 \textbf{Homeomorphisms: }A continuous function is called a homeomorphism if it's bijective and it's inverse is also continuous. If $f:X\rightarrow Y$ is continuous and injective and the function obtained by restricting the range to $f(X)$ is a homeomorphism then $f$ is called an \textbf{embedding}.
 
 \end{itemize}
-
 \end{document}

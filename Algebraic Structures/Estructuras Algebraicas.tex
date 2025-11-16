@@ -68,6 +68,7 @@
 
 \DeclareMathOperator{\apl}{Apl}
 \DeclareMathOperator{\biy}{Biy}
+\DeclareMathOperator{\mcd}{mcd}
 \DeclareMathOperator{\simgroup}{\mathcal{S}}
 
 \makeatletter
@@ -325,13 +326,13 @@ Generalmente la multiplicación por un escalar y la multiplicación del cuerpo s
 	Sea $(K,\ +,\ *)$ un cuerpo. $E$ un conjunto no vacío, $\oplus$ y $\otimes$ dos operaciones internas sobre $E$ y $\cdot : K \times E \rightarrow E$ una aplicación, llamada \textbf{multiplicación por un escalar}. Decimos que $(E,\ \oplus,\ \otimes)$ es un \textbf{álgebra} sobre $K$ si se cumplen:
 	\begin{enumerate}
 		\item
-		$E$ es un espacio vectorial con la multiplicación $\cdot$.
+		$(E,\ \oplus)$ es un espacio vectorial con la multiplicación $\cdot$.
 		
 		\item
 		$(E,\ \oplus,\ \otimes)$ es un anillo.
 		
 		\item
-		$\alpha (x y) = (\alpha x) y = x (\alpha)y$ para todo $\alpha \in K$ y $x,\ y \in E$. 
+		$\alpha (x y) = (\alpha x) y = x (\alpha y)$ para todo $\alpha \in K$ y $x,\ y \in E$. 
 	\end{enumerate}
 \end{define}
 
@@ -459,8 +460,77 @@ Al igual que para los semigrupos, tenemos el siguiente teorema:
 	\end{enumerate}
 \end{theorem}
 
+\begin{define}{Subespacio vectorial}{subvect}
+	Sea $K$ un cuerpo, $(E,\ +)$ un espacio vectorial sobre $K$ y $V \subseteq E$ no vacío. Decimos que $(V,\ +|_{V \times V})$ es un \textbf{subespacio vectorial} de $E$ si $(V,\ +|_{V \times V})$ es un espacio vectorial sobre $K$.
+\end{define}
+
+\begin{define}{Subálgebra}{subalgebra}
+	Sea $K$ un cuerpo, $(A,\ +,\ *)$ un álgebra sobre $K$ y $B \subseteq A$ no vacío. Decimos que $(B,\ +|_{B \times B}, *|_{B \times B})$ es un \textbf{subálgebra} de $A$ si $(B,\ +|_{B \times B}, *|_{B \times B})$ es un álgebra sobre $K$ y la identidad multiplicativa del anillo $(A,\ +,\ *)$ está en $B$.
+\end{define}
 
 \section{Generadores}
-\section{Homomorfismos}
+TODO: this is draconian no way i'm putting this here
+\begin{theorem}
+	Sea $(S,\ *)$ un semigrupo y $X \subseteq S$ no vacío. Definimos el conjunto
+	\begin{equation*}
+		\langle X \rangle = \bigcap \{T\ :\ T\ \text{es subsemigrupo de}\ S\}.
+	\end{equation*}
+	Se cumple:
+	\begin{enumerate}
+		\item
+		$\langle X \rangle$ es un subsemigrupo de $S$. 
+	\end{enumerate}
+\end{theorem}
+
+\section{Los números enteros}
+\begin{define}{Divisibilidad}{div}
+	Sean $a,b \in \enteros$ con $a \neq 0$. Decimos que $a$ \textbf{divide} a $b$ (o que $b$ es múltiplo de $a$) si existe $m \in \enteros$ tal que $b = am$, y lo denotamos por $a | b$.
+\end{define}
+
+\begin{theorem}[Algoritmo de división]
+	Sean $a,b \in \enteros$ con $b > 0$. Entonces existe una única pareja $q,r \in \enteros$ tales que
+	\begin{equation*}
+		a = bq + r
+	\end{equation*}
+	con $0 \leq r < b$.
+\end{theorem}
+
+\begin{theorem}
+	Los subgrupos de $(\enteros,\ +)$ son exactamente los conjuntos de la forma $m\enteros = \{ mn : n \in \enteros\} = \langle m \rangle$ con $m \in \enteros$.
+\end{theorem}
+
+\begin{theorem}
+	Sean $a,b \in \enteros$ con $a \neq 0$. Entonces $a|b$ si y solo si $b\enteros \subseteq a\enteros$.
+\end{theorem}
+
+\begin{define}{Maximo común divisor}{mcd}
+	Sean $a,b \in \enteros$ no todos nulos. Decimos que $d \in \enteros$ es un \textbf{máximo común divisor} de $a$ y $b$ si se cumplen:
+	\begin{enumerate}
+		\item
+		$d|a$ y  $d|b$.
+		
+		\item
+		Si $d'|a$ y $d'|b$ entonces $d'|d$.
+		
+		\item
+		$d \geq 1$.
+	\end{enumerate}	 
+\end{define}
+
+\begin{theorem}
+	Si $a,b \in \enteros$ no todos nulos entonces existe un único máximo común divisor, que denotamos por $d = \mcd(a,b)$.
+\end{theorem}
+
+\begin{theorem}
+	Si $a,b \in \enteros$ no todos nulos entonces existen $n, m \in \enteros$ tales que $\mcd(a,b) = na + mb$. Además, si existen $u,v \in \enteros$ tales que $1 = ua + vb$ entonces $\mcd(a,b) = 1$.
+\end{theorem}
+
+\begin{define}{Coprimos}{coprime}
+	Dos números $a,b \in \enteros$ no todos nulos se dicen \textbf{coprimos} si $\mcd(a,b) = 1$.
+\end{define}
+
+\chapter{Grupos}
+
+\chapter{Anillos}
 
 \end{document}

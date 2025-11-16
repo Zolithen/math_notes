@@ -1366,7 +1366,7 @@ El objetivo elemental de la derivada es el estudio de como varia cierta función
 	\begin{equation*}
 		\lim_{x \rightarrow p} \frac{f(x) - f(p)}{x - p}
 	\end{equation*}
-	y en caso de que exista, el valor de tal límite se denomina \textbf{derivada} de $f$ en el punto $p$ y se denota $f'(p)$. Si $f$ es derivable en todo punto de un conjunto $B \subseteq A$ se dice \textbf{derivable} en $B$ y se define la \textbf{función derivada} como la función que en cada punto de $B$ toma el valor de la derivada de $f$ en ese punto. Tal función se denota por $f'$. 
+	y en caso de que exista, el valor de tal límite se denomina \textbf{derivada} de $f$ en el punto $p$ y se denota $f'(p)$. Si $f$ es derivable en todo punto de un conjunto $B \subseteq A$ se dice \textbf{derivable} en $B$ y se define la \textbf{función derivada} como la función que en cada punto de $B$ toma el valor de la derivada de $f$ en ese punto. Tal función se denota por $f'$, independientemente del conjunto $B$ que estemos considerando. 
 \end{define}
 
 \begin{ejem}
@@ -1416,7 +1416,7 @@ La idea de aproximar funciones por funciones más simples se expande en la secci
 Como es costumbre, relacionamos las operaciones aritméticas con el concepto de derivada.
 
 \begin{prop}
-	Sean $f: A \rightarrow \reales$ y $g: B \rightarrow \reales$ funciones, con $p \in A \cap B$ un punto interior de $A$ y $B$. Si $f$ y $g$ son derivables en $p$, entonces las funciones $f + g$, $fg$ y $af$ para todo $a \in \reales$ son derivables en $p$, además sus derivadas valiendo $f'(p) + g'(p)$, $f'(p)g(p) + f(p)g'(p)$ y $af'(p)$. Si $g'(p) \neq 0$ entonces $\frac{f}{g}$ es derivable en $p$, y su derivada vale $\frac{f'(p)g(p) - f(p)g'(p)}{(g(p))^2}$.
+	Sean $f: A \rightarrow \reales$ y $g: B \rightarrow \reales$ funciones, con $p \in A \cap B$ un punto interior de $A$ y $B$. Si $f$ y $g$ son derivables en $p$, entonces las funciones $f + g$, $fg$ y $af$ para todo $a \in \reales$ son derivables en $p$, además sus derivadas valiendo $f'(p) + g'(p)$, $f'(p)g(p) + f(p)g'(p)$ y $af'(p)$. Si $g(p) \neq 0$ entonces $\frac{f}{g}$ es derivable en $p$, y su derivada vale $\frac{f'(p)g(p) - f(p)g'(p)}{(g(p))^2}$.
 \end{prop}
 
 \begin{prop}[Regla de la cadena]
@@ -1465,6 +1465,8 @@ Esta relación se expande en la sección de comportamiento local. La hemos prese
 \begin{theorem}[Teorema de Darboux]
 	Sea $f:A \rightarrow \reales$ continua y derivable en $A$ con $A$ un intervalo abierto. Si $a,b \in A$ con $a<b$ y $\alpha \in \reales$ es un valor entre $f'(a)$ y $f'(b)$ entonces existe un $c \in [a, b]$ tal que $f'(c) = \alpha$.
 \end{theorem}
+
+TODO: Inversas, calcular algunas derivadas, introducir las exponeciales en algun sitio
 
 \subsection{Taylor I}
 
