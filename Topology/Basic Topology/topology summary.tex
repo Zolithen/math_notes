@@ -119,7 +119,8 @@
 %%Thing
 \chapter{Topological spaces}
 TODO\\ 
-Change all $\subseteq$ into $\subset$ (for clearer notation).
+Change all $\subseteq$ into $\subset$ (for clearer notation).\\ 
+Make header better.
 \section{Topologies and bases}
 
 \begin{define}{Topological space}{top_space}
@@ -152,7 +153,7 @@ Generally, if the topology is clear we simply refer to the topological space as 
 \end{example}
 
 \begin{example}\label{top_euclidean}
-	For a more interesting example, we can consider over the real numbers the topology $\tau = \{A \subseteq \reales\ :\ \forall x \in A\ \exists I \text{ open interval s.t. } x \in I \subseteq A\}$. This one is called the \textbf{euclidean topology} over the real numbers.
+	For a more interesting example, we can consider over the real numbers the topology $\tau = \{A \subseteq \reales\ :\ \forall x \in A\ \exists I \text{ open interval s.t. } x \in I \subseteq A\}$. This one is called the \textbf{euclidean topology} over the real numbers. As it is quite ubiquitous, whenever we talk about the real numbers without explicitly mentioning the topology we will assume they carry the euclidean topology.
 \end{example}
 
 \begin{define}{Comparison of topologies}{topology_comparison}
@@ -490,7 +491,7 @@ The inclusion in theorem \eqref{interior_in_subspace} is not always an equality:
 
 
 \section{Product spaces}
-\section{Quotient topology}
+\section{Terminal topologies}
 
 \begin{define}{Quotient space}{quotient_space}
 	Let $(X,\ \tau)$ be a topological space and let $\sim$ be an equivalence binary relation (ERB). We define over the quotient set $X / \sim$ the \textbf{quotient topology}
@@ -653,27 +654,60 @@ Rarely is a property fully hereditary.
 	Let $(X,\ \tau)$ be a topological space. We say that $X$ is
 	\begin{itemize}
 		\item
-		\textbf{T0} (or \textbf{Kolmogorov}) if for all $x,y \in X$ distinct there exist an open set $U$ such that one of $x,y$ is in $U$ and the other one isn't.
+		$T_0$ (or \textbf{Kolmogorov}) if for all $x,y \in X$ distinct there exist an open set $U$ such that one of $x,y$ is in $U$ and the other one isn't.
 		
 		\item
-		\textbf{T1} (or \textbf{Frechet}) if for all $x,y \in X$ distinct there exist 2 open sets $U$ and $V$ such that $x \in U, y \not \in U$ and $x \not \in V, y \in V$.
+		$T_1$ (or \textbf{Frechet}) if for all $x,y \in X$ distinct there exist 2 open sets $U$ and $V$ such that $x \in U, y \not \in U$ and $x \not \in V, y \in V$.
 		
 		\item
-		\textbf{T2} (or \textbf{Hausdorff}) if for all $x,y \in X$ distinct there exist 2 open sets $U$ and $V$ such that $x \in U$, $y \in V$ and $U \cap V = \emptyset$.
+		$T_2$ (or \textbf{Hausdorff}) if for all $x,y \in X$ distinct there exist 2 open sets $U$ and $V$ such that $x \in U$, $y \in V$ and $U \cap V = \emptyset$.
 		
 		\item
 		\textbf{regular} if for all $x \in X$ and closed sets $F \subset X$ with $x \not \in F$ there exist 2 open sets $U$ and $V$ such that $x \in U$, $F \subset V$ and $U \cap V = \emptyset$.
 		
 		\item
-		\textbf{T3} if it's regular and T1.
+		$T_3$ if it's regular and $T_1$.
 		
 		\item
 		\textbf{normal} if for all closed sets $F,G \subset X$ with $F \cap G = \emptyset$ there exist 2 open sets $U$ and $V$ such that $F \subset U$, $G \subset V$ and $U \cap V = \emptyset$.
 		
 		\item
-		\textbf{T4} if it's normal and T1.
+		$T_4$ if it's normal and $T_1$.
 	\end{itemize}
 \end{define}
+
+These are more-or-less standard notation. A bit less standard notation is these ones:
+
+TODO: Does completely Hausdorff need to be T1? May be implied by the other part
+\begin{define}{More separation axioms}{more_sep_axiomes}
+	Let $(X,\ \tau)$ be a topological space. We say that $X$ is
+	\begin{itemize}
+		\item
+		\textbf{completely Hausdorff} (or completely $T_2$) if it's $T_1$ and if for every $x,y\in X$ distinct there exists a continuous function $f: X \rightarrow \reales$ (in the euclidean topology) such that $f(x) = 0$ and $f(y) = 1$.
+		
+		\item
+		\textbf{Tychonoff} (or \textbf{completely regular} or $T_{3\frac{1}{2}}$) if it's $T_1$ and if for every $x \in X$ and $C \subset X$ closed nonempty set with $x \not \in C$ there exists a continuous function $f: X \rightarrow \reales$ such that $f(x) = 1$ and $f(C) = \{ 0 \}$.
+	\end{itemize}
+\end{define}
+
+\begin{theorem}
+	$T_6 \Rightarrow T_5 \Rightarrow T_{4\frac{1}{2}} \Rightarrow T_4 \Rightarrow T_{3\frac{1}{2}} \Rightarrow T_3 \Rightarrow T_2 \Rightarrow T_1 \Rightarrow T_0$
+\end{theorem}
+
+It is of note that $T_3$ doesn't imply completely Hausdorff, as the next example implies:
+\begin{example}
+
+\end{example}
+
+Tychonoff spaces are really interesting.
+
+\begin{theorem}
+	Let $X$ be a Tychonoff space with a base $\mathcal{B}$ of cardinal $\leq \kappa$. Then $X$ can be embedded in $[0,\ 1]^{\kappa}$.
+\end{theorem}
+
+\begin{theorem}
+	Let $X$ be a topological space with weight $w(X) = \kappa$. Then $X$ is Tychonoff if and only if $X$ can be embedded in $[0,\ 1]^{\kappa}$.
+\end{theorem}
 
 \section{Cardinal invariants}
 \begin{define}{Weight}{weight}
@@ -684,7 +718,12 @@ Rarely is a property fully hereditary.
 	Let $(X,\ \tau)$ be a topological space. We define the \textbf{character of a point} $x\in X$ to be the smallest infinite cardinal $\alpha$ for which there exists a neighborhood base $\mathcal{B}$ of $x$ with $|\mathcal{B}| = \alpha$, and is denoted by $\chi(x, X)$. The \textbf{character} of $X$ is defined to be $\chi(X) = \sup\{\chi(x, X) : x \in X\}$.
 \end{define}
 
-Only allowing infinite cardinals makes arithmetic with these cardinal invariants a bit easier to handle.
+Only allowing infinite cardinals makes arithmetic with these cardinal invariants a bit easier to handle.\\ 
+There's a problem when working with these invariants: they require the axiom of choice to exist, as the next theorem entails:
+\begin{theorem}
+	(AC) Every set of cardinal numbers is well-ordered. That is to say it has a minimum element.
+\end{theorem}
+However, not every case needs the axiom of choice:
 
 \begin{define}{Numerability axioms}{num_axioms}
 \begin{itemize}
@@ -695,7 +734,8 @@ Only allowing infinite cardinals makes arithmetic with these cardinal invariants
 \end{itemize}
 \end{define}
 
-As we will see when we talk about convergence, 1AN is an important axiom when talking about convergent sequences in an space.
+The countable cardinal is the minimum in any set of infinite cardinals, so for example we already know the set of the cardinals associated with the bases of a topological space that has a countable base will have countable weight.\\ 
+As we will see when we talk about convergence, 1AN is an important axiom when talking about convergent sequences in an space.\\ 
 
 \begin{theorem}
 	$w(x) \geq \chi(X)$.
@@ -807,8 +847,24 @@ The problem of finding equivalent conditions for FPP is pretty hard.
 Section \eqref{sect_compactness} gave an introduction to the notion of compactness. We provide a deeper exploration here.
 
 \section{Stone-Čech compactification}
-\section{Rings of continuous real valued functions}
-
+\section{Rings of continuous functions}
+\begin{define}{Rings of continuous functions}{cont_func}
+	Let $X$ be a topological space, and 
+	\begin{equation*}
+		C(X) := \{ f: X \rightarrow \reales\ :\ f \text{ is continuous} \},
+	\end{equation*}
+	\begin{equation*}
+		C^*(X) := \{ f: X \rightarrow \reales\ :\ f \text{ is continuous and bounded} \}.
+	\end{equation*}
+	Then $C(X)$ and $C^*{X}$ are rings with the usual addition and multiplication of functions. Moreover, $C^*(X)$ is a Banach algebra with the usual scalar multiplication and the norm
+	\begin{equation*}
+		\| f \| = \sup_{x \in X} | f(x) |,
+	\end{equation*}
+	white $C(X)$ is a complete metric space under the metric
+	\begin{equation*}
+		d(f, g) = \sup_{x \in X} \frac{| f(x) - g(x) |}{1 + |f(x) - g(x)|}.
+	\end{equation*}
+\end{define}
 
 \chapter{Homotopy}
 
