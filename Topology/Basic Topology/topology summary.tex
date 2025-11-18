@@ -847,6 +847,58 @@ The problem of finding equivalent conditions for FPP is pretty hard.
 Section \eqref{sect_compactness} gave an introduction to the notion of compactness. We provide a deeper exploration here.
 
 \section{Stone-Čech compactification}
+\begin{define}{C-embedded}{c_embedded}
+	Let $X$ be a topological space, and $S \subset X$. We say that $S$ is \textbf{C-embedded} (resp. $C^*$-embedded) if every $f \in C(S)$ (resp. $C^*(S)$) extends to a function $g \in C(X)$ (resp. $C^*(X)$).
+\end{define}
+
+If $S$ is dense in $X$, then theorem (TODO: reference) tells us that the continuous extension is unique. This implies that $C(S)$ embeds into $C(X)$ as rings, via the application that sends each continuous function to it's unique extension.
+
+\begin{theorem}[Urysohn extension]
+	$S$ is a $C^*$-embedded subset of $X$ if and only if every pair of subsets that can be separated by continuous functions in $S$ can be separated by continuous functions in $X$.
+\end{theorem}
+\begin{proof}
+	The direct implication is consequence of the definitions. For the converse, let $f$ be a continuous bounded function $f: S \rightarrow \reales$, let $\alpha > 0$ be an upper bound for the absolute value of $f$, and let $r_n = \frac{\alpha}{2} (\frac{2}{3})^n$ for any $n \in \naturales$. We notice that $|f(s)| \leq 3r_1$ for all $s \in S$. We search for an extension of $f$ to the entire space $X$. To that end, we proceed by induction. Suppose we have $n+1$ functions $f_m: S \rightarrow \reales$ for $m = 0$ integer to $n$ and another $n$ functions $g_m: X \rightarrow \reales$ for $m = 0$ integer to $n-1$ that satisfy
+	\begin{equation*}
+		|f_m(s)| \leq 3r_m\ \forall s \in S\ \forall m,
+	\end{equation*}
+	\begin{equation*}
+		|g_m(x)| \leq r_m\ \forall x \in X\ \forall m,
+	\end{equation*}
+	\begin{equation*}
+		f_{m+1} = f_m - g_m|_S\ \forall m \in \{ n-1, \ldots, 0\}.
+	\end{equation*}
+	Our base case is covered by letting $f_1 = f_0 = f$ and $g_0 = 0$. Let
+	\begin{equation*}
+		A_n = \{ x \in S : f_n(x) \leq -r_n\},
+	\end{equation*}
+	\begin{equation*}
+		B_n = \{ x \in S : f_n(x) \geq r_n\}.
+	\end{equation*}
+	It is easily checked that $A_n$ and $B_n$ are separated by continuous functions in $S$, via the function (TODO: Write the function). By the hypothesis $A_n$ and $B_n$ are separated by continuous functions in $X$, and so there exists some continuous bounded function $g_n: X \rightarrow \reales$ such that $g_n(A_n) = \{ -r_n \}$, $g(B_n) = \{ r_n \}$ and $|g_n(x)| \leq r_n$ for all $x \in X$. We can now define the continuous function $f_{n+1}: S \rightarrow \reales$ via
+	\begin{equation}\label{urysohn_ext_fdef}
+		f_{n+1} = f_n - g_n|_{S},
+	\end{equation}
+	and notice that, for $x \in S$:
+	\begin{enumerate}
+		\item
+		If $x \in A_n$ then $|f_{n+1}(x)| = |f_n(x) - g_n(x)| = |f_n(x) + r_n|\leq 2r_n$ because $-3r_n \leq f_n(x) \leq -r_n$.		
+		
+		\item
+		If $x \in B_n$ then $|f_{n+1}(x)| = |f_n(x) - g_n(x)| = |f_n(x) - r_n| \leq 2r_n$ because $r_n \leq f_n(x) \leq 3r_n$.	
+		
+		\item
+		If $x \not \in A_n$ and $x \not \in B_n$ then $|f_{n+1}(x)| = |f_n(x) - g_n(x)| \leq 2r_n$ because $f_n(x) \in ]-r_n, r_n[$ and $g(x) \in [-r_n, r_n]$.	
+	\end{enumerate}
+	So $|f_{n+1}(x)| \leq 2r_n = 2 * \frac{\alpha}{2} (\frac{2}{3})^n = 3r_{n+1}$ for all $x \in S$. By induction we have built two sequences of functions $f_n : S \rightarrow \reales$ with $|f_n(x)| \leq 3r_n$ and $g_n : X \rightarrow \reales$ with $|g_n(x)| \leq r_n$. By Weierstrass M-Test, the series $\sum_{n=1}^{\infty} g_n$ converges to some continuous function $g$ on $X$, and using \eqref{urysohn_ext_fdef} with some $x \in S$ we observe that:
+	\begin{equation*}
+		\sum_{n=1}^{m} g_n(x) = \sum_{n=1}^{m} (f_n(x) - f_{n+1}(x)) = f_1(x) - f_{m+1}(x).
+	\end{equation*}
+	Because of $|f_n(x)| \leq 3r_n$ we obtain that on $S$, $\sum_{n=1}^{m} g_n(x)$ converges to $f_1 = f$ and so $g = f$ on $S$.
+\end{proof}
+
+
+This theorem tells us that to prove that a subset is $C^*$-embedded we don't have to consider every mapping, we only have to consider the ones that separate sets.
+
 \section{Rings of continuous functions}
 \begin{define}{Rings of continuous functions}{cont_func}
 	Let $X$ be a topological space, and 
