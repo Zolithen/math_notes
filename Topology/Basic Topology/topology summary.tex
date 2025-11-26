@@ -398,6 +398,14 @@ We can also characterize previous definitions via bases and neighborhood bases.
 	\end{enumerate}
 \end{theorem}
 
+Finally, we define dense subsets.
+\begin{define}{Dense subset}{dense_subset}
+	If $S \subset X$ is a subset of a space $X$ such that $\closure(S) = X$ then $S$ is called a \textbf{dense} subset of $X$
+\end{define}
+
+\begin{theorem}
+	$S \subset X$ is dense if and only if every open set of $X$ intersects $S$.
+\end{theorem}
 
 \section{Subspaces}
 \begin{define}{Subspace topology}{subspace_topology}
@@ -509,8 +517,52 @@ The inclusion in theorem \eqref{interior_in_subspace} is not always an equality:
 	Let $(X,\ \tau)$ and $(Y,\ \tau')$ be topological spaces. An application $f: X \rightarrow Y$ is \textbf{continuous} with respect to the topologies $\tau$ and $\tau'$ if for every $O \in \tau'$ we have $f^{-1}(O) \in \tau$. When talking about applications between topological spaces, we denote them by $f: (X,\ \tau) \rightarrow (Y,\ \tau')$.
 \end{define}
 
+\begin{theorem}
+	A function is continuous if and only if the preimage of every closed set is closed.
+\end{theorem}
+
+This is a global definition. We can also talk about continuity locally or near points:
+
+\begin{define}{Continuity at a point}{cont_point}
+	A function $f: X \rightarrow Y$ between spaces is called \textbf{continuous at a point} $x_0 \in X$ if for all $U \in \mathcal{N}(f(x_0))$ there exists some $V \in \mathcal{N}(x_0)$ such that $f(V) \subset U$.
+\end{define}
+
+\begin{theorem}
+	A function is continuous if and only if it's continuous at every point.
+\end{theorem}
+
+We can also characterize continuity via bases and neighborhood bases.
+
+\begin{theorem}
+	Let $f: X \rightarrow Y$ be a function between spaces and $x_0 \in X$. Let $\mathcal{B}(x_0)$ and $\mathcal{B}(f(x_0))$ be neighborhood bases of $x_0$ and $f(x_0)$ respectively. Then $f$ is continuous at $x_0$ if and only if for all $B' \in \mathcal{B}(f(x_0))$ there exists some $B \in \mathcal{B}(x_0)$ such that $f(B) \subset B'$.
+\end{theorem}
+
+\begin{theorem}
+	If $g: X \rightarrow Y$ and $f: Y \rightarrow Z$ are continuous at $x_0 \in X$ and $g(x_0)$ respectively then their composition $f \circ g$ is continuous at $x_0$.
+\end{theorem}
+\begin{theorem}
+	The composition of continous functions is continuous.
+\end{theorem}
+
+TODO: Put the big characterization theorem here
+
+\begin{define}{Open function}{open_function}
+	A function $f: X \rightarrow Y$ is called \textbf{open} if the image of every open set is open.
+\end{define}
+
+\begin{define}{Closed function}{closed_function}
+	A function $f: X \rightarrow Y$ is called \textbf{closed} if the image of every closed set is closed.
+\end{define}
 
 \section{Product spaces}
+\begin{theorem}[Embedding lemma]
+	Let $X$ be a space and $F$ be a family of continuous functions of the form $f: X \rightarrow Y_f$. Then the evaluation mapping given by $e:X \rightarrow \Pi Y_f$ and
+	\begin{equation*}
+		(e(x))_f = f(x)\ \forall x \in X\ \forall f \in F	
+	\end{equation*}
+	is an embedding if and only if $F$ distinguishes points and $F$ distinguishes points and closed sets.
+\end{theorem}
+
 \section{Terminal topologies}
 
 \begin{define}{Quotient space}{quotient_space}
@@ -736,6 +788,10 @@ It is of note that $T_3$ doesn't imply completely Hausdorff, as the next example
 Tychonoff spaces are really interesting.
 
 \begin{theorem}
+	A space $X$ is Tychonoff if and only if there exists some base of cozeros.
+\end{theorem}
+
+\begin{theorem}
 	Let $X$ be a Tychonoff space with a base $\mathcal{B}$ of cardinal $\leq \kappa$. Then $X$ can be embedded in $[0,\ 1]^{\kappa}$.
 \end{theorem}
 
@@ -848,6 +904,10 @@ Given connected subsets, we can obtain new connected sets from them:
 
 
 \section{Compactness}\label{sect_compactness}
+\begin{theorem}\label{thm_compact_haus}
+	A compact Hausdorff space is $T_4$.
+\end{theorem}
+
 \section{Miscellaneous properties}
 Of course, we have not listed every topological property. Other, less important, examples of properties are listed here.
 \begin{define}{Fixed point property}{fixed_point_property}
@@ -881,11 +941,28 @@ The problem of finding equivalent conditions for FPP is pretty hard.
 Section \eqref{sect_compactness} gave an introduction to the notion of compactness. We provide a deeper exploration here.
 
 \section{Stone-Čech compactification}
+\begin{define}{Compactification}{compactification}
+	Let $X$ be a topological space. We say that a pair $(Y,\ h)$ of a space $Y$ and an embedding $h: X \rightarrow X$ is a \textbf{compactification} of $X$ if $Y$ is a compact Hausdorff space and $\closure(h(X)) = Y$.
+\end{define}
+We then consider $X$ as if it was a subset of $Y$, treating $h(X)$ and $X$ as if it were the same.
+
+
+\begin{theorem}
+	If there exists some compactification $(Y,\ h)$ of a space $X$ then $X$ must be completely regular.
+\end{theorem}
+
+\begin{proof}
+	By theorem \eqref{thm_compact_haus} $Y$ must be normal and so by Urysohn's lemma $Y$ is completely regular. Then $X$ is homeomorphic to $h(X)$, which is a subset of a completely regular space and so is completely regular.
+\end{proof}
+
+We will show 2 different compactifications: the one point (or Alexandroff) compactification, which its results are on the exercise section, and the Stone-Čech compactification.\\ 
+There's 2 ways to motivate the Stone-Čech compactification of a space: one is finding a compactification such that all mappings from $X$ to compact spaces can be extended (in some way) to the compactification and another one is finding a ``maximal'' compactification. We expose both of them, but build the compactification via the first way of thinking. First, we need to define a notion of extending continuous functions from subspaces to the parent space.
+
 \begin{define}{C-embedded}{c_embedded}
-	Let $X$ be a topological space, and $S \subset X$. We say that $S$ is \textbf{C-embedded} (resp. $C^*$-embedded) if every $f \in C(S)$ (resp. $C^*(S)$) extends to a function $g \in C(X)$ (resp. $C^*(X)$).
+	Let $X$ be a topological space, and $S \subset X$. We say that $S$ is \textbf{C-embedded} (resp. $C^*$-embedded) if for every $f \in C(S)$ (resp. $C^*(S)$) there exists some $g \in C(X)$ (resp. $C^*(X)$) such that $g|_S = f$.
 \end{define}
 
-If $S$ is dense in $X$, then theorem (TODO: reference) tells us that the continuous extension is unique. This implies that $C(S)$ embeds into $C(X)$ as rings, via the application that sends each continuous function to it's unique extension.
+If $S$ is dense in $X$, then theorem (TODO: reference) tells us that the continuous extension is unique. This implies that $C(S)$ embeds into $C(X)$ as rings, via the application that sends each continuous function to it's unique extension. So if $X$ is some compactification of $S$ such that $S$ is $C$-embedded we have that $C(S)$ embeds into $C(X)$. The same applies to $C^*(S)$ and $C^*(X)$.
 
 \begin{theorem}[Urysohn extension]
 	$S$ is a $C^*$-embedded subset of $X$ if and only if every pair of subsets that can be separated by continuous functions in $S$ can be separated by continuous functions in $X$.
@@ -933,7 +1010,17 @@ If $S$ is dense in $X$, then theorem (TODO: reference) tells us that the continu
 
 This theorem tells us that to prove that a subset is $C^*$-embedded we don't have to consider every mapping, we only have to consider the ones that separate sets.
 
-\section{Rings of continuous functions}
+\begin{theorem}
+	For every space $X$ there exists some space $tX$ such that $C(X) \cong C(tX)$ and $C^*(X) \cong C^*(tX)$.
+\end{theorem}
+
+\begin{theorem}
+	TODO: Does it work with Tychonoff spaces?\\ 
+	Let $X$ and $Y$ be compact Hausdorff spaces. Then $X$ is homeomorphic to $Y$ if and only if $C(X)$ is isomorphic to $C(Y)$ as rings.
+\end{theorem}
+This looks like a pretty strong characterization of homeomorphic spaces. In practice, calculating $C(X)$ is near impossible. In section \eqref{sect_ringscont} we provide a way of getting a ring isomorphic to $C(X)$, which may prove useful (it won't).
+
+\section{Rings of continuous functions}\label{sect_ringscont}
 \begin{define}{Rings of continuous functions}{cont_func}
 	Let $X$ be a topological space, and 
 	\begin{equation*}
@@ -946,7 +1033,7 @@ This theorem tells us that to prove that a subset is $C^*$-embedded we don't hav
 	\begin{equation*}
 		\| f \| = \sup_{x \in X} | f(x) |,
 	\end{equation*}
-	white $C(X)$ is a complete metric space under the metric
+	while $C(X)$ is a complete metric space under the metric
 	\begin{equation*}
 		d(f, g) = \sup_{x \in X} \frac{| f(x) - g(x) |}{1 + |f(x) - g(x)|}.
 	\end{equation*}
