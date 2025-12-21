@@ -11,6 +11,7 @@
 \usepackage{amsthm}
 \usepackage{xcolor}
 \usepackage{tcolorbox}
+\usepackage{tikz-cd}
 \tcbuselibrary{theorems}
 \tcbuselibrary{breakable}
 \tcbuselibrary{skins}
@@ -583,7 +584,7 @@ TODO: Put the big characterization theorem here
 	It is obvious that $p:(X,\ \tau) \rightarrow (X/\sim,\ \quottop)$ is continuous. Now, let $\tau'$ be any other topology over $X/\sim$ in which $p$ is continuous. Then for every $O' \in \tau'$ we have $p^{-1}(O') \in \tau$, which means $O' \in \quottop$ and so $\tau' \subseteq \quottop$.
 \end{proof}
 
-\begin{theorem}
+\begin{theorem}\label{thm_contquot}
 	A function $f: (X / \sim,\ \quottop) \rightarrow (Y,\ \tau')$ of a quotient space onto a topological space is continuous if and only if $f \circ p : (X,\ \tau) \rightarrow (Y,\ \tau')$ is continuous.
 \end{theorem}
 
@@ -766,12 +767,11 @@ Rarely is a property fully hereditary.
 
 These are more-or-less standard notation. A bit less standard notation is these ones:
 
-TODO: Does completely Hausdorff need to be T1? May be implied by the other part
 \begin{define}{More separation axioms}{more_sep_axiomes}
 	Let $(X,\ \tau)$ be a topological space. We say that $X$ is
 	\begin{itemize}
 		\item
-		\textbf{completely Hausdorff} (or completely $T_2$) if it's $T_1$ and if for every $x,y\in X$ distinct there exists a continuous function $f: X \rightarrow \reales$ (in the euclidean topology) such that $f(x) = 0$ and $f(y) = 1$.
+		\textbf{completely Hausdorff} (or completely $T_2$) if for every $x,y\in X$ distinct there exists a continuous function $f: X \rightarrow \reales$ (in the euclidean topology) such that $f(x) = 0$ and $f(y) = 1$.
 		
 		\item
 		\textbf{Tychonoff} (or \textbf{completely regular} or $T_{3\frac{1}{2}}$) if it's $T_1$ and if for every $x \in X$ and $C \subset X$ closed nonempty set with $x \not \in C$ there exists a continuous function $f: X \rightarrow \reales$ such that $f(x) = 1$ and $f(C) = \{ 0 \}$.
@@ -1015,7 +1015,7 @@ We then consider $X$ as if it was a subset of $Y$, treating $h(X)$ and $X$ as if
 \end{theorem}
 
 \begin{proof}
-	By theorem \eqref{thm_compact_haus} $Y$ must be normal and so by Urysohn's lemma $Y$ is completely regular. Then $X$ is homeomorphic to $h(X)$, which is a subset of a completely regular space and so is completely regular.
+	By theorem \eqref{thm_compact_haus} $Y$ must be $T_4$ and so by Urysohn's lemma $Y$ is completely regular. Then $X$ is homeomorphic to $h(X)$, which is a subset of a completely regular space and so is completely regular.
 \end{proof}
 
 We will show 2 different compactifications: the one point (or Alexandroff) compactification, which its results are on the exercise section, and the Stone-Čech compactification.\\ 
@@ -1071,11 +1071,8 @@ If $S$ is dense in $X$, then theorem (TODO: reference) tells us that the continu
 \end{proof}
 
 
-This theorem tells us that to prove that a subset is $C^*$-embedded we don't have to consider every mapping, we only have to consider the ones that separate sets.
+This theorem tells us that to prove that a subset is $C^*$-embedded we don't have to consider every mapping, we only have to consider the ones that separate sets. 
 
-\begin{theorem}
-	For every space $X$ there exists some space $tX$ such that $C(X) \cong C(tX)$ and $C^*(X) \cong C^*(tX)$.
-\end{theorem}
 
 \begin{theorem}
 	TODO: Does it work with Tychonoff spaces?\\ 
@@ -1092,7 +1089,7 @@ This looks like a pretty strong characterization of homeomorphic spaces. In prac
 	\begin{equation*}
 		C^*(X) := \{ f: X \rightarrow \reales\ :\ f \text{ is continuous and bounded} \}.
 	\end{equation*}
-	Then $C(X)$ and $C^*{X}$ are rings with the usual addition and multiplication of functions. Moreover, $C^*(X)$ is a Banach algebra with the usual scalar multiplication and the norm
+	Then $C(X)$ and $C^*(X)$ are rings with the usual addition and multiplication of functions. Moreover, $C^*(X)$ is a Banach algebra with the usual scalar multiplication and the norm
 	\begin{equation*}
 		\| f \| = \sup_{x \in X} | f(x) |,
 	\end{equation*}
@@ -1101,6 +1098,40 @@ This looks like a pretty strong characterization of homeomorphic spaces. In prac
 		d(f, g) = \sup_{x \in X} \frac{| f(x) - g(x) |}{1 + |f(x) - g(x)|}.
 	\end{equation*}
 \end{define}
+
+Now, we want to know what kind of spaces we can study with rings of functions.
+
+\begin{theorem}
+	For every space $X$ there exists some completely regular space $tX$ such that:
+	\begin{enumerate}
+		\item
+		$tX$ is a continuous image of $X$ under some mapping $t$.
+		
+		\item
+		For every continuous function $f: X \rightarrow \reales$, there exists some continuous function $t(f): tX \rightarrow \reales$ such that the following diagram commutes:	
+
+		\begin{center}
+		\begin{tikzcd}
+			X \arrow[rd, "f"'] \arrow[r, "t"] & tX \arrow[d, "t(f)"] \\
+            & \reales             
+		\end{tikzcd}	
+		\end{center}	
+			
+		\item
+		$C(X) \cong C(tX)$ and $C^*(X) \cong C^*(tX)$.
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	Define over $X$ the following EBR:
+	\begin{equation*}
+		x \sim y \Leftrightarrow f(x) = f(y)\ \forall f \in C(X).
+	\end{equation*}
+	Let $tX$ be the set of all equivalence classes and $t: X \rightarrow tX$ the canonical projection. Given $f \in C(X)$ we define the map $t(f)$ by $t(f) \circ t = f$, which is a well defined map: if $[x] = [y]$ then $t(f)([x]) = t(f)(t(x)) = f(x) = f(y) = t(f)(t(y)) = t(f)([y])$. We equip $tX$ with the initial topology given by all the $t(f)$ (that is, the coarsest topology such that all $t(f)$ are continuous). This obviously makes the diagram above commute, and makes $t$ a continuous map. \\ \\ 
+	Now, to prove $tX$ is completely regular we will first show it is completely Hausdorff. If $[x] \not = [y]$ for some elements $[x], [y] \in tX$ then by definition there must exist $f \in C(X)$ such that $f(x) \neq f(y)$, which means that $t(f)([x]) \neq t(f)([y])$, where we can construct a mapping that separates $[x]$ and $[y]$. Because $tX$ is completely Hausdorff, it is $T_1$. To see that it is completely regular, let $F$ be a closed set in $tX$ and $[y] \not \in F$. Because we have given $tX$ the final topology generated by the $t(f)$, there exists a collection of closed sets $\{F_f\}_{f \in C(X)}$ in $\reales$ (of which many may be equal to $\reales$) such that $F = \bigcap (t(f))^{-1} (F_f)$. Because $[y] \not \in F$ there must exist some $f_0 \in C(X)$ such that $[y] \not \in (t(f_0))^{-1} (F_{f_0})$, and so $t(f_0)([y]) \not \in F_{f_0}$. Because $\reales$ is completely regular, there exists $g$ that separates $t(f_0)([y])$ and $F_{f_0}$ and so $g \circ t(f_0)$ separates $[y]$ and $F \subseteq (t(f_0))^{-1}(F_{f_0})$.\\ \\ 
+	Finally, we prove that the map $f \rightarrow t(f)$ is a ring and lattice isomorphism of $C(X)$ and $C^*(X)$. TODO, Weak topology?
+\end{proof}
+Note that in the theorem, $tX$ is not given the quotient topology, as in general it may not be equal to the initial topology of all the $t(f)$.\\ 
+This theorem means that we can restrain ourselves to studying rings of completely regular spaces, without losing much generality.
 
 \chapter{The fundamental group}
 \section{Path homotopy}
