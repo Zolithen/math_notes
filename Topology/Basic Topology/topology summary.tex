@@ -709,6 +709,18 @@ I have decided to compile interesting or useful exercises in this section. It is
 	Prove from the definition of a base that if $\{ B_i \}_{i \in I}$ is a finite family of elements in some base $\mathcal{B}$ that have nonempty intersection then if $x \in B = \cap_{i \in I} B_i$ there exists some $B' \in \mathcal{B}$ such that $x \in B' \subset B$.
 \end{exercise}
 
+\begin{exercise}
+	Find a map $f: \reales \rightarrow \reales$ such that there exists $x_0 \in \reales$ with $f(\mathcal{N}(x_0)) = \{ \reales \}$ (in the usual topology). Can such a map be continuous at $x_0$?
+\end{exercise}
+
+\begin{exercise}
+	Over $\reales$ define the following EBR:
+	\begin{equation*}
+		x \sim y \Leftrightarrow x,y \in \enteros \vee x = y.
+	\end{equation*}
+	Find a subset $S$ of $\reales^2$ such that $S \simeq \reales/\sim$.
+\end{exercise}
+
 
 
 
@@ -1135,6 +1147,8 @@ This theorem means that we can restrain ourselves to studying rings of completel
 
 \chapter{The fundamental group}
 \section{Path homotopy}
+In this section $X$ and $Y$ will denote topological spaces.
+
 \begin{define}{Path space}{path_space}
 	The set of all paths from $x$ to $y$ in a space $X$ is called the \textbf{path space}, and is denoted by $\Omega_{x,y}$. An element of $\Omega_{x,x}$ is called a \textbf{loop}, and $\Omega_{x,x}$ is the \textbf{loop space} based at $x$.
 \end{define}
@@ -1198,6 +1212,60 @@ And so we define path homotopy:
 \begin{define}{Fundamental group}{fundamental_group}
 	With the operation defined above, $\overline{\Omega}_{x,x}$ is a group called the \textbf{fundamental group} of $X$ based at $x$, and is denoted by $\pi_1(X, x)$.
 \end{define}
+
+\begin{define}{Induced homomorphism}{induced_homomorphism}
+	If $x \in X,\ y \in Y$ and $f: X \rightarrow Y$ is a continuous function such that $f(x) = f(y)$ then the application $\overline{f}: \pi_1(X, x) \rightarrow \pi_1(Y, y)$ defined by $\overline{f}([\alpha]) = [f \circ \alpha]$ is a group homomorphism that we call the homomorphism \textbf{induced} by $f$.
+\end{define}
+
+\begin{theorem}
+	If $X$ is path connected for all $x, y \in X$ then $\pi_1(X, x) \cong \pi_1(X, y)$.
+\end{theorem}
+
+\begin{define}
+	If $X$ is path connected then we say that any $\pi_1(X, x)$ is the \textbf{fundamental group} of $X$ and we denote it by $\pi_1(X, x)$. 
+\end{define}
+
+We now turn towards the task of calculating fundamental groups of some spaces. This task is, in general, pretty hard.
+
+\begin{example}
+	If $X = \{ a\}$ is an space with one point, then we can only define one path on $X$ (the path $f: [0, 1] \rightarrow X$ such that $f(x) = a\ \forall x \in [0, 1]$). Therefore $X$ is path connected and its fundamental group is the only group with one element (which we call the trivial group).
+\end{example}
+
+\begin{define}{Strong deformation retract}{deformation_retract}
+	A set $A \subseteq X$ is a \textbf{retract} of $X$ if there exists some continuous function $r: X \rightarrow A$ (known as a \textbf{retraction}) such that $r(a) = a\ \forall a \in A$. $A$ is also called a \textbf{strong reformation retract} of $X$ if there exists a continuous application $G: X \times [0, 1] \rightarrow X$ (called \textbf{strong deformation} of the identity to $r$) such that
+	\begin{itemize}
+		\item
+		$G(x, 0) = x$ and $G(x, 1) = r(x)$ for all $x \in X$.
+		
+		\item
+		$G(a, t) = a$ for all $a \in A$ and $t \in [0, 1]$.
+	\end{itemize}
+\end{define}
+
+\begin{theorem}
+	Let $A \subseteq X$ be nonempty.
+	\begin{itemize}
+		\item
+		If $A$ is a retract of $X$, then for every $a \in A$ the inclusion $i_A: A \rightarrow X$ induces a monomorphism between the fundamental groups $\pi_1(A, a)$ and $\pi_1(X, a)$.
+		\item
+		If $A$ is a strong deformation retract of $X$, then for every $a \in A$ the inclusion induces an isomoprhism between the fundamental groups $\pi_1(A, a)$ and $\pi_1(X, a)$.
+	\end{itemize}
+\end{theorem}
+
+\begin{example}
+	The set $A = \{ (0, 0)\}$ (the origin) is an strong deformation retract of the open ball $X = B((0, 0), 1) \subseteq \reales^2$ with the usual topology. To see this, we consider the obvious retraction $r: A \rightarrow X$ defined by $r(x) = (0, 0)\ \forall x \in X$, and the strong deformation $G: X \times [0, 1] \rightarrow X$ given by $G(x, t) = (1-t)x$. These are continuous functions, $r$ is obviously a retraction and $G$ satisfies:
+	\begin{itemize}
+		\item
+		$G(x, 0) = (1 - 0)x = x$ and $G(x, 1) = (1 - 1)x = (0, 0) = r(x)$ for all $x \in X$.
+		
+		\item
+		If $a \in A$ and $t \in [0, 1]$ then $G(a, t) = (1 - t)a = (0, 0) = a$.
+	\end{itemize}
+	So $G$ is a strong deformation between the identity and $r$, so $A$ is a strong deformation retract of $X$ onto $A$. By the last theorem and $A$ and $X$ being path connected, the fundamental groups of $A$ and $X$ are isomorphic, so $X$ has trivial fundamental group.
+\end{example}
+
+
+
 
 \begin{itemize}
 

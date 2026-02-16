@@ -50,7 +50,7 @@ Por comodidad, asumiremos que $\naturales$ (el conjunto de los números naturale
 \end{define}
 Es un resultado de un curso de análisis que una aplicación $\cinfinito$ definida sobre un dominio abierto es diferenciable. Otro nombre para las funciones $\cinfinito$ es suave.
 \begin{define}
-	Una aplicación $f:I \rightarrow J$ con $I,J$ intervalos abiertos de números reales se dice $difeomorfismo$ si es biyectiva, derivable y su inversa también es derivable.
+	Una aplicación $f:I \rightarrow J$ con $I,J$ intervalos abiertos de números reales se dice $difeomorfismo$ si es biyectiva, $\cinfinito$ y su inversa también es $\cinfinito$.
 \end{define}
 De la definición se puede ver que un difeomorfismo es también un homeomorfismo.
 
@@ -120,13 +120,14 @@ La implicación conversa (trazas iguales implican que son reparametrizaciones) n
 La situación de este ejemplo es algo que intuitivamente queremos evitar: contradice la noción de ser \textit{suave}. La causa de este problema es que en este punto no existe una recta tangente bien definida, ya que el vector derivada es nulo. Solo nos interesa trabajar con curvas en las que esto no pase:
 
 \begin{define}
-	Una curva diferenciable $\alpha: I \rightarrow \reales^{n}$ se dice \textbf{regular} si $\alpha(t) \neq 0$ para todo $t \in I$. 
+	Una curva diferenciable $\alpha: I \rightarrow \reales^{n}$ se dice \textbf{regular} si $\alpha'(t) \neq 0$ para todo $t \in I$. 
 \end{define}
 
 Una curva regular es tal que todo punto de la traza tiene por lo menos una recta tangente. Esto no significa que necesariamente sea única, como se puede apreciar en el ejemplo de la lemniscata de Bernoulli (en el punto de autointersección).\\ 
 
 Ahora nuestro objetivo es establecer un parámetro que nos proporcione una forma ``natural'' de trabajar con una curva. De esta manera a una traza resultante de alguna curva regular le asignaremos una curva de alguna manera canónica (aunque esto no sea del todo posible, se ve más abajo).
 
+TODO: y si $b \leq a$? se usa mas abajo en la naturalidad, parece que se usa que sea negativa asi que no hay que cambiar nada
 \begin{define}
 	Dada una curva diferenciable $\alpha: I \rightarrow \reales^{n}$ definimos su \textbf{longitud} desde $a$ hasta $b$ con $a\leq b \in I$ como la cantidad $\int_a^b |\alpha' (t)| dt$, y la denotaremos como $L_{a}^{b} (\alpha)$. 
 \end{define}
@@ -134,6 +135,7 @@ Ahora nuestro objetivo es establecer un parámetro que nos proporcione una forma
 Aquí damos una definición de longitud. Se podría demostrar que el producto escalar sobre $\reales^{n}$ da lugar (usando la definición de integral de Riemann) a está fórmula, pero nosotros no demostraremos esto.\\ 
 Esta noción proporciona una invariante de una curva:
 
+TODO: Esta mal? por ejemplo la lemniscata
 \begin{prop}
 	Sea $\alpha: I \rightarrow \reales^{n}$ una curva diferenciable y $\beta: J \rightarrow \reales^{n}$ una reparametrización de $\alpha$. Si $t_0, t_1 \in I$, $s_0, s_1 \in J$ son tales que $\alpha(t_0) = \beta(s_0)$ y $\alpha(t_1) = \beta(s_1)$ entonces $L_{t_0}^{t_1} (\alpha) = L_{s_0}^{s_1} (\beta)$.
 \end{prop}
@@ -452,9 +454,41 @@ El concepto de superficie regular es una ``versión bidimensional'' del concepto
 
 \section{Plano tangente y aplicaciones diferenciables}
 \begin{define}
-	Sea $S$ una superficie regular y $p \in S$. Decimos que $v \in \reales^3$ es un \textbf{vector tangente} si existe una parametrización regular $X: U \rightarrow S$ alrededor de $p$ y una curva regular $\alpha: (-\varepsilon, \varepsilon) \rightarrow U$ tal que $(X \circ \alpha)' (0) = v$.
+	Sea $S$ una superficie regular y $p \in S$. Decimos que $v \in \reales^3$ es un \textbf{vector tangente} en $p$ a $S$ si existe una curva regular $\alpha: (-\varepsilon, \varepsilon) \rightarrow S$ tal que $\alpha(0) = p$ y $\alpha' (0) = v$. El conjunto de todos los vectores tangentes en un punto $p \in S$ a $S$ se denota como $T_p S$.
 \end{define}
+
+\begin{prop}
+	$T_pS$ es un subespacio vectorial de $\reales^3$ de dimensión $2$ (es decir, un plano vectorial). Además, para cualquier parametrización $X: U \rightarrow S$ en $p$ se tiene $\text{Im}(dX_q) = T_pS$ para $X(q) = p$ y $\{ X_u, X_v\}$ es una base de $T_pS$.
+\end{prop}
+
+
+
 \section{Primera forma fundamental}
+\begin{define}
+	Sea $S$ una superficie regular y $p \in S$. Sea $\langle \cdot, \cdot \rangle_p$ el producto escalar heredado en $T_pS$ del espacio euclideo estándar $\reales^3$. La \textbf{primera forma fundamental} (1ª FF) es la forma cuadrática en $T_pS$ dada por:
+	\begin{equation*}
+		I_p(v) = \langle v, v\rangle_p.
+	\end{equation*}
+\end{define}
+
+\begin{prop}
+	Dada una parametrizacion $X: U \rightarrow S$ en $p$, los coeficientes de $I_p$ en la base $\{ X_u, X_v\}$ son:
+	\begin{equation*}
+		\left(
+		\begin{array}{cc}
+			E & F \\ 
+			F & G
+		\end{array}
+		\right) = 
+		\left(
+		\begin{array}{cc}
+			\langle X_u, X_u \rangle & \langle X_u, X_v \rangle \\ 
+			\langle X_u, X_v \rangle & \langle X_v, X_v \rangle
+		\end{array}
+		\right).
+	\end{equation*}
+\end{prop}
+
 \section{Segunda forma fundamental}
 \section{Indicatriz de Dupin}
 
