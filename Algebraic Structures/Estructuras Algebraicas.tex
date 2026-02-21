@@ -2,7 +2,6 @@
 \usepackage[spanish]{babel}
 \usepackage{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{hyperref}
 \usepackage{fancyhdr}
 \usepackage{graphicx}
 \usepackage{amsmath}
@@ -16,6 +15,7 @@
 \tcbuselibrary{skins}
 %\usepackage[left=30pt,right=40pt,top=40pt,bottom=60pt]{geometry}
 \usepackage[bottom=60pt]{geometry}
+\usepackage{hyperref}
 
 \newtheoremstyle{ejemplo}% name
 {5pt}% Space above
@@ -52,6 +52,7 @@
 \theoremstyle{ejemplo}
 \newtheorem{ejem}{Ejemplo}[section]
 \newtheorem{nota}{Nota}[section]
+\newtheorem{exercise}{Ejercicio}[chapter]
 
 \theoremstyle{demostracion}
 \newtheorem{dem}{Demostración}
@@ -70,6 +71,10 @@
 \DeclareMathOperator{\biy}{Biy}
 \DeclareMathOperator{\mcd}{mcd}
 \DeclareMathOperator{\simgroup}{\mathcal{S}}
+
+\DeclareMathOperator{\tor}{Tor}
+\DeclareMathOperator{\kernel}{Ker}
+\DeclareMathOperator{\image}{Im}
 
 \makeatletter
 %\def\thickhrulefill{\leavevmode \leaders \hrule height 1ex \hfill \kern \z@}
@@ -300,7 +305,7 @@ Esto justifica la notación $b = a^{-1}$.
 \end{define}
 
 \begin{define}{Espacio vectorial y módulo}{vectspace}
-	Sea $(K,\ +,\ *)$ un cuerpo, $E$ un conjunto no vacío, $\oplus$ una operación interna sobre $E$ y $\cdot : K \times E \rightarrow E$ una aplicación, llamada \textbf{multiplicación por un escalar}. Decimos que $(E,\ \oplus)$ es un \textbf{espacio vectorial} sobre $K$ (al que llamamos \textbf{cuerpo de escalares}) si se cumplen:
+	Sea $(K,\ +,\ *)$ un cuerpo, $E$ un conjunto no vacío, $\oplus$ una operación interna sobre $E$ y $\cdot : K \times E \rightarrow E$ una aplicación, que llamaremos \textbf{multiplicación por un escalar}. Decimos que $(E,\ \oplus)$ es un \textbf{espacio vectorial} sobre $K$ (al que llamamos \textbf{cuerpo de escalares}) si se cumplen:
 	\begin{enumerate}
 		\item
 		$(E,\ \oplus)$ es un grupo abeliano.
@@ -315,7 +320,7 @@ Esto justifica la notación $b = a^{-1}$.
 		$\alpha\cdot  (x \oplus y) = \alpha\cdot  x \oplus \alpha\cdot  y$ para todo $\alpha \in K$ y $x,\ y \in E$.
 		
 		\item
-		$1\cdot x = x$ para $1$ la identidad multiplicativa de $K$ y cualquier $x \in K$.
+		$1\cdot x = x$ para $1$ la identidad multiplicativa de $K$ y cualquier $x \in E$.
 	\end{enumerate}
 	Si en vez de ser $(K,\ +,\ *)$ un cuerpo es un anillo, $(E,\ \oplus)$ se conoce como un \textbf{módulo} sobre $K$.
 \end{define}
@@ -529,8 +534,148 @@ TODO: this is draconian no way i'm putting this here
 	Dos números $a,b \in \enteros$ no todos nulos se dicen \textbf{coprimos} si $\mcd(a,b) = 1$.
 \end{define}
 
-\chapter{Grupos}
+\chapter{Grupos I}
 
 \chapter{Anillos}
+\section{Ejercicios}
+\begin{exercise}\label{exc:multideals1}
+	Si $R_1$ y $R_2$ son anillos, demuestra que todo ideal de $R_1 \times R_2$ es de la forma $I_1 \times I_2$ con $I_1$ ideal de $R_1$ e $I_2$ ideal de $R_2$.
+\end{exercise}
+\begin{exercise}\label{exc:multideals2}
+	Sean $R_1$ y $R_2$ dos anillos, $I_1$ e $I_2$ ideales en $R_1$ y $R_2$ respectivamente. Demuestra que $\frac{R_1 \times R_2}{I_1 \times I_2} \cong \frac{R_1}{I_1} \times \frac{R_2}{I_2}$.
+\end{exercise}
+
+\chapter{Módulos}
+Por completitud, recordamos la definición de módulo sobre un anillo.
+
+\begin{define}{Módulo}{module}
+	Sea $(R,\ +,\ *)$ un anillo, $M$ un conjunto no vacío, $\oplus$ una operación interna sobre $M$ y $\cdot : R \times M \rightarrow M$ una aplicación, que llamaremos \textbf{multiplicación por un escalar}. Decimos que $(M,\ \oplus)$ es un \textbf{módulo} sobre $R$ (al que llamamos \textbf{anillo de escalares}) si se cumplen:
+	\begin{enumerate}
+		\item
+		$(M,\ \oplus)$ es un grupo abeliano.
+		
+		\item
+		$(\alpha \beta)\cdot x = \alpha\cdot ( \beta\cdot  x)$ para todo $\alpha,\ \beta \in R$ y $x \in M$.
+		
+		\item
+		$(\alpha + \beta)\cdot x = \alpha\cdot  x \oplus \beta\cdot  x$ para todo $\alpha,\ \beta \in R$ y $x \in M$.
+		
+		\item
+		$\alpha\cdot  (x \oplus y) = \alpha\cdot  x \oplus \alpha\cdot  y$ para todo $\alpha \in R$ y $x,\ y \in M$.
+		
+		\item
+		$1\cdot x = x$ para $1$ la identidad multiplicativa de $R$ y cualquier $x \in M$.
+	\end{enumerate}
+	También decimos que $M$ es un $R$-módulo.
+\end{define}
+
+Por comodidad, las operaciones de suma de $M$ y de $R$ se denotan mediante el mismo símbolo, $+$. Esto no crea confusión. \\ 
+\section{Conceptos básicos}
+
+\section{Módulos generados}
+En esta sección suponemos que $R$ es un anillo y que $D$ es un DI.\\ 
+Recordamos que de la definición de espacio vectorial \eqref{defn:vectspace}, los módulos son generalizaciones de los espacios vectoriales. Tiene sentido estudiar en cuanto son estos conceptos similares. Primero vemos si tiene sentido el concepto de base para un módulo:
+
+\begin{define}{Conjunto linealmente independiente}{module_linear_independence}
+	Sea $M$ un $R$-módulo, y $X \subseteq M$ no vacío. Decimos que $X$ es \textbf{linealmente independiente} (que abreviamos como \textbf{LI}) si para todo subconjunto finito no vacío $\{ x_1, \ldots , x_n\} \subseteq X$ se tiene que si $a_1x_1 + a_2x_2 + \cdots + a_nx_n = 0$ con $a_i \in R\ \forall i$ entonces $a_i = 0$ para todo $i$. Si $X$ es vacío o no es linealmente independiente, decimos que es \textbf{linealmente dependiente}.
+\end{define}
+
+\begin{define}{Base}{module_base}
+	Sea $M$ un $R$-módulo, y $B \subseteq M$ no vacío. Decimos que $B$ es una \textbf{base} para $M$ si $B$ genera $M$ y $B$ es un conjunto linealmente independiente.
+\end{define}
+
+Las bases de módulos no son tan omnipresentes como las bases de espacios vectoriales:
+\begin{ejem}
+	Tomando $\enteros_n$ como $\enteros$-módulo, si $m$ es cualquier elemento de $\enteros_n$ entonces $nm = 0$ por lo que el conjunto $\{ m \}$ es linealmente dependiente. Por ello, todo subconjunto $B \subseteq \enteros_n$ es linealmente dependiente, y así $\enteros_n$ no tiene base como $\enteros$-módulo.\\ 
+	Es decir, existen módulos sin base.
+\end{ejem}
+
+En este caso, no tenemos ninguna base de $\enteros_n$ debido a que existen elementos no nulos $m \in \enteros_n$ y $k \in \enteros$ tales que $km = 0$, cosa que no ocurre en espacios vectoriales.
+
+\begin{define}{Elemento de torsión}{module_torsion}
+	Sea $M$ un $R$-módulo. Decimos que $u \in M$ es un \textbf{elemento de torsión} si existe $r \in R$ distinto de cero tal que $ru = 0$. El conjunto de todos los elementos de torsión de $M$ lo denotamos por $\tor_R(M)$. Si $\tor_R(M) = \{ 0 \}$, $M$ se dice \textbf{libre de torsión}, y si $\tor_R(M) = M$ se dice \textbf{módulo de torsión}.
+\end{define}
+
+Notamos que la identidad de $M$ es siempre un elemento de torsión.
+Aunque podamos pensar que los elementos de torsión no nulos son lo único que imposibilita la existencia de una base en un módulo, esto no es cierto:
+
+\begin{ejem}
+	Tomamos $\racionales$ como $\enteros$-módulo. Si $\{\frac{q_1}{s_1}, \frac{q_2}{s_2} \} \subseteq \racionales$ es cualquier subconjunto de dos elementos con $q_1,\ q_2,\ s_1,\ s_2 \in \enteros$ $q_1$ y $q_2$ distintos de cero, entonces $s_1 * q_2 * \frac{q_1}{s_1} - s_2 * q_1 * \frac{q_2}{s_2} = 0$. Deducimos que todo subconjunto de los números raciones con dos elementos o más es linealmente dependiente. Por lo que si $B \subseteq \racionales$ es una base, esta debe tener un único elemento, digamos $\frac{q}{s} \in B$ con $q,\ s \in \enteros$ y $\mcd(q, s) = 1$. Pero si $p$ es un número primo que no divide a $s$ entonces $\frac{1}{p}$ no es un elemento del submódulo generado por $B$. Deducimos que $\racionales$ no tiene base como $\enteros$-módulo, y además como todo elemento no nulo de $\racionales$ tiene orden infinito, el único elemento de torsión de $\racionales$ es $0$.
+\end{ejem}
+
+Por lo que tener una base es algo un poco más raro.
+\begin{define}{Módulo libre}{module_free}
+	Sea $M$ un $R$-módulo. Se dice que $M$ es \textbf{libre} si $M$ admite una base.
+\end{define}
+Las bases pueden ser finitas o infinitas, como en el caso de los espacios vectoriales.
+\begin{theorem}
+	Sea $M$ un $R$-módulo con base $B$. Entonces todo elemento de $M$ se expresa como combinación lineal de elementos de $B$ de forma única
+\end{theorem}
+
+\begin{theorem}
+	Sea $R$ un anillo conmutativo y $M$ un $R$-módulo que admite dos bases $B$ y $C$. Entonces $|B| = |C|$.
+\end{theorem}
+
+\begin{dem}
+	Si $R$ no tiene ideales no triviales, $R$ es un cuerpo y $M$ un espacio vectorial, por lo que sabemos que $|B| = |C|$. Si $R$ tiene ideales no triviales, por el teorema $R$ tiene por lo menos un ideal maximal $J$. Queremos dotar a $M/JM$ una estructura de $R/J$-espacio vectorial. Definimos $(r+J)(m+JM) = (rm + JM)$, operación que está bien definida: si $r + J = s + J$ y $m + JM = n + JM$ entonces
+	\begin{equation*}
+		rm - sn = rm - sm + sm - rn + rn + sn - sn - sn = (r - s)(m - n) + s(m - n) + (r - s)n.
+	\end{equation*}
+	Como $r - s \in J$, tenemos $(r - s)(m - n) + (r - s) \in JM$. Al ser $m - n \in JM$ y $s \in J$, también $s(m - n) \in J$. Lo que implica $rm - ns \in JM$ y $(r + J)(m + JM) = (s + J)(n + JM)$. Es fácil comprobar que con esta operación y la suma de $M/JM$ como cociente de grupos, $M/JM$ es un $R/J$-espacio vectorial.\\ 
+	TODO: Escribir esto.
+	Ahora, si $B = \{x_i\ |\ i \in I \}$ es una base de $M$ entonces $B' = \{x_i + JM\ |\ i \in I \}$ es una base de $M/JM$ con el mismo cardinal, aplicando la unicidad de cardinalidad de bases para espacios vectoriales obtenemos $|B| = |B'| = |C'| = |C|$.
+\end{dem}
+\begin{theorem}
+	Sea $M$ un $R$-módulo y $u_1,\ \ldots\ ,u_n \in M$ elementos que no son de torsión. Son equivalentes:
+	\begin{itemize}
+		\item
+		$\{ u_1,\ \dots\ ,u_n\}$ es una base de $M$.
+		
+		\item
+		$M = Du_1 \oplus Du_2 \oplus \cdots \oplus Du_n$.
+	\end{itemize}
+\end{theorem}
+
+\begin{dem}
+	
+\end{dem}
+Para módulos finitamente generados tenemos un resultado parecido:
+\begin{theorem}
+	Sea $M$ un $R$-módulo. $M$ es finitamente generado si y solo si $M$ es isomorfo a un cociente de $R^n$ con $n > 0$ entero.
+\end{theorem}
+\begin{dem}
+	$\Rightarrow$ Sea $\{x_1,\ \ldots\ ,x_n \}$ un conjunto generador de $M$. Consideramos la aplicación $f: R^n \rightarrow M$ dada por $f(r_1,\ \ldots\ , r_n) = r_1x_1 + \cdots + r_nx_n$. Se puede comprobar que $f$ es un homomorfismo, y aplicando el primer teorema de isomorfía se obtiene $R^n / \kernel(f) \cong \image(f)$. Además, como los $x_i$ son conjunto generador, $f$ es suprayectiva y $Im(f) = M$.\\ 
+	$\Leftarrow$ $R^n$ es finitamente generado con conjunto generador $\{ e_i\ |\ 1 \leq i \leq n\}$, $\{ \pi(e_i)\ |\ 1 \leq i \leq n \}$ será entonces conjunto generador de $M$. TODO: Imagen homomorfa de un conjunto generador es un conjunto generador de $im(f)$?
+\end{dem}
+Este teorema particularmente tiene una aplicación muy poderosa para clasificar grupos abelianos finitos.
+
+\begin{ejem}
+	Vamos a buscar todos los grupos abelianos finitos $G$ con $|G| = 206 = 103 * 2$. Podemos considerar $G$ como un $\enteros$-módulo, que será finitamente generado por ser finito (por ejemplo, $G$ es un conjunto generador). Por ello $G$ será isomorfo a un cociente de $\enteros^n$ para algún $n$ natural. Por los ejercicios 
+\end{ejem}
+
+\begin{theorem}
+	Todo grupo abeliano finito es isomorfo al producto de grupos cíclicos de orden potencia de un primo.
+\end{theorem}
+
+\begin{dem}
+	Un grupo abeliano finito $G = \{x_1,\ \ldots\ , x_n\}$ es isomorfo al cociente $\enteros^n / \kernel(f)$ para el homomorfismo $f(r_1,\ \ldots\ , r_n) = r_1x_1 + \cdots + r_nx_n$. Si llamamos $m = |G|$ y definimos los elementos $e_i \in \enteros^n$ mediante
+	\begin{equation*}
+		e_{i}^{(j)} = \left\lbrace \begin{array}{c}
+			1 \text{ si } i = j \\ 
+			0 \text{ si } i \neq j
+		\end{array} \right.
+	\end{equation*}
+	entonces $f(me_i) = 0$ para todo $i$, por lo que $m\enteros^n \subseteq \kernel(f)$. Por el tercer teorema de isomorfía para módulos
+	\begin{equation*}
+		\frac{\frac{\enteros^n}{m\enteros^n}}{\frac{\kernel(f)}{m\enteros^n}} \cong \frac{\enteros^n}{\kernel(f)} \cong G
+	\end{equation*}
+	y tratando ahora con grupos abelianos
+	\begin{equation*}
+		\frac{\frac{\enteros^n}{m\enteros^n}}{\frac{\kernel(f)}{m\enteros^n}} \cong \frac{(\enteros_m)^n}{\frac{\kernel(f)}{m\enteros^n}}.
+	\end{equation*}
+	Por lo que el grupo $G$ es isomorfo a un cociente del grupo $(\enteros_m)^n$. Ahora bien, el grupo $(\enteros_m)^n$ es tambien un anillo bajo la multiplicación elemento a elemento. Con estas operaciones todo subgrupo bajo la suma es un ideal y viceversa. Por los ejercicios \eqref{exc:multideals1} y \eqref{exc:multideals2} los cocientes de $(\enteros_m)^n$ por un ideal serán de la forma $\Pi_{i=1}^{n} \frac{\enteros_m}{J_i}$ con $J_i$ ideal de $\enteros_m$ para todo $i$, y sabemos que $\frac{\enteros_m}{J_i}$ es de la forma $\enteros_{l_i}$ para algunos $l_i \in \naturales$. Volviendo a grupos, hemos demostrado que $G$ es isomorfo al producto de grupos cíclicos, y usando () se puede ver que estos se pueden poner como potencia de un primo.
+\end{dem}
+
+\section{Estructura de un módulo sobre un DIP}
 
 \end{document}
