@@ -46,6 +46,7 @@
 \begin{document}
 
 \section{Introducción a los conjuntos numéricos}
+TODO: Remove italics
 
 \subsection{Construcciones}
 
@@ -1078,11 +1079,12 @@ Por último, dejamos más definiciones que son parcialmente importantes:
 El concepto de límite formaliza la idea de \textit{acercarse}. Para una función, podemos ver a que valor se acerca al ir a infinito o cuando tiende a un punto. Esto significa que tenemos que tratar con distintos tipos de límites:
 
 \begin{define}
+	TODO: Cambiar todos los dominios para que solo se requiera punto de acumulacion infinito, punto de acumulacion derecha o izquierda.
 	\begin{itemize}
 		\item
 		Sea $f: (a, \infty) \rightarrow \reales$. Decimos que $f$ \textbf{converge} a un valor $L\in \reales$ en el infinito positivo si $\forall \varepsilon > 0$ existe un $\delta > 0$ tal que si $x > \delta$ se tiene $|f(x) - L| < \varepsilon$. Si en cambio ocurre que $\forall K \in \reales$ existe un $\delta > 0$ tal que si $x > \delta$ se tiene $f(x) > K$ entonces decimos que $f$ \textbf{diverge a $+\infty$}. Análogamente se pueden definir para el infinito negativo y para $-\infty$.
 		\item
-		Sea $f: A \rightarrow \reales$ y $p$ un punto de acumulación de $A$. Decimos que $f$ \textbf{converge} a un valor $L\in \reales$ en $p$ si $\forall \varepsilon > 0$ existe un $\delta > 0$ tal que si $|x - p| < \delta$ se tiene $|f(x) - L| < \varepsilon$. Si en cambio ocurre que $\forall K \in \reales$ existe un $\delta > 0$ tal que si $|x - p| < \delta$ se tiene $f(x) > K$ entonces decimos que $f$ \textbf{diverge a $+\infty$} en $p$. Análogamente se define para $-\infty$.
+		Sea $f: A \rightarrow \reales$ y $p$ un punto de acumulación de $A$. Decimos que $f$ \textbf{converge} a un valor $L\in \reales$ en $p$ si $\forall \varepsilon > 0$ existe un $\delta > 0$ tal que si $|x - p| < \delta$ con $x \in A$ se tiene $|f(x) - L| < \varepsilon$. Si en cambio ocurre que $\forall K \in \reales$ existe un $\delta > 0$ tal que si $|x - p| < \delta$ se tiene $f(x) > K$ entonces decimos que $f$ \textbf{diverge a $+\infty$} en $p$. Análogamente se define para $-\infty$.
 		\item
 		Sea $f: (p, b) \rightarrow \reales$. Decimos que $f$ \textbf{converge por la derecha} a un valor $L \in \reales$ en $p$ si $\forall \varepsilon > 0$ existe un $\delta > 0$ tal que si $x \in (p, p + \delta)$ se tiene $|f(x) - L| < \varepsilon$. Si en cambio ocurre que $\forall K \in \reales$ existe un $\delta > 0$ tal que si $x \in (p, p + \delta)$ se tiene $f(x) > K$ entonces decimos que $f$ \textbf{diverge por la derecha a $+\infty$} en $p$. Análogamente se define para $-\infty$.		
 		\item
@@ -1095,7 +1097,7 @@ Existen muchas combinaciones posibles para cubrir todos los casos. Aquí hemos p
 El primer paso en el estudio de límites es ver que efectivamente una función solo puede converger a un único valor. Por comodidad, solo enunciamos el resultado para límites no laterales en un punto. Para funciones en el infinito y límites laterales es similar.
 
 \begin{prop}
-	Sea $f: A \rightarrow \reales$ y $p$ punto de acumulación de $A$. Si $f$ converge a $L_1$ y $L_2$ en $p$ entonces no $L_1 = L_2$.
+	Sea $f: A \rightarrow \reales$ y $p$ punto de acumulación de $A$. Si $f$ converge a $L_1$ y $L_2$ en $p$ entonces $L_1 = L_2$.
 \end{prop}
 
 \begin{define}
@@ -1288,6 +1290,19 @@ TODO: limites en un punto e infinito, laterales, caracterización por sucesiones
 	\end{enumerate}
 	Si $f$ es continua en todo $p \in P \subseteq A$ se dice que $f$ es continua en $P$, y si es continua en todo punto de su dominio simplemente se dice continua.
 \end{define}
+
+\begin{ejem}
+	La función $f: \reales \rightarrow \reales$ definida por
+	\begin{equation*}
+		f(x) =
+		\left\lbrace
+		\begin{array}{cc}
+			1 & \text{ si } 0 \leq x \leq 1 \\
+			0 & \text{ en el resto de puntos }
+		\end{array}\right.
+	\end{equation*}
+	no es continua en $[0, 1]$, pero su restricción a este intervalo si lo es.
+\end{ejem}
 
 \begin{define}
 	Decimos que una función $f: (a, b) \rightarrow \reales$ es \textbf{continua de Lipschitz} si $\exists K \in \reales$ tal que

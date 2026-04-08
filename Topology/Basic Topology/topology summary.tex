@@ -710,6 +710,21 @@ I have decided to compile interesting or useful exercises in this section. It is
 \end{exercise}
 
 \begin{exercise}
+	Let $X$ be a nonempty set and $f: \wp(X) \rightarrow \wp(X)$ an application that satisfies:
+	\begin{enumerate}
+		\item
+		$f(\emptyset) = \emptyset$.
+		\item
+		$f(f(A)) = f(A)$ for all $A \subseteq X$.
+		\item
+		$A \subseteq f(A)$ for all $A \subseteq X$.
+		\item
+		If $A, B \subseteq X$ then $f(A \cup B) = f(A) \cup f(b)$.
+	\end{enumerate}
+	Show that the set $\mathcal{F} = \{A \subseteq X\ |\ A = f(A) \}$ is the closed sets of a topology such that $\closure(A) = f(A)$ for all $A \subseteq X$. Maps that satisfy the previous axioms are called \textbf{Kuratowski closure operators}.
+\end{exercise}
+
+\begin{exercise}
 	Find a map $f: \reales \rightarrow \reales$ such that there exists $x_0 \in \reales$ with $f(\mathcal{N}(x_0)) = \{ \reales \}$ (in the usual topology). Can such a map be continuous at $x_0$?
 \end{exercise}
 
@@ -1146,12 +1161,15 @@ Note that in the theorem, $tX$ is not given the quotient topology, as in general
 This theorem means that we can restrain ourselves to studying rings of completely regular spaces, without losing much generality.
 
 \chapter{The fundamental group}
+Something we have been unable to do at this point is find out if $\reales^2$ and $\reales^3$ are homeomorphic. Back when we learned about connectedness, we were able to prove that $\reales$ and $\reales^2$ were not homeomorphic by seeing what happens to both space when we prick a hole in them. Running through our topological invariants lists with the perforated $\reales^2$ and $\reales^3$ we see that they do have the same invariants. In this chapter we will see that these two holes are actually of a different topological nature, and we can use this same method to prove that $\reales^2$ and $\reales^3$ are not homeomorphic. Later, we will be able to generalize this to $\reales^n$ and $\reales^m$ for arbitrary $n,m$ (much later). This will also yield a whole lot of interesting topology.\\ 
+The basic idea is this: if we have a loop $L$ in $\reales^2 \setminus \{(0,0)\}$ such that $(0, 0)$ is in the (intuitive) interior of $L$ then we can't continuously deform $L$ into a point (because eventually the loop will hit $(0, 0)$ but it can't pass through there), while in $\reales^3 \setminus \{(0,0) \}$ we can. One can think of a loop in any space as the continuous image of $S^1$, and the act of deformation as a certain continuous map $F: S^1 \times [0, 1] \rightarrow X$ that for every $t \in [0, 1]$ gives us a loop $F(\cdot, t)$ of the process of deformation, such that the image of $F(\cdot, 0)$ is $L$ and the image of $F(\cdot, 1)$ is a single point. This proves that this process is topological, and so we should be able to get a topological invariant out of it.
 \section{Path homotopy}
-In this section $X$ and $Y$ will denote topological spaces.
+In this section $X$ and $Y$ will denote topological spaces.\\ 
 
 \begin{define}{Path space}{path_space}
 	The set of all paths from $x$ to $y$ in a space $X$ is called the \textbf{path space}, and is denoted by $\Omega_{x,y}$. An element of $\Omega_{x,x}$ is called a \textbf{loop}, and $\Omega_{x,x}$ is the \textbf{loop space} based at $x$.
 \end{define}
+It is of note that loop and continuous maps from $S^1$ to $X$ are equivalent concepts.
 
 \begin{define}{Concatenation of paths}{concatenation}
 	Given paths $\alpha \in \Omega_{x,y}$ and $\beta \in \Omega_{y,z}$ their \textbf{concatenation} is a path from $x$ to $z$ given by
@@ -1164,11 +1182,7 @@ In this section $X$ and $Y$ will denote topological spaces.
 \end{define}
 
 Is it easy to see, by using the gluing lemma, that $\alpha * \beta$ is continuous and so is a path from $x$ to $z$.\\ 
-Concatenation, as an algebraic operation, doesn't have many remarkable properties. Our objective is to make it a group operation. To make it so, we need to restrict ourselves to loop spaces (to make it an internal operation) and consider some kind of equivalence relation over it. To see why we need to consider an equivalence relation, we will see that concatenation generally doesn't have neutral elements nor inverses:
-\begin{example}
-
-\end{example}
-And so we define path homotopy:
+We now need to formalize the concept of continuous deformation of paths.
 \begin{define}{Path homotopy}{path_homotopy}
 	Let $x,\ y \in X$ and $\alpha,\ \beta \in \Omega_{x,y}$. We say that $\alpha$ is \textbf{homotopic} to $\beta$ if there exists some continuous function $F : [0, 1]^2 \rightarrow X$ that satisfies:
 	\begin{itemize}
@@ -1209,20 +1223,28 @@ And so we define path homotopy:
 	\end{itemize}
 \end{theorem}
 
-\begin{define}{Fundamental group}{fundamental_group}
+\begin{define}{Fundamental group at a point}{fundamental_group_point}
 	With the operation defined above, $\overline{\Omega}_{x,x}$ is a group called the \textbf{fundamental group} of $X$ based at $x$, and is denoted by $\pi_1(X, x)$.
 \end{define}
 
 \begin{define}{Induced homomorphism}{induced_homomorphism}
-	If $x \in X,\ y \in Y$ and $f: X \rightarrow Y$ is a continuous function such that $f(x) = f(y)$ then the application $\overline{f}: \pi_1(X, x) \rightarrow \pi_1(Y, y)$ defined by $\overline{f}([\alpha]) = [f \circ \alpha]$ is a group homomorphism that we call the homomorphism \textbf{induced} by $f$.
+	If $x \in X,\ y \in Y$ and $f: X \rightarrow Y$ is a continuous function such that $f(x) = y$ then the application $\overline{f}: \pi_1(X, x) \rightarrow \pi_1(Y, y)$ defined by $\overline{f}([\alpha]) = [f \circ \alpha]$ is a group homomorphism that we call the homomorphism \textbf{induced} by $f$.
 \end{define}
+
+\begin{theorem}
+	If $f: X \rightarrow Y$ is a homeomorphism and $x \in X$ then the homomorphism $\overline{f}$ induced on $\pi_1(X, x)$ by $f$ is an isomorphism.
+\end{theorem}
 
 \begin{theorem}
 	If $X$ is path connected for all $x, y \in X$ then $\pi_1(X, x) \cong \pi_1(X, y)$.
 \end{theorem}
 
-\begin{define}
+\begin{define}{Fundamental group}{fundamental_group}
 	If $X$ is path connected then we say that any $\pi_1(X, x)$ is the \textbf{fundamental group} of $X$ and we denote it by $\pi_1(X, x)$. 
+\end{define}
+The 2 previous theorems imply that it is well defined and that it is a topological invariant.
+\begin{define}{Simply connected}{simply_connected}
+	If $X$ is path connected and $\pi_1(X, x) \cong \{1\}$ (the trivial group) then $X$ is said to be \textbf{simply connected}.
 \end{define}
 
 We now turn towards the task of calculating fundamental groups of some spaces. This task is, in general, pretty hard.
@@ -1261,8 +1283,85 @@ We now turn towards the task of calculating fundamental groups of some spaces. T
 		\item
 		If $a \in A$ and $t \in [0, 1]$ then $G(a, t) = (1 - t)a = (0, 0) = a$.
 	\end{itemize}
-	So $G$ is a strong deformation between the identity and $r$, so $A$ is a strong deformation retract of $X$ onto $A$. By the last theorem and $A$ and $X$ being path connected, the fundamental groups of $A$ and $X$ are isomorphic, so $X$ has trivial fundamental group.
+	So $G$ is a strong deformation between the identity and $r$, so $A$ is a strong deformation retract of $X$ onto $A$. By the last theorem and $A$ and $X$ being path connected, the fundamental groups of $A$ and $X$ are isomorphic, so $X$ has trivial fundamental group. This example can be generalized to any nonempty convex subset of $\reales^n$ under the euclidean topology.
 \end{example}
+
+\section{Covering spaces}
+\begin{define}{Covering space}{covering_space}
+	Let $X$ and $E$ be topological spaces, and $p:E \rightarrow X$ a continuous and surjective map. We say that $p$ is a \textbf{covering map} and that $E$ is a \textbf{covering space} of $X$ if for all $x \in X$ there exists an open neighborhood $U_x$ of $x$ such that
+	\begin{equation*}
+		p^{-1} (U_x) = \bigcup_{\alpha} V_{\alpha}
+	\end{equation*}
+	were the $V_{\alpha}$ are open pairwise disjoint sets on $E$ such that $p|_{V_{\alpha}}: V_{\alpha} \rightarrow U_x$ is a homeomorphism for all $\alpha$. The $V_{\alpha}$ sets are called \textbf{sheets} and the set $p^{-1}(\{ x\})$ is called the \textbf{fiber} of $x$. 
+\end{define}
+Covering spaces have a complex definition.
+\begin{example}
+	Every topological space is a covering space of itself.
+\end{example}
+\begin{example}
+	$\reales$ is a covering space of $S^1$ via the covering map $p(t) = (\cos t, \sin t)$.
+\end{example}
+
+\begin{define}{Lifting}{map_lifting}
+	Let $E$ be a covering space of $X$, with covering map $p$. Given an application $f: A \rightarrow X$ from an arbitrary set $A$ to $X$ we say that $g: A \rightarrow E$ is a \textbf{lifting} of $f$ if $p \circ g = f$.
+\end{define}
+
+\begin{theorem}[Lifting of paths]
+	Let $X,\ E,\ p$ be like in the prior definition. Given $x_0 \in X$ and $e_0 \in E$ with $p(e_0) = x_0$, then any path $\alpha$ in $X$ starting at $x_0$ admits a continuous lifting $\beta$ in $E$ such that $\beta$ starts at $e_0$.
+\end{theorem}
+
+\begin{theorem}
+	Let $X,\ E,\ p,\ x_0,\ e_0$ be like in the prior theorem. Then if $F: I \times I \rightarrow X$ is a continuous map with $F(0,\ 0)=x_0$ then there exists a unique continuous map $G:I \times I \rightarrow E$ such that $p \circ G = F$ and $G(0,\ 0)=e_0$. Moreover, if $F$ is a path homotopy then $G$ is a path homotopy.
+\end{theorem}
+
+\begin{theorem}
+	Let $X,\ E,\ p,\ x_0,\ e_0$ be like in the prior theorem. The rule $\phi : \pi_1(X, x_0) \rightarrow p^{-1}(\{ x_0\})$ given by
+	\begin{equation*}
+		\phi([\alpha]) = q_{\alpha}
+	\end{equation*}
+	where $q_{\alpha}$ is the ending point of a lifting of $\alpha$ satisfies:
+	\begin{enumerate}
+		\item
+		It is a well defined application.
+		\item
+		If $E$ is path connected then $\phi$ is surjective.
+		\item
+		If $E$ is simply connected then $\phi$ is bijective.
+	\end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+	$\pi_1(S^1) \cong (\enteros, +)$.
+\end{theorem}
+
+\begin{theorem}
+	$\pi_1(\reales P^2) \cong (\enteros_2, +)$
+\end{theorem}
+
+\begin{theorem}
+	Let $X,\ Y$ be topological spaces and $x \in X$, $y \in Y$. Then
+	\begin{equation*}
+		\pi_1(X \times Y, (x,y)) \cong \pi_1(X, x) \times \pi_1(Y, y).
+	\end{equation*}
+\end{theorem}
+
+\section{Seifert-Van Kampen theorem}
+\begin{theorem}[Seifert-Van Kampen for simply connected spaces]
+	Let $X$ be a topological space and $U,V$ open subsets of $X$ such that
+	\begin{enumerate}
+		\item
+		$U \cup V = X$ and $U \cap V \neq \emptyset$.
+		\item
+		$U, V$ and $U \cap V$ are path connected.
+		\item
+		$U$ and $V$ are simply connected.
+	\end{enumerate}
+	Then $X$ is simply connected
+\end{theorem}
+This is a simpler version of the more general theorem.
+\begin{theorem}
+	$\pi_1(S^2) \cong \{1\}$.
+\end{theorem}
 
 
 

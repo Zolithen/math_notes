@@ -537,6 +537,156 @@ TODO: this is draconian no way i'm putting this here
 \chapter{Grupos I}
 
 \chapter{Anillos}
+
+\section{Factorización}
+Ciertos tipos de anillos son las estructuras perfectas para estudiar la factorización en términos más generales. En esta sección:
+\begin{enumerate}
+	\item
+	Estudiaremos los conceptos relativos a la divisibilidad en anillos conmutativos arbitrarios.
+	\item
+	Generalizaremos los algoritmos de la división de $\reales[x]$ y $\enteros$.
+	\item
+	Generalizaremos el teorema fundamental de la aritmética de $\enteros$ a otros anillos.
+\end{enumerate}
+
+\begin{define}{Divisibilidad}{div_general}
+	Sea $R$ un anillo conmutativo y $a,\ b \in R$ con $a \neq 0$. Decimos que $a$ \textbf{divide} $b$ si existe $c \in R$ tal que $b = ac$. Lo denotamos por $a|b$.
+\end{define}
+En la definición anterior, diremos que $b$ es un múltiplo de $a$ y que $a$ es un factor de $b$.
+\begin{define}{Elementos asociados}{el_ass}
+	Sea $R$ un anillo conmutativo. Decimos que $a,\ b \in R$ son \textbf{asociados} si $a|b$ y $b|a$.
+\end{define}
+\begin{define}{Elemento irreducible}{el_irred}
+	Sea $R$ un anillo conmutativo. Decimos que $p \in R$ es un \textbf{elemento irreducible} si se cumplen las dos siguientes propiedades:
+	\begin{itemize}
+		\item
+		$p \neq 0$ y $p \not \in U(R)$.
+		\item
+		Si $p = ab$ para algunos $a,\ b \in R$ entonces o $a \in U(R)$ o $b \in U(R)$.
+	\end{itemize}
+\end{define}
+\begin{define}{Elemento primo}{el_prime}
+	Sea $R$ un anillo conmutativo. Decimos que $p \in R$ es un \textbf{elemento primo} si se cumplen:
+	\begin{itemize}
+		\item
+		$p \neq 0$ y $p \not \in U(R)$.
+		\item
+		Si $p|ab$ para algunos $a,\ b \in R$ entonces $p|a$ o $p|b$.
+	\end{itemize}
+\end{define}
+Aunque hayamos dado todas estas definiciones para anillos conmutativos generales, los resultados más coherentes se obtienen en dominios de integridad.
+\begin{theorem}
+	Sea $D$ un DI y sean $a,\ b \in D$ con $b \neq 0$. Entonces $b|a$ si y solo si $(a) \subseteq (b)$.
+\end{theorem}
+TODO: Que hay mal aqui
+\begin{dem}
+	$\Rightarrow$ Si $b|a$ entonces $\exists c \in R$ tal que $a = cb$. Todos los elementos de $(a)$ son de la forma $xa$ con $x \in R$, y además $xa = x(cb) = (xc)b \in (b)$.\\ 
+	$\Leftarrow$ Si $(a) \subseteq (b)$ se tiene $a \in (b)$ por lo que existe $c \in R$ tal que $a = bc$ y asi $b|a$.
+\end{dem}
+
+\begin{theorem}
+	Sea $D$ un DI y sean $a,\ b \in D^*$. Son equivalentes:
+	\begin{enumerate}
+		\item
+		$a$ y $b$ son asociados.
+		\item
+		$(a) = (b)$.
+		\item
+		Existe $u \in U(D)$ tal que $a = ub$.
+	\end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+	Sea $D$ un DI y $p \in D^*$. Son equivalentes:
+	\begin{enumerate}
+		\item
+		$p$ es irreducible en $D$.
+		\item
+		El ideal principal generado por $p$ es maximal entre todos los ideales principales de $D$ (¡Cuidado! Esto no significa que $(p)$ sea ideal maximal).
+	\end{enumerate}
+\end{theorem}
+En un DIP, el resultado anterior se transforma en:
+\begin{theorem}
+	Sea $D$ un DIP y $p \in D^*$. Son equivalentes:
+	\begin{enumerate}
+		\item
+		$p$ es irreducible.
+		\item
+		$(p)$ es ideal maximal de $D$.
+	\end{enumerate}
+\end{theorem}
+
+También tenemos un resultado para elementos primos:
+\begin{theorem}
+	Sea $D$ un DI y $p \in D^*$. Son equivalentes:
+	\begin{enumerate}
+		\item
+		$p$ es primo.
+		\item
+		$(p)$ es ideal primo de $D$.
+	\end{enumerate}
+\end{theorem}
+
+TODO: Ponerlo en la sección de anillos?
+\begin{theorem}
+	Sea $K$ un cuerpo. Entonces $K[x]$ es un DIP.
+\end{theorem}
+
+La estrategia de la demostración anterior se puede generalizar.
+
+\begin{define}{Dominio euclídeo}{euclidean_domain}
+	Sea $D$ un dominio de integridad. Decimos que $D$ es un \textbf{dominio euclídeo} (DE) si existe una aplicación $\delta: D^* \rightarrow \naturales \cup \{ 0 \}$ (llamada \textbf{valuación euclídea}) que satisface:
+	\begin{enumerate}
+		\item
+		Si $a,\ b \in D$ con $b \neq 0$ entonces existen $q,\ r \in D$ tales que $a = bq + r$ con $r = 0$ o $\delta(r) < \delta(b)$.
+		\item
+		Si $a,\ b \in D^*$ entonces $\delta(a) < \delta(ab)$.
+	\end{enumerate}
+\end{define}
+Los dominios euclídeos generalizan el algoritmo de la división en $K[x]$ o en $\enteros$
+
+\begin{theorem}
+	Sea $D$ un DE. Entonces $D$ es un DIP.
+\end{theorem}
+
+\begin{theorem}
+	Sea $D$ un DI y $p \in D$. Si $p$ es primo entonces $p$ es irreducible.
+\end{theorem}
+
+\begin{theorem}
+	Sea $D$ un DIP y $p \in D$. Entonces $p$ es primo si y solo si $p$ es irreducible.
+\end{theorem}
+
+\begin{theorem}
+	Sea $D$ un DI y $a \in D$ con $a \neq 0$ y $a \not \in U(D)$. Si no existe expresión de $a$ como producto de elementos irreducibles entonces existe una cadena de ideales principales $\{ (a_i) \}_{i \in \naturales}$ tales que $(a) \subsetneq (a_1) \subsetneq (a_2) \subsetneq \ldots$.
+\end{theorem}
+
+\begin{theorem}
+	Si $D$ es un DIP entonces $D$ es un anillo noetheriano.
+\end{theorem}
+
+\begin{define}{Dominio de factorización única}{domini_fu}
+	Sea $D$ un DI. Decimos que $D$ es un \textbf{dominio de factorización única} (DFU) si para todo $a \in D$ con $a \neq 0$ y $a \in U(D)$ se satisface:
+	\begin{enumerate}
+		\item
+		Existen $p_1,\ p_2,\ \ldots\ \, p_n$ elementos irreducibles tales que $a = p_1 p_2\ \cdots\ p_n$.
+		\item
+		La factorización anterior es única salvo elementos asociados y el orden de los factores.
+	\end{enumerate}
+\end{define}
+
+\begin{theorem}
+	Sea $D$ un DIP. Entonces $D$ es un DFU.
+\end{theorem}
+
+\begin{theorem}
+	Sea $K$ un cuerpo. Entonces $K[x]$ es un DFU.
+\end{theorem}
+
+\begin{theorem}
+	Sea $D$ un DFU y $p \in D$. Entonces $p$ es primo si y solo si $p$ es irreducible.
+\end{theorem}
+
 \section{Ejercicios}
 \begin{exercise}\label{exc:multideals1}
 	Si $R_1$ y $R_2$ son anillos, demuestra que todo ideal de $R_1 \times R_2$ es de la forma $I_1 \times I_2$ con $I_1$ ideal de $R_1$ e $I_2$ ideal de $R_2$.
@@ -646,34 +796,6 @@ Para módulos finitamente generados tenemos un resultado parecido:
 \begin{dem}
 	$\Rightarrow$ Sea $\{x_1,\ \ldots\ ,x_n \}$ un conjunto generador de $M$. Consideramos la aplicación $f: R^n \rightarrow M$ dada por $f(r_1,\ \ldots\ , r_n) = r_1x_1 + \cdots + r_nx_n$. Se puede comprobar que $f$ es un homomorfismo, y aplicando el primer teorema de isomorfía se obtiene $R^n / \kernel(f) \cong \image(f)$. Además, como los $x_i$ son conjunto generador, $f$ es suprayectiva y $Im(f) = M$.\\ 
 	$\Leftarrow$ $R^n$ es finitamente generado con conjunto generador $\{ e_i\ |\ 1 \leq i \leq n\}$, $\{ \pi(e_i)\ |\ 1 \leq i \leq n \}$ será entonces conjunto generador de $M$. TODO: Imagen homomorfa de un conjunto generador es un conjunto generador de $im(f)$?
-\end{dem}
-Este teorema particularmente tiene una aplicación muy poderosa para clasificar grupos abelianos finitos.
-
-\begin{ejem}
-	Vamos a buscar todos los grupos abelianos finitos $G$ con $|G| = 206 = 103 * 2$. Podemos considerar $G$ como un $\enteros$-módulo, que será finitamente generado por ser finito (por ejemplo, $G$ es un conjunto generador). Por ello $G$ será isomorfo a un cociente de $\enteros^n$ para algún $n$ natural. Por los ejercicios 
-\end{ejem}
-
-\begin{theorem}
-	Todo grupo abeliano finito es isomorfo al producto de grupos cíclicos de orden potencia de un primo.
-\end{theorem}
-
-\begin{dem}
-	Un grupo abeliano finito $G = \{x_1,\ \ldots\ , x_n\}$ es isomorfo al cociente $\enteros^n / \kernel(f)$ para el homomorfismo $f(r_1,\ \ldots\ , r_n) = r_1x_1 + \cdots + r_nx_n$. Si llamamos $m = |G|$ y definimos los elementos $e_i \in \enteros^n$ mediante
-	\begin{equation*}
-		e_{i}^{(j)} = \left\lbrace \begin{array}{c}
-			1 \text{ si } i = j \\ 
-			0 \text{ si } i \neq j
-		\end{array} \right.
-	\end{equation*}
-	entonces $f(me_i) = 0$ para todo $i$, por lo que $m\enteros^n \subseteq \kernel(f)$. Por el tercer teorema de isomorfía para módulos
-	\begin{equation*}
-		\frac{\frac{\enteros^n}{m\enteros^n}}{\frac{\kernel(f)}{m\enteros^n}} \cong \frac{\enteros^n}{\kernel(f)} \cong G
-	\end{equation*}
-	y tratando ahora con grupos abelianos
-	\begin{equation*}
-		\frac{\frac{\enteros^n}{m\enteros^n}}{\frac{\kernel(f)}{m\enteros^n}} \cong \frac{(\enteros_m)^n}{\frac{\kernel(f)}{m\enteros^n}}.
-	\end{equation*}
-	Por lo que el grupo $G$ es isomorfo a un cociente del grupo $(\enteros_m)^n$. Ahora bien, el grupo $(\enteros_m)^n$ es tambien un anillo bajo la multiplicación elemento a elemento. Con estas operaciones todo subgrupo bajo la suma es un ideal y viceversa. Por los ejercicios \eqref{exc:multideals1} y \eqref{exc:multideals2} los cocientes de $(\enteros_m)^n$ por un ideal serán de la forma $\Pi_{i=1}^{n} \frac{\enteros_m}{J_i}$ con $J_i$ ideal de $\enteros_m$ para todo $i$, y sabemos que $\frac{\enteros_m}{J_i}$ es de la forma $\enteros_{l_i}$ para algunos $l_i \in \naturales$. Volviendo a grupos, hemos demostrado que $G$ es isomorfo al producto de grupos cíclicos, y usando () se puede ver que estos se pueden poner como potencia de un primo.
 \end{dem}
 
 \section{Estructura de un módulo sobre un DIP}
