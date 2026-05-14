@@ -66,11 +66,18 @@
 \newcommand{\enteros}{\mathbb{Z}}
 \newcommand{\naturales}{\mathbb{N}}
 \newcommand{\realnmatrix}[1]{\mathcal{M}_{#1}(\reales)}
+\newcommand{\incognitas}[1]{x_1,\ \ldots ,\ x_{#1}}
+\newcommand{\incognitasperm}[2]{x_{#2(1)},\ \ldots ,\ x_{#2(#1)}}
 
 \DeclareMathOperator{\apl}{Apl}
 \DeclareMathOperator{\biy}{Biy}
 \DeclareMathOperator{\mcd}{mcd}
 \DeclareMathOperator{\simgroup}{\mathcal{S}}
+
+\DeclareMathOperator{\grado}{grd}
+\DeclareMathOperator{\grupogalois}{Gal}
+\DeclareMathOperator{\Fix}{Fix}
+
 
 \DeclareMathOperator{\tor}{Tor}
 \DeclareMathOperator{\kernel}{Ker}
@@ -451,7 +458,7 @@ Al igual que para los semigrupos, tenemos el siguiente teorema:
 	\end{enumerate}
 \end{theorem}
 
-\begin{define}{Subcuerpo}{subfield}
+\begin{define}{Subcuerpo}{subfield}\label{field_extensions_primero}
 	Sea $(R,\ +,\ *)$ un cuerpo y $S \subseteq R$ no vacío. Decimos que $(S,\ +|_{S \times S},\ *|_{S \times S})$ es un \textbf{subcuerpo} de $R$ si $(S,\ +|_{S \times S},\ *|_{S \times S})$ es un cuerpo. Además, diremos que $R$ es una \textbf{extensión} de $S$.
 \end{define}
 
@@ -473,7 +480,7 @@ Al igual que para los semigrupos, tenemos el siguiente teorema:
 	Sea $K$ un cuerpo, $(A,\ +,\ *)$ un álgebra sobre $K$ y $B \subseteq A$ no vacío. Decimos que $(B,\ +|_{B \times B}, *|_{B \times B})$ es un \textbf{subálgebra} de $A$ si $(B,\ +|_{B \times B}, *|_{B \times B})$ es un álgebra sobre $K$ y la identidad multiplicativa del anillo $(A,\ +,\ *)$ está en $B$.
 \end{define}
 
-\section{Generadores}
+\section{Generadores}\label{sec:generadores}
 TODO: this is draconian no way i'm putting this here
 \begin{theorem}
 	Sea $(S,\ *)$ un semigrupo y $X \subseteq S$ no vacío. Definimos el conjunto
@@ -799,5 +806,265 @@ Para módulos finitamente generados tenemos un resultado parecido:
 \end{dem}
 
 \section{Estructura de un módulo sobre un DIP}
+
+\chapter{Cuerpos}
+Los anillos son una generalización de los cuerpos, lo que nos puede llevar a pensar que a la hora de estudiar cuerpos, tendremos una teoría parecida a la que hemos desarrollado con los anillos. Sin embargo, hemos usado extensivamente los ideales, que se reducen al caso trivial en todo cuerpo. Por ello, será necesario recurrir a nuevas herramientas especiales que, en este caso, no nos ayudan con los anillos.\\ 
+Aun así, vamos a seguir usando las subestructuras de los cuerpos para estudiarlos. Pero también hay otra herramienta importante: las raíces de polinomios. 
+
+\section{Polinomios sobre cuerpos}
+Recordamos que $F[x]$ denota el anillo de polinomios con coeficientes en $F$.
+\begin{define}{Raíz de un polinomio}{poly_root}
+	Sea $a(x) \in F[x]$ un polinomio distinto de cero. Decimos que $c \in F$ es una \textbf{raíz} de $a(x)$ si $a(c) = 0$.
+\end{define}
+\begin{theorem}
+	Sea $a(x) \in F[x]$ distinto de cero. Si $c \in F$ es una raíz de $a(x)$, entonces existe $b(x) \in F[x]$ distinto de cero tal que $a(x) = (x - c)b(x)$.
+\end{theorem}
+\begin{theorem}
+	Sea $a(x) \in F[x]$ distinto de cero. $a(x)$ tiene como máximo $\grado(a(x))$ raíces distintas.
+\end{theorem}
+\begin{define}{Raíz múltiple}{poly_multiroot}
+	Sea $a(x) \in F[x]$ un polinomio distinto de cero. Decimos que $c \in F$ es una \textbf{raíz múltiple} de multiplicidad $k \in \naturales$ de $a(x)$ si existe $b(x) \in F[x]$ tal que $b(c) \neq 0$ y $a(x) = (x-c)^k b(x)$.
+\end{define}
+\begin{define}{Derivada formal}{poly_der}
+	TODO
+\end{define}
+\begin{theorem}
+	Sea $a(x) \in F[x]$ distinto de cero. $c \in F$ es una raíz múltiple de $a(x)$ si y solo si $a(c) = 0$ y $a'(c) = 0$.
+\end{theorem}
+
+
+\begin{define}{Escisión}{poly_split}
+	Sea $a(x) \in F[x]$. Se dice que $a(x)$ \textbf{escinde} en $F$ si existen $c_1,\ \ldots,\ c_n \in F$ tales que
+	\begin{equation*}
+		a(x) = \prod_{i=1}^n (x - c_i)
+	\end{equation*}
+	donde los $c_i$ no son necesariamente distintos.
+\end{define}
+\begin{theorem}
+	Sea $a(x) \in F[x]$ distinto de cero que escinde en $F$. Entonces la suma de las multiplicidades de todas sus raíces es igual a $\grado(a(x))$.
+\end{theorem}
+\begin{theorem}
+	Todo polinomio de $\complejos[x]$ escinde en $\complejos$.
+\end{theorem}
+
+\begin{define}{Permutaciones de incógnitas}{poly_perm}
+	Sea $p(\incognitas{n}) \in F[\incognitas{n}]$ y $\sigma \in \simgroup_n$. Definimos el \textbf{permutado} de $p$ bajo $\sigma$ como
+	\begin{equation*}
+		\sigma p (\incognitas{n}) := p(\incognitasperm{n}{\sigma}).
+	\end{equation*}
+	Un polinomio se dice \textbf{simétrico} si cualquier permutado de él es igual a él mismo.
+\end{define}
+
+\begin{define}{Polinomios simétricos elementales}{poly_elemsym}
+	Sea $n \in \naturales$. Los \textbf{polinomios simétricos elementales} en $n$ incógnitas son los coeficientes no principales del polinomio
+	\begin{equation*}
+		\prod_{i = 1}^n (t - x_i)
+	\end{equation*}
+	cuando se expresa en potencias de $t$. Concretamente, son los polinomios $e^{(n)}_i$ en la expresión
+	\begin{equation*}
+		\prod_{i = 1}^n (t - x_i) = t^n + \sum_{i = 0}^{n-1} e^{(n)}_{n-i} (\incognitas{n})t^i. 
+	\end{equation*}
+	Obviamente son simétricos.
+\end{define}
+
+\begin{theorem}
+	Todo polinomio simétrico en $n$ incógnitas se puede expresar como polinomio de los polinomios simétricos elementales en $n$ incógnitas. Es decir, $p(\incognitas{n}) \in F[\incognitas{n}]$ es simétrico si y solo si existe un $q(\incognitas{n}) \in F[\incognitas{n}]$ tal que $p(\incognitas{n}) = q(e^{(n)}_1,\ e^{(n)}_2,\ \ldots,\ e^{(n)}_n)$.
+\end{theorem}
+
+\begin{theorem}
+	Los polinomios simétricos en $n$ incógnitas sobre un cuerpo $F$ forman un anillo isomorfo a $F[\incognitas{n}]$.
+\end{theorem}
+
+\begin{ejem}
+	Queremos resolver el sistema de ecuaciones
+	\begin{equation*}
+		\left\lbrace
+		\begin{array}{c}
+			x + y + z = 1 \\
+			x^2 + y^2 + z^2 = 1 \\
+			x^3 + y^3 + z^3 = 1
+		\end{array}
+		\right.
+	\end{equation*}
+	con $x,y,z \in \reales$.
+\end{ejem}
+
+\section{Extensiones de cuerpos}
+\begin{define}{Extensiones}{field_extension}
+	Sea $F$ un cuerpo. Se dice que otro cuerpo $K$ es una \textbf{extensión} de $F$ si existe un monomorfismo $f: F \rightarrow K$.
+\end{define}
+Esta definición no es exactamente equivalente a la dada en \eqref{field_extensions_primero}, pero el concepto es el mismo: si $F \leq K$ son ambos cuerpos entonces la inclusión es un homomorfismo inyectivo de $F$ a $K$, y si se tienen dos cuerpos $F$ y $K$ tales que exista un monomorfismo $f: F \rightarrow K$ entonces $F$ se puede identificar con el subcuerpo $f(F)$ de $K$.\\ 
+Primero, nos interesa entender cuales son las extensiones más ``simples''. En la sección \eqref{sec:generadores} vimos extensiones del tipo $F \leq F(u_1, \ldots,\ u_n)$. Estas extensiones son las \textbf{finitamente generadas} (TODO: no ponerle nombre, se confunde), ya que se pueden generar con $F$ y un conjunto de generadores finito de elementos que no están en $F$. Aun así existen muchas diferencias dentro de este tipo de extensiones.
+
+\begin{ejem}
+Consideramos las extensiones $\racionales(x)$ y $\racionales(\sqrt{2})$ de $\racionales$, donde $\racionales(x)$ es el cuerpo de fracciones de $\racionales[x]$. Fundamentalmente, la diferencia radica en como los conjuntos generadores ``generan'' la extensión. En el caso de $\racionales(\sqrt{2})$, pudimos comprobar en el ejemplo (TODO: poner el ejemplo) que
+\begin{equation*}
+	\racionales(\sqrt{2}) = \{ a + b\sqrt{2}\ : a,b\ \in \racionales\},
+\end{equation*}
+de donde vemos que la extensión se puede ver como un espacio vectorial de dimensión finita sobre $\racionales$, lo que no ocurre con $\racionales(x)$.
+\end{ejem}
+
+\begin{define}{Extensión finita}{extension_finite}
+	Sea $F$ un cuerpo. El \textbf{grado} de una extensión $F \leq K$ es la dimensión de $K$ como $F$-espacio vectorial, y se denota por $[K:F]$. Si $[K:F]$ es finito, se dice que $K$ es una extensión \textbf{finita} de $F$.
+\end{define}
+
+$\racionales(\sqrt{2})$ también satisface otra propiedad importante.
+
+\begin{define}{Extensión algebraica}{extension_algebraic}
+	Sea $F \leq K$ una extensión de un cuerpo. Un elemento $u \in K$ se dice \textbf{algebraico} sobre $F$ si existe un polinomio $p(x) \in F[x]$ distinto de $0$ tal que $p(u) = 0$. La extensión $K$ se dice \textbf{algebraica} sobre $F$ si todo elemento de $K$ es algebraico sobre $F$.
+\end{define}
+
+\begin{theorem}
+	Toda extensión finita sobre un cuerpo $F$ es algebraica.
+\end{theorem}
+
+\begin{dem}
+	Sea $K$ una extensión finita, de grado $n$. Si $u \in K$ es un elemento cualquiera, el conjunto $\{1,\ u,\ u^2,\ \ldots,\ u^n\} \subseteq K$ contiene $n + 1$ elementos, que como $K$ es un $F$-espacio vectorial de dimensión $n$ tienen que ser linealmente independientes. Por lo que existen $a_0,\ a_1,\ \ldots,\ a_n \in F$ no todos cero tales que $a_0 + a_1 u + a_2 u^2 + \cdots + a_n u^n = 0$. El polinomio $p(x) = a_0 + a_1 x + a_2 x^2 + \cdots + a_n x^n \in F[x]$ satisface $p(u) = 0$ y es distinto de cero, por lo que $u$ es algebraico.
+\end{dem}
+
+\begin{ejem}
+	Este teorema implica que $\racionales(\sqrt{2})$ es algebraica sobre $\racionales$. Está claro que $\racionales(x)$ no es algebraica sobre $\racionales$.
+\end{ejem}
+
+\begin{theorem}
+	Sea $F \leq K$ una extensión de un cuerpo. Si $u \in K$ es algebraico sobre $F$, entonces existe un único polinomio $m(x) \in F[x]$ (distinto de cero) que satisface:
+	\begin{enumerate}
+		\item
+		$m(x)$ es mónico (es decir, el coeficiente principal es igual a 1).
+		\item
+		$m(x)$ es irreducible.
+		\item		
+		$m(u) = 0$.
+	\end{enumerate}
+\end{theorem}
+
+\begin{dem}
+	Sea 
+	\begin{equation*}
+		A = \{ p(x) \in F[x] \setminus \{0\}:p(u) = 0\}
+	\end{equation*} 
+	el conjunto de todos los polinomios con coeficientes en $F$ distintos de $0$ que tienen a $u$ como raíz. Este conjunto es no vacío por ser $u$ algebraico, y por ello el conjunto 
+	\begin{equation*}
+	\{ \grado(p(x))\ :\ p(x) \in A)\} \subseteq \naturales
+	\end{equation*}
+	tiene un mínimo. Supongamos que el mínimo se consigue para el grado de un polinomio $m(x) \in A$ (podría ocurrir en varios polinomios) que suponemos mónico.\\
+	Por la definición de $A$ se tiene $m(u) = 0$, y si suponemos que $m(x)$ es reducible tendríamos $0 = m(u) = a(u)b(u)$ lo que implica $a(u) = 0$ o $b(u) = 0$ para unos polinomios $a(x), b(x) \in F[x]$ de grado entre $0$ y $\grado(q(x))$ estrictamente, lo que contradice la minimalidad del grado de $q(x)$ en $A$.\\ 
+	Ahora, falta ver que este polinomio es único. Si $q(x) \in A$ satisface las condiciones de la $1$ a la $3$ tendríamos que $\grado(m(x)) \leq \grado(q(x))$ por ser $q(x) \in A$. Por el algoritmo de la división tenemos 
+	\begin{equation*}
+		q(x) = s(x)m(x) + r(x)
+	\end{equation*}	
+	con $s(x), r(x) \in F[x]$ y $0 \leq \grado(r(x)) < \grado(m(x))$, de donde obtenemos $r(u) = q(u) - s(u)m(u) = 0$. La minimalidad del grado de $m(x)$ en $A$ implica que $r(x) = 0$, por lo que $q(x) = s(x)m(x)$. Por suposición $q(x)$ es irreducible, así que o $\grado(s(x)) = 0$ o $\grado(m(x)) = 0$. Como $\grado(m(x)) \neq 0$, se tiene que $\grado(s(x)) = 0$ y como $m(x)$ y $q(x)$ son mónicos, $s(x)$ es el polinomio constante igual a $1$, por lo que $q(x) = m(x)$.
+\end{dem}
+
+\begin{define}{Polinomio mínimo}{minimal_polynomial}
+	Al polinomio $m(x)$ del teorema anterior se le conoce como \textbf{polinomio mínimo} de $u \in K$ sobre $F$, y se denota por $m_{u,F}(x)$.
+\end{define}
+
+TODO: Poner este teorema para el caso de $F(u_1,\ \ldots\ ,u_n) = F[u_1,\ \ldots\ ,u_n]$, excepto lo del grado supongo
+
+\begin{theorem}
+	Sea $F \leq K$ una extensión de un cuerpo. Si $u \in K$ es algebraico sobre $F$, se tiene que $F[u] = F(u)$ y que $[F(u):F] = \grado(m_{u,F}(x)).$
+\end{theorem}
+
+\begin{theorem}
+	Sea $F \leq L \leq K$ una cadena de extensiones. Entonces $K$ es una extensión finita de $F$ si y solo si $K$ lo es de $L$ y $L$ lo es de $F$. En tal caso se tiene
+	\begin{equation*}
+		[K:F] = [K:L][L:F].
+	\end{equation*}
+\end{theorem}
+
+\begin{theorem}
+	Todo cuerpo $K$ admite una clausura algebraica $\overline{K}$.
+\end{theorem}
+
+\begin{define}{Índice}{extension_index}
+	Sea $F \leq K$ una extensión finita. El número de monomorfismos de $K$ en $\overline{K}$ que dejan fijo $F$ se conoce como el \textbf{índice} de la extensión $F \leq K$ y se denota por $\{K:F\}$.
+\end{define}
+
+\begin{theorem}
+	El índice de una extensión finita es finito.
+\end{theorem}
+
+\begin{dem}
+	Sea $F \leq K = F(u_1,\ \ldots\ ,\ u_n)$ es una extensión finita y $f:K \rightarrow \overline{K}$ un monomorfismo que deja fijo $F$. Entonces $f$ viene únicamente determinado por donde envía cada $u_i$, y sabemos que $m_{u_i,F}(f(u_i)) = f(m_{u_i,F}(0)) = 0$. Por ello cada $u_i$ tiene que ser enviado necesariamente a una raíz de $m_{u_i,F}$, y como un polinomio distinto de cero tiene finitas raíces, el máximo número de monomorfismos que dejan fijo $F$ es finito.
+\end{dem}
+
+\begin{theorem}
+	Sea $F \leq K$ una extensión finita. Entonces $\{K:F\} \leq [K:F]$.
+\end{theorem}
+
+\begin{theorem}
+	Sean $F \leq L \leq K$ extensiones finitas. Entonces
+	\begin{equation*}
+		\{K:F\} = \{K:L\} \{L:F\}.
+	\end{equation*}
+\end{theorem}
+
+\begin{theorem}
+	Sea $F \leq K = F(u)$ una extensión de un cuerpo, con $u \in K$. Entonces $\{K:F\}$ es igual al número de raíces distintas de $m_{u,F}(x)$.
+\end{theorem}
+Este último teorema explica porque es interesante que un polinomio irreducible no tenga raíces múltiples en ningún cuerpo de escisión.
+
+
+TODO: Raíces múltiples, definicion de cuerpo de escision, existencia y unicidad, extension de isomorfismos 
+
+\section{Extensiones separables y normales}
+TODO: Se necesita algebraica aqui?
+\begin{define}{Extensión separable}{extension_separable}
+	Sea $F \leq K$ una extensión algebraica. Un polinomio $p(x) \in F[x]$ se dice que es \textbf{separable} sobre $F$ si no tiene raíces múltiples en ninguno de sus cuerpos de escisión. Un elemento $u \in K$ es \textbf{separable} sobre $F$ si $m_{u,F}(x)$ es separable sobre $F$. La extensión $K$ es \textbf{separable} si todo elemento de $K$ es separable sobre $F$.
+\end{define}
+
+\begin{theorem}
+	Sea $F \leq K = F(u_1,\ \ldots\ ,\ u_n)$ una extensión finita. Son equivalentes:
+	\begin{enumerate}
+		\item
+		$\{K:F\} = [K:F]$.
+		\item
+		$u_j$ es separable sobre $F(u_1,\ \ldots\ ,\ u_{j-1})$ para cada $1 \leq j \leq n$.
+		\item
+		$u_j$ es separable sobre $F$ para cada $1 \leq j \leq n$. 
+		\item
+		$K$ es una extensión separable.
+	\end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+	Sea $F \leq K$ una extensión finita. Si $F$ es un cuerpo de característica $0$ o $F$ es finito, entonces $K$ es separable.
+\end{theorem}
+
+\begin{define}{Extensión normal}{extension_normal}
+	Sea $F \leq K$ una extensión finita. Se dice que $K$ es una extensión \textbf{normal} si todo polinomio irreducible $p(x) \in F[x]$ que tiene una raíz en $K$ escinde en $K$.
+\end{define}
+
+\begin{theorem}
+	Sea $F \leq K$ una extensión finita. $K$ es una extensión normal de $F$ si y solo si $K$ es el cuerpo de escisión de algún polinomio $p(x) \in F[x]$.
+\end{theorem}
+
+\begin{dem}
+	Si $K$ es una extensión finita y normal, entonces existen $u_1,\ \ldots\ ,u_n \in F$ tales que $K = F(u_1,\ \ldots\ ,u_n)$. Como cada polinomio minimo $m_{u_i,F}(x)$ tiene una raíz en $K$, por definición de extensión normal escinde en $K$, y por ello $K$ será el cuerpo de escisión del polinomio $\prod_{i=1}^{n} m_{u_i,F}(x)$.\\ 
+	Recíprocamente, sea $K$ el cuerpo de escisión del polinomio $p(x) \in F[x]$. Sea $q(x) \in F[x]$ un polinomio irreducible que tiene una raíz $u \in K$. Como $K$ es finita, podemos escribir $K = F(u_1,\ \ldots\ ,u_n) = F[u_1,\ \ldots\ ,u_n]$ con $u_1,\ \ldots\ ,u_n \in K$ todas las raíces de $p(x)$ (posiblemente no distintas), por lo que $u$ se puede escribir como un polinomio $a(x) \in F[x_1,\ \ldots\ ,x_n]$ evaluado en los $u_i$, es decir $u = a(u_1,\ \ldots\ ,u_n)$. El polinomio
+	\begin{equation*}
+		h(x) = \prod_{\sigma \in \simgroup_n} (x - a(u_{\sigma(1)},\ \ldots\ ,u_{\sigma(n)}))
+	\end{equation*}
+	tiene coeficientes simétricos en los $u_i$, por lo que $h(x) \in F[x]$. Como $h(u) = 0$, por las propiedades del polinomio mínimo $q(x) = \alpha^{-1}m_{u,F}(x)\ |\ h(x)$ con $\alpha$ el coeficiente principal de $q(x)$. Pero $h(x)$ escinde en $K$, por lo que $q(x)$ también.
+\end{dem}
+
+\begin{define}{Extensión de Galois}{extension_galois}
+	Sea $F \leq K$ una extensión finita. $K$ se dice \textbf{extensión de Galois} si $K$ es extensión separable y normal. 
+\end{define}
+
+\begin{theorem}
+	Sea $F \leq K$ una extensión finita. Son equivalentes:
+	\begin{enumerate}
+		\item
+		$K$ es un cuerpo de escisión de un polinomio separable de $F[x]$ sobre $F$.
+		\item
+		$K$ es una extensión de Galois de $F$.
+		\item
+		$|\grupogalois(K:F)| = [K:F]$.
+		\item
+		$\Fix(\grupogalois(K:F)) = F$.
+	\end{enumerate}
+\end{theorem}
 
 \end{document}
