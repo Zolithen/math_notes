@@ -1001,7 +1001,7 @@ TODO: Poner este teorema para el caso de $F(u_1,\ \ldots\ ,u_n) = F[u_1,\ \ldots
 \end{theorem}
 
 \begin{theorem}
-	Sea $F \leq K = F(u)$ una extensión de un cuerpo, con $u \in K$. Entonces $\{K:F\}$ es igual al número de raíces distintas de $m_{u,F}(x)$.
+	Sea $F \leq K = F(u)$ una extensión de un cuerpo, con $u \in K$. Entonces $\{K:F\}$ es igual al número de raíces distintas de $m_{u,F}(x)$ en $\overline{K}$.
 \end{theorem}
 Este último teorema explica porque es interesante que un polinomio irreducible no tenga raíces múltiples en ningún cuerpo de escisión.
 
@@ -1009,6 +1009,25 @@ Este último teorema explica porque es interesante que un polinomio irreducible 
 TODO: Raíces múltiples, definicion de cuerpo de escision, existencia y unicidad, extension de isomorfismos 
 
 \section{Extensiones separables y normales}
+\begin{define}{Grupo de Galois}{extension_group_galois}
+	Sea $F \leq K$ una extensión. Definimos el \textbf{grupo de Galois} de $K$ sobre $F$ como el conjunto
+	\begin{equation*}
+		\grupogalois(K:F) = \{\sigma: K \rightarrow K:\sigma \text{ es automorfismo y } \sigma|_F = \text{id}|_F \}.
+	\end{equation*}
+	Se puede comprobar que es un subgrupo de los automorfismos de $K$.
+\end{define}
+
+\begin{theorem}
+	Sea $F \leq K$ una extensión finita. Entonces $\grupogalois(K:F)$ es finito.
+\end{theorem}
+
+\begin{theorem}
+	Sea $F \leq K$ una extensión finita. Entonces se cumple
+	\begin{equation*}
+		|\grupogalois(K:F)| \leq \{K:F\} \leq [K:F].
+	\end{equation*}
+\end{theorem}
+
 TODO: Se necesita algebraica aqui?
 \begin{define}{Extensión separable}{extension_separable}
 	Sea $F \leq K$ una extensión algebraica. Un polinomio $p(x) \in F[x]$ se dice que es \textbf{separable} sobre $F$ si no tiene raíces múltiples en ninguno de sus cuerpos de escisión. Un elemento $u \in K$ es \textbf{separable} sobre $F$ si $m_{u,F}(x)$ es separable sobre $F$. La extensión $K$ es \textbf{separable} si todo elemento de $K$ es separable sobre $F$.
@@ -1037,7 +1056,15 @@ TODO: Se necesita algebraica aqui?
 \end{define}
 
 \begin{theorem}
-	Sea $F \leq K$ una extensión finita. $K$ es una extensión normal de $F$ si y solo si $K$ es el cuerpo de escisión de algún polinomio $p(x) \in F[x]$.
+	Sea $F \leq K$ una extensión finita. Son equivalentes:
+	\begin{enumerate}
+		\item
+		$K$ es una extensión normal.
+		\item
+		$K$ es el cuerpo de escisión de algún polinomio $p(x) \in F[x]$.
+		\item
+		$|\grupogalois(K:F)| = \{K:F\}$.
+	\end{enumerate}
 \end{theorem}
 
 \begin{dem}
@@ -1053,6 +1080,18 @@ TODO: Se necesita algebraica aqui?
 	Sea $F \leq K$ una extensión finita. $K$ se dice \textbf{extensión de Galois} si $K$ es extensión separable y normal. 
 \end{define}
 
+\begin{define}{Cuerpo fijo}{extension_fixed}
+	Sea $F \leq K$ una extensión, y $H \leq \grupogalois(K:F)$ un subgrupo del grupo de Galois de $K$ sobre $F$. Se define
+	\begin{equation*}
+		\Fix(H) := \{a \in F: \sigma(a) = a\ \forall \sigma \in H \},
+	\end{equation*}
+	que lo denominamos \textbf{cuerpo fijo} de $H$. Se puede demostrar que es un cuerpo tal que $F \leq \Fix(H) \leq K$.
+\end{define}
+
+\begin{theorem}
+	Sea $F \leq K$ y $H_1,\ H_2 \leq \grupogalois(K:F)$. Si $H_1 \leq H_2$ entonces $\Fix(H_2) \leq \Fix(H_1)$.
+\end{theorem}
+
 \begin{theorem}
 	Sea $F \leq K$ una extensión finita. Son equivalentes:
 	\begin{enumerate}
@@ -1061,10 +1100,18 @@ TODO: Se necesita algebraica aqui?
 		\item
 		$K$ es una extensión de Galois de $F$.
 		\item
-		$|\grupogalois(K:F)| = [K:F]$.
+		$|\grupogalois(K:F)| = \{K:F\} = [K:F]$.
 		\item
 		$\Fix(\grupogalois(K:F)) = F$.
 	\end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+	Sea $F \leq K$ una extensión de Galois, y $F \leq L \leq K$. Entonces $K$ es una extensión de Galois de $L$.
+\end{theorem}
+
+\begin{theorem}[Teorema fundamental de la teoría de Galois]
+
 \end{theorem}
 
 \end{document}
